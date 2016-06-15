@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/ourvrisrealerthanyours/tanks#readme",
   "dependencies": {
+    "aframe": "^0.2.0",
     "aframe-extras": "^1.15.1",
     "babel-core": "^6.8.0",
     "babel-loader": "^6.2.4",
