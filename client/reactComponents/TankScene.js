@@ -1,5 +1,7 @@
 import React from 'react';
+import Tank from './Tank';
 import extras from 'aframe-extras';
+
 extras.registerAll();
 
 class TankScene extends React.Component {
@@ -14,9 +16,9 @@ class TankScene extends React.Component {
         <a-assets>
         </a-assets>
         
-        <a-entity id='camera' position={`0 1.8 0`} width='0.5'
-          camera='near: 0.05' universal-controls kinematic-body='radius: 0.6' />
+        <Tank/>
 
+        <a-sky color='blue' />
         <a-plane static-body height='20' width='20' color='grey' rotation='-90 0 0' />
 
       </a-scene>
