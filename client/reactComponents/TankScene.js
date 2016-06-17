@@ -1,4 +1,5 @@
 import React from 'react';
+import Arena from './Arena';
 import Tank from './Tank';
 import extras from 'aframe-extras';
 
@@ -15,11 +16,12 @@ class TankScene extends React.Component {
       <a-scene physics='debug:true'>
         <a-assets>
         </a-assets>
-        
-        <Tank/>
 
         <a-sky color='blue' />
-        <a-plane static-body height='100' width='100' color='grey' rotation='-90 0 0' />
+
+        <Arena>
+          <Tank/>
+        </Arena>
 
       </a-scene>
     )
