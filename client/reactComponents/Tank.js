@@ -6,17 +6,43 @@ class Tank extends React.Component {
     super(props);
     this.position = props.position || '0 3 0';
     this.rotation = props.rotation || '0 0 0';
+    this.driverLength = 5;
+    this.driverWidth = 3;
+    this.driverCompartmentLength = 2;
   }
 
   render () {
-    return (
+    const driverBlockLength = this.driverLength - this.driverCompartmentLength;
+    const driverCameraOffset = (this.driverCompartmentLength - this.driverLength) / 2;
+     return (
       <a-entity position={this.position} 
         tank-controls wasd-controls='adEnabled: false; acceleration: 200;' 
         kinematic-body>
-        <a-entity id='camera' position='0 1.8 0' rotation={this.rotation}
-          camera='near: 0.05' look-controls/>
-        <a-box width='3' height='0.5' depth='5' position='0 0 0' 
-          color='red' material='side:double;'/>
+        <a-entity id='camera' position={`0 1 ${driverCameraOffset}`} 
+          rotation={this.rotation}
+          camera='near: 0.05' look-controls />
+
+        {/* Top and bottom driver plate */}
+        <a-box width={this.driverWidth} height='0.5' depth={this.driverLength} 
+          position='0 0 0' 
+          color='red'/>
+        <a-box width={this.driverWidth} height='0.5' depth={this.driverLength} 
+          position='0 2 0' 
+          color='red'/>
+
+        {/* Driver compartment block */}
+        <a-box width={this.driverWidth} height='1.5' 
+          depth={driverBlockLength} 
+          position={`0 1 ${(this.driverLength - driverBlockLength) / 2}`} color='red'/>
+
+        {/* Driver compartment window liners */}
+        <a-box width='0.2' height='1.5' depth='1' 
+          position={`${-(this.driverWidth - 0.2) / 2} 1 ${-(this.driverLength - 1) / 2}`} 
+          color='red'/>
+        <a-box width='0.2' height='1.5' depth='1' 
+          position={`${(this.driverWidth - 0.2) / 2} 1 ${-(this.driverLength - 1) / 2}`}
+          color='red'/>
+
       </a-entity>
     )
   }
