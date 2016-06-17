@@ -7,7 +7,6 @@ class Arena extends React.Component {
     this.width = props.width || 200;
     this.length = props.length || 200;
     this.groundMaterial = props.groundMaterial || 'color: grey;';
-    this.wallMaterial = props.wallMaterial || 'color: brown;';
     this.wallHeight = props.wallHeight || 8;
   }
 
@@ -19,18 +18,18 @@ class Arena extends React.Component {
         height={this.length} width={this.width}  
         material={this.groundMaterial} />
 
-        <a-box position={`${-this.width/2} ${this.wallHeight/2} 0`}
-        material={this.wallMaterial}
-        depth={this.length} width={0.5} height={this.wallHeight} />
-        <a-box position={`${this.width/2} ${this.wallHeight/2} 0`}
-        material={this.wallMaterial}
-        depth={this.length} width={0.5} height={this.wallHeight} />
-        <a-box position={`0 ${this.wallHeight/2} ${-this.length/2}`}
-        material={this.wallMaterial}
-        depth={0.5} width={this.width} height={this.wallHeight} />
-        <a-box position={`0 ${this.wallHeight/2} ${this.length/2}`}
-        material={this.wallMaterial}
-        depth={0.5} width={this.width} height={this.wallHeight} />
+        <a-entity position={`${-this.width/2} ${this.wallHeight/2} 0`}
+        mixin='wall'
+        geometry={`depth: ${this.length}`}/>
+        <a-entity position={`${this.width/2} ${this.wallHeight/2} 0`}
+        mixin='wall'
+        geometry={`depth: ${this.length}`}/>
+        <a-entity position={`0 ${this.wallHeight/2} ${-this.length/2}`} rotation='0 90 0'
+        mixin='wall'
+        geometry={`depth: ${this.width}`}/>
+        <a-entity position={`0 ${this.wallHeight/2} ${this.length/2}`} rotation='0 90 0'
+        mixin='wall'
+        geometry={`depth: ${this.width}`}/>
 
         {this.props.children}
 
