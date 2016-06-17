@@ -8,7 +8,7 @@ class Tank extends React.Component {
     this.rotation = props.rotation || '0 0 0';
     this.driverLength = 5;
     this.driverWidth = 3;
-    this.driverCompartmentLength = 2;
+    this.driverCompartmentLength = Math.min(2, this.driverLength);
   }
 
   render () {
@@ -42,6 +42,16 @@ class Tank extends React.Component {
         <a-box width='0.2' height='1.5' depth='1' 
           position={`${(this.driverWidth - 0.2) / 2} 1 ${-(this.driverLength - 1) / 2}`}
           color='red'/>
+
+        {/* turret */}
+        <a-entity position={`0 2.75 0`}>
+          <a-cylinder height='1' radius={this.driverWidth / 2} />
+          <a-cylinder height='3' radius='0.08' position={`0 0 ${-(this.driverWidth + 3) / 2}`}
+            rotation='90 0 0' />
+          <a-cylinder height='0.3' radius='0.12' position={`0 0 ${-(this.driverWidth/2 + 3)}`}
+            rotation='90 0 0' />
+          }
+        </a-entity>
 
       </a-entity>
     )

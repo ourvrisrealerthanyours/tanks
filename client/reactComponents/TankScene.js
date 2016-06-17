@@ -19,7 +19,7 @@ class TankScene extends React.Component {
         <Tank/>
 
         <a-sky color='blue' />
-        <a-plane static-body height='20' width='20' color='grey' rotation='-90 0 0' />
+        <a-plane static-body height='100' width='100' color='grey' rotation='-90 0 0' />
 
       </a-scene>
     )
