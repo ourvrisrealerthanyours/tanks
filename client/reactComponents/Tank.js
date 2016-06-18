@@ -1,4 +1,5 @@
 import React from 'react';
+import Turret from './Turret';
 
 class Tank extends React.Component {
 
@@ -56,14 +57,7 @@ class Tank extends React.Component {
         color='red'/>
 
         {/* turret */}
-        <a-entity id='turret' position={`0 2.75 0`}
-        quick-rotate={`nextAngle: ${this.state.turretAngle}`}>
-          <a-cylinder height='1' radius={this.driverWidth / 2} />
-          <a-cylinder height='5' radius='0.08' position={`0 0 ${-5/2}`}
-          rotation='90 0 0' />
-          <a-cylinder height='0.3' radius='0.12' position={`0 0 ${-(5/2 + 3)}`}
-          rotation='90 0 0' />
-        </a-entity>
+        <Turret turretAngle={this.state.turretAngle}/>
 
       </a-entity>
     )

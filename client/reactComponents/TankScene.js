@@ -37,7 +37,7 @@ class TankScene extends React.Component {
 
         <a-sky color='blue' />
 
-        <Turret/>
+        <Tank/>
         <Arena wallHeight={8}>
         </Arena>
 
