@@ -45,7 +45,11 @@ AFRAME.registerComponent('spawner', {
     }
     if(tankRotation) {
       const tankHeading = new THREE.Euler(0, 0, 0, 'YXZ');
-      tankHeading.set(0, THREE.Math.degToRad(tankRotation.y), 0);
+      tankHeading.set(
+        THREE.Math.degToRad(tankRotation.x), 
+        THREE.Math.degToRad(tankRotation.y), 
+        THREE.Math.degToRad(tankRotation.z)
+      );
       velocity.applyEuler(tankHeading); 
     }
 
