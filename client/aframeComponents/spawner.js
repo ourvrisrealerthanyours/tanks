@@ -33,10 +33,14 @@ AFRAME.registerComponent('spawner', {
     entity.setAttribute('mixin', this.data.mixin);
 
     // Rotate to heading based on turret rotation and tank rotation
-    var velocity = new THREE.Vector3(0, 5, -15); 
+    var velocity = new THREE.Vector3(0, 0, -30); 
     if (cameraRotation) {
       const cameraHeading = new THREE.Euler(0, 0, 0, 'YXZ');
-      cameraHeading.set(0, THREE.Math.degToRad(cameraRotation.y), 0);
+      cameraHeading.set(
+        THREE.Math.degToRad(cameraRotation.x), 
+        THREE.Math.degToRad(cameraRotation.y), 
+        THREE.Math.degToRad(cameraRotation.z)
+      );
       velocity.applyEuler(cameraHeading);
     }
     if(tankRotation) {
