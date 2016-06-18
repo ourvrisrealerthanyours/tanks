@@ -4,6 +4,7 @@ import Tank from './Tank';
 import WallMixin from './WallMixin';
 import extras from 'aframe-extras';
 
+require('./../aframeComponents/tank-controls');
 extras.registerAll();
 
 class TankScene extends React.Component {
