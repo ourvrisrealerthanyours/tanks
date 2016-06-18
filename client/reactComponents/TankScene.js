@@ -5,6 +5,7 @@ import WallMixin from './WallMixin';
 import extras from 'aframe-extras';
 
 require('./../aframeComponents/tank-controls');
+require('./../aframeComponents/quick-rotate');
 extras.registerAll();
 
 class TankScene extends React.Component {
