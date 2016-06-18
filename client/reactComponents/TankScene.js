@@ -1,6 +1,7 @@
 import React from 'react';
 import Arena from './Arena';
 import Tank from './Tank';
+import Turret from './Turret';
 import WallMixin from './WallMixin';
 import extras from 'aframe-extras';
 
@@ -36,7 +37,7 @@ class TankScene extends React.Component {
 
         <a-sky color='blue' />
 
-        <Tank/>
+        <Turret/>
         <Arena wallHeight={8}>
         </Arena>
 
