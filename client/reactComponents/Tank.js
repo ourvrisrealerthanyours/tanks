@@ -1,4 +1,5 @@
 import React from 'react';
+import TankBody from './TankBody';
 import Turret from './Turret';
 
 class Tank extends React.Component {
@@ -7,11 +8,11 @@ class Tank extends React.Component {
     super(props);
     this.position = props.position || '0 3 0';
     this.rotation = props.rotation || '0 0 0';
-    this.driverLength = 5;
-    this.driverWidth = 3;
-    this.driverCompartmentLength = Math.min(2, this.driverLength);
+    this.bodyLength = 5;
+    this.bodyWidth = 3;
     this.state = {
-      turretAngle: 0
+      turretAngle: 0,
+      control: 'turret'
     }
 
     setInterval(() => {
@@ -22,45 +23,40 @@ class Tank extends React.Component {
   }
 
   render () {
-    const driverBlockLength = this.driverLength - this.driverCompartmentLength;
-    const driverCameraOffset = (this.driverCompartmentLength - this.driverLength) / 2;
-     return (
-      <a-entity id='tank' material='opacity: 0;' 
-      geometry={`primitive: box; width: ${this.driverWidth}; height: 2.5; depth: ${this.driverLength}`}
-      position={this.position} 
-      tank-controls 
-      kinematic-body='radius: 2.5; enableSlopes: false'>
-
-        <a-entity id='camera' position={`0 1 ${driverCameraOffset}`} 
-        rotation={this.rotation}
-        camera='near: 0.05' look-controls />
-
-        {/* Top and bottom driver plate */}
-        <a-box width={this.driverWidth} height='0.5' depth={this.driverLength} 
-        position='0 0 0' 
-        color='red'/>
-        <a-box width={this.driverWidth} height='0.5' depth={this.driverLength} 
-        position='0 2 0' 
-        color='red'/>
-
-        {/* Driver compartment block */}
-        <a-box width={this.driverWidth} height='1.5' 
-        depth={driverBlockLength} 
-        position={`0 1 ${(this.driverLength - driverBlockLength) / 2}`} color='red'/>
-
-        {/* Driver compartment window liners */}
-        <a-box width='0.2' height='1.5' depth='1' 
-        position={`${-(this.driverWidth - 0.2) / 2} 1 ${-(this.driverLength - 1) / 2}`} 
-        color='red'/>
-        <a-box width='0.2' height='1.5' depth='1' 
-        position={`${(this.driverWidth - 0.2) / 2} 1 ${-(this.driverLength - 1) / 2}`}
-        color='red'/>
-
-        {/* turret */}
-        <Turret turretAngle={this.state.turretAngle}/>
-
-      </a-entity>
-    )
+    if(this.state.control === 'body') {
+      return (
+        <a-entity id='tank'>
+          <TankBody 
+          activeControl={true}
+          position={this.position}
+          rotation={this.rotation}
+          bodyLength={this.bodyLength}
+          bodyWidth={this.bodyWidth}>
+            <Turret 
+            position={'0 2.75 0'}
+            turretRadius={this.bodyWidth/2}
+            turretAngle={this.state.turretAngle}/>
+          </TankBody>
+        </a-entity>
+      )
+    } else {
+      return (
+        <a-entity id='tank'>
+          <TankBody 
+          position={this.position}
+          rotation={this.rotation}
+          // velocity={this.state.velocity} TODO: set velocity and heading based on incoming state
+          // heading={this.state.heading}
+          bodyLength={this.bodyLength}
+          bodyWidth={this.bodyWidth}>
+            <Turret 
+            activeControl={true}
+            position={'0 2.75 0'}
+            turretRadius={this.bodyWidth/2}/>
+          </TankBody>
+        </a-entity>
+      )
+    }
   }
 }
 
