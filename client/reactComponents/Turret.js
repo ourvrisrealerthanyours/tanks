@@ -21,7 +21,9 @@ class Turret extends React.Component {
           camera='near: 0.05' look-controls >
             <a-cylinder height={this.barrelLength} radius='0.08' 
             position={`0 -1 ${-this.barrelLength / 2}`} rotation='90 0 0' />
-            <a-cylinder height='0.3' radius='0.12' 
+            <a-cylinder height='0.3' radius='0.12'
+            spawner='mixin: projectile;' 
+            click-listener
             position={`0 -1 ${-this.barrelLength}`}
             rotation='90 0 0' />
           </a-entity>
@@ -44,3 +46,12 @@ class Turret extends React.Component {
 }
 
 module.exports = Turret;
+
+AFRAME.registerComponent('click-listener', {
+  init: function () {
+    var el = this.el;
+    window.addEventListener('click', function () {
+      el.emit('click', null, false);
+    });
+  }
+});

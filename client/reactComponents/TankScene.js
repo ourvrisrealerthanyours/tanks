@@ -3,11 +3,13 @@ import Arena from './Arena';
 import Tank from './Tank';
 import Turret from './Turret';
 import WallMixin from './WallMixin';
+import Projectile from './Projectile';
 import extras from 'aframe-extras';
 
 require('./../aframeComponents/tank-controls');
 require('./../aframeComponents/kinematic-body');
 require('./../aframeComponents/quick-rotate');
+require('./../aframeComponents/spawner');
 extras.physics.registerAll();
 
 class TankScene extends React.Component {
@@ -33,6 +35,7 @@ class TankScene extends React.Component {
       <a-scene physics='debug:true'>
         <a-assets>
           <WallMixin height={8}/>
+          <Projectile />
         </a-assets>
 
         <a-sky color='blue' />

@@ -12,7 +12,7 @@ class Tank extends React.Component {
     this.bodyWidth = 3;
     this.state = {
       turretAngle: 0,
-      control: 'body'
+      control: 't'
     }
 
     setInterval(() => {

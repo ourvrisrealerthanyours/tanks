@@ -19,12 +19,11 @@ class TankBody extends React.Component {
       return (
         <a-entity id='tankBody' material='opacity: 0;' 
         geometry={`primitive: box; width: ${this.bodyWidth}; height: 2.5; depth: ${this.bodyLength}`}
-        position={this.position} 
+        position={this.position} rotation={this.rotation}
         tank-controls 
         kinematic-body='radius: 2.5; enableSlopes: false'>
 
           <a-entity id='camera' position={`0 1 ${driverCameraOffset}`} 
-          rotation={this.rotation}
           camera='near: 0.05' look-controls />
 
           {/* Top and bottom driver plate */}
@@ -54,9 +53,9 @@ class TankBody extends React.Component {
       )
     } else {
       return (
-        <a-entity id='tank' material='opacity: 0;' 
+        <a-entity id='tankBody' material='opacity: 0;' 
         geometry={`primitive: box; width: ${this.bodyWidth}; height: 2.5; depth: ${this.bodyLength}`}
-        position={this.position} 
+        position={this.position}  rotation={this.rotation}
         // tank-controls 
         velocity='0 0 -5'
         kinematic-body='radius: 2.5; enableSlopes: false'>
