@@ -12,7 +12,7 @@ class Tank extends React.Component {
     this.bodyWidth = 3;
     this.state = {
       turretAngle: 0,
-      control: 'turret'
+      control: 'body'
     }
 
     setInterval(() => {
@@ -25,7 +25,7 @@ class Tank extends React.Component {
   render () {
     if(this.state.control === 'body') {
       return (
-        <a-entity id='tank'>
+        <a-entity id='tank' position='0 0 0' rotation='0 0 0'>
           <TankBody 
           activeControl={true}
           position={this.position}
@@ -41,7 +41,7 @@ class Tank extends React.Component {
       )
     } else {
       return (
-        <a-entity id='tank'>
+        <a-entity id='tank' position='0 0 0' rotation='0 0 0'>
           <TankBody 
           position={this.position}
           rotation={this.rotation}
