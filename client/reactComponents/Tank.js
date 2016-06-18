@@ -24,9 +24,12 @@ class Tank extends React.Component {
     const driverBlockLength = this.driverLength - this.driverCompartmentLength;
     const driverCameraOffset = (this.driverCompartmentLength - this.driverLength) / 2;
      return (
-      <a-entity position={this.position} 
-      tank-controls wasd-controls='adEnabled: false; acceleration: 200;' 
-      kinematic-body>
+      <a-entity id='tank' material='opacity: 0;' 
+      geometry={`primitive: box; width: ${this.driverWidth}; height: 2.5; depth: ${this.driverLength}`}
+      position={this.position} 
+      tank-controls 
+      kinematic-body='radius: 2.5; enableSlopes: false'>
+
         <a-entity id='camera' position={`0 1 ${driverCameraOffset}`} 
         rotation={this.rotation}
         camera='near: 0.05' look-controls />
@@ -69,6 +72,7 @@ class Tank extends React.Component {
 
 module.exports = Tank;
 
+import THREE from 'three';
 var MAX_DELTA = 0.2;
 var shouldCaptureKeyEvent = (event) => {
   if (event.shiftKey || event.metaKey || event.altKey || event.ctrlKey) {
@@ -78,10 +82,18 @@ var shouldCaptureKeyEvent = (event) => {
 };
 
 AFRAME.registerComponent('tank-controls', {
+
+  dependencies: ['velocity', 'rotation'],
+
   schema: {
+    movementEasing:       { default: 15 }, // m/s2
+    movementAcceleration: { default: 200 }, // m/s2
   },
 
   init: function () {
+    this.velocity = new THREE.Vector3();
+    this.dVelocity = new THREE.Vector3();
+    this.heading = new THREE.Euler(0, 0, 0, 'YXZ');
     this.angularVelocity = 0;
     this.keys = {};
     this.onBlur = this.onBlur.bind(this);
@@ -93,36 +105,93 @@ AFRAME.registerComponent('tank-controls', {
   },
 
   update: function (previousData) {
-    var prevTime = this.prevTime = this.prevTime || Date.now();
-    var time = window.performance.now();
-    var delta = (time - prevTime) / 1000;
-    var keys = this.keys;
-    var el = this.el;
-    this.prevTime = time;
+    // If data changed, reset velocity.
+    this.angularVelocity = 0;
+    this.velocity.set(0, 0, 0);
+    this.el.setAttribute('velocity', this.velocity);
+  },
 
-    // If data changed or FPS too low, reset velocity.
-    if (previousData || delta > MAX_DELTA) {
+  tick: function (t, dt) {
+    if (isNaN(dt)) { return; }
+
+    if (dt / 1000 > MAX_DELTA) {
       this.angularVelocity = 0;
+      this.velocity.set(0, 0, 0);
+      this.el.setAttribute('velocity', this.velocity);
       return;
-    }
+    } 
 
-    var rotation = el.getComputedAttribute('rotation');
+    this.updateRotation(dt);
+    this.updateVelocity(dt);
+  },
 
-    if (keys[65] && !keys[68]) { 
-      this.angularVelocity = 1; 
-    } else if (keys[68] && !keys[65]) { 
-      this.angularVelocity = -1; 
-    } else {
-      this.angularVelocity = 0;
-    }
-
-    el.setAttribute('rotation', {
+  updateRotation: function(dt) {
+    var rotation = this.el.getComputedAttribute('rotation');
+    this.angularVelocity = 0;
+    if (this.keys[65]) { this.angularVelocity += 1} // A
+    if (this.keys[68]) { this.angularVelocity -= 1} // D
+    this.el.setAttribute('rotation', {
       x: rotation.x,
       y: rotation.y + this.angularVelocity,
       z: rotation.z
     });
   },
 
+  updateVelocity: function(dt) {
+    var velocity, dVelocity,
+        data = this.data;
+    var keys = this.keys;
+    var el = this.el;
+
+    dVelocity = this.getVelocityDelta(dt);
+    velocity = this.velocity;
+    velocity.copy(this.el.getAttribute('velocity'));
+    velocity.x -= velocity.x * data.movementEasing * dt / 1000;
+    velocity.z -= velocity.z * data.movementEasing * dt / 1000;
+
+    if (dVelocity) {
+      // Set acceleration
+      if (dVelocity.length() > 1) {
+        dVelocity.setLength(this.data.movementAcceleration * dt / 1000);
+      } else {
+        dVelocity.multiplyScalar(this.data.movementAcceleration * dt / 1000);
+      }
+
+      // Rotate to heading
+      var rotation = this.el.getAttribute('rotation');
+      if (rotation) {
+        this.heading.set(0, THREE.Math.degToRad(rotation.y), 0);
+        dVelocity.applyEuler(this.heading);
+      }
+      velocity.add(dVelocity);
+    }
+
+    this.el.setAttribute('velocity', velocity);
+    
+  },
+
+  getVelocityDelta: function (dt) {
+    var data = this.data,
+        keys = this.getKeys();
+
+    this.dVelocity.set(0, 0, 0);
+    if (keys[87]) { this.dVelocity.z -= 1; } // W
+    if (keys[83]) { this.dVelocity.z += 1; } // S
+    return this.dVelocity.clone();
+  },
+
+  getKeys: function () {
+    if (this.isProxied()) {
+      return this.el.sceneEl.components['proxy-controls'].getKeyboard();
+    }
+    return this.keys;
+  },
+
+  isProxied: function () {
+    var proxyControls = this.el.sceneEl.components['proxy-controls'];
+    return proxyControls && proxyControls.isConnected();
+  },
+  
   play: function () {
     this.attachKeyEventListeners();
   },
@@ -130,10 +199,6 @@ AFRAME.registerComponent('tank-controls', {
   pause: function () {
     this.keys = {};
     this.removeKeyEventListeners();
-  },
-
-  tick: function (t) {
-    this.update();
   },
 
   remove: function () {
@@ -187,8 +252,7 @@ AFRAME.registerComponent('tank-controls', {
   onKeyUp: function (event) {
     if (!shouldCaptureKeyEvent(event)) { return; }
     this.keys[event.keyCode] = false;
-  },
- 
+  }
 });
 
 AFRAME.registerComponent('quick-rotate', {
@@ -197,19 +261,15 @@ AFRAME.registerComponent('quick-rotate', {
     dur: {default: 50}
   },
 
-  init: function () {
-    this.lastTime = window.performance.now()
-  },
+  tick: function(t, dt) {
+    if (isNaN(dt)) { return; }
 
-  tick: function(t) {
-    const lastTime = this.lastTime;
-    this.lastTime = t;
     this.rotation = this.el.getComputedAttribute('rotation');
     const difference = this.data.nextAngle - this.rotation.y;
     if((this.step > 0 && difference > 1) || (this.step < 0 && difference < -1)) {
       this.el.setAttribute('rotation', {
         x: this.rotation.x,
-        y: this.rotation.y + this.step * (t - lastTime),
+        y: this.rotation.y + this.step * dt,
         z: this.rotation.z
       })
     }
@@ -219,8 +279,6 @@ AFRAME.registerComponent('quick-rotate', {
     this.rotation = this.el.getComputedAttribute('rotation');
     const distance = this.data.nextAngle - this.rotation.y;
     this.step = distance / this.data.dur;
-    this.lastTime = window.performance.now();
   },
  
 });
-

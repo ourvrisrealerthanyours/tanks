@@ -18,6 +18,7 @@ class Arena extends React.Component {
         height={this.length} width={this.width}  
         material={this.groundMaterial} />
 
+        {/* Outside Walls */}
         <a-entity position={`${-this.width/2} ${this.wallHeight/2} 0`}
         mixin='wall'
         geometry={`depth: ${this.length}`}/>
@@ -30,6 +31,8 @@ class Arena extends React.Component {
         <a-entity position={`0 ${this.wallHeight/2} ${this.length/2}`} rotation='0 90 0'
         mixin='wall'
         geometry={`depth: ${this.width}`}/>
+
+        {/* Obstruction Walls (Don't exist yet) */}
 
         {this.props.children}
 
