@@ -6,6 +6,16 @@ var path = require('path');
 var PORT = process.env.PORT || 3000;
 var ENV = process.env.NODE_ENV || 'development';
 
+server.listen(PORT, '127.0.0.1');
+
+// Sockets
+var io = require('socket.io')(server);
+require('./socketLogic')(io);
+
+// server.listen(app.get('port'));
+console.log('Node environment:', ENV)
+console.log('Server listening on port', PORT);
+
 // CORS handling
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -15,8 +25,5 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.listen(PORT);
-console.log('Node environment:', ENV)
-console.log('Server listening on port', PORT);
 
 app.use(express.static(__dirname + '/../client/dist'));
