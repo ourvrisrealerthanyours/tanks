@@ -1,4 +1,5 @@
 import React from 'react';
+import TankScene from './TankScene';
 
 class WelcomePage extends React.Component {
 
@@ -8,7 +9,7 @@ class WelcomePage extends React.Component {
 
   render () {
     return (
-      <div>Welcome!</div>
+      <TankScene/>
     )
   }
 }
