@@ -24,14 +24,18 @@ module.exports = io => {
         // playerId?
     });
 
+
     client.on('disconnect', data => {
-      // look into this
+      console.log('our client disconnected...');
     });
 
     client.on('mango', data => {
-      // look into this
       console.log('What are mangos?:', data.are);
     });
+
+    client.on('clientPositionUpdate', data => {
+      console.log('position:', data);
+    })
 
   });
 }

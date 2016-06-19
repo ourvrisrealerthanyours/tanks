@@ -6,7 +6,7 @@ var path = require('path');
 var PORT = process.env.PORT || 3000;
 var ENV = process.env.NODE_ENV || 'development';
 
-server.listen(PORT, '127.0.0.1');
+server.listen(PORT, '127.0.0.1'); // change for production
 
 // Sockets
 var io = require('socket.io')(server);

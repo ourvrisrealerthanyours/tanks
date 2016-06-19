@@ -45,7 +45,7 @@ AFRAME.registerComponent('tank-controls', {
       this.velocity.set(0, 0, 0);
       this.el.setAttribute('velocity', this.velocity);
       return;
-    } 
+    }
 
     this.updateRotation(dt);
     this.updateVelocity(dt);
@@ -93,7 +93,7 @@ AFRAME.registerComponent('tank-controls', {
     }
 
     this.el.setAttribute('velocity', velocity);
-    
+
   },
 
   getVelocityDelta: function (dt) {
@@ -117,7 +117,7 @@ AFRAME.registerComponent('tank-controls', {
     var proxyControls = this.el.sceneEl.components['proxy-controls'];
     return proxyControls && proxyControls.isConnected();
   },
-  
+
   play: function () {
     this.attachKeyEventListeners();
   },

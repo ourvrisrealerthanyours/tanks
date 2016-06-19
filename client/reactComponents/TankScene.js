@@ -41,7 +41,7 @@ class TankScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          <Tank/>
+          <Tank socket={this.props.socket}/>
         </Arena>
 
       </a-scene>

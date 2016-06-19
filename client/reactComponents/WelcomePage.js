@@ -16,7 +16,7 @@ class WelcomePage extends React.Component {
 
   render () {
     return (
-      <TankScene/>
+      <TankScene socket={this.socket}/>
     )
   }
 }
