@@ -34,8 +34,12 @@ module.exports = io => {
     });
 
     client.on('clientPositionUpdate', data => {
-      console.log('position:', data);
-    })
+      io.emit('enemyPositionUpdate', {
+        x: Math.random()*5,
+        y: Math.random()*5,
+        z: Math.random()*5,
+      });
+    });
 
   });
 }
