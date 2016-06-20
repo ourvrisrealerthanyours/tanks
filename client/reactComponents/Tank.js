@@ -16,13 +16,13 @@ class Tank extends React.Component {
     }
   }
 
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        turretAngle: Math.random() * 60 - 30
-      })
-    }, 1000)
-  }
+  // componentDidMount() {
+  //   setInterval(() => {
+  //     this.setState({
+  //       turretAngle: Math.random() * 60 - 30
+  //     })
+  //   }, 1000)
+  // }
 
   render () {
     if(this.state.control === 'body') {

@@ -65,7 +65,7 @@ class TankBody extends React.Component {
         geometry={`primitive: box; width: ${this.bodyWidth}; height: 2.5; depth: ${this.bodyLength}`}
         position={this.position}  rotation={this.rotation}
         // tank-controls
-        velocity='0 0 -5'
+        // velocity='0 0 -5'
         kinematic-body='radius: 2.5; enableSlopes: false'>
 
           {/* Top and bottom driver plate */}
