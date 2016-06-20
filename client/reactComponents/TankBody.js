@@ -15,9 +15,11 @@ class TankBody extends React.Component {
 
   componentDidMount() {
     this.tank = document.querySelector('#tankBody').object3D.el;
-    setInterval(() => {
-      this.socket.emit('clientPositionUpdate', this.tank.getAttribute('position'))
-    }, 1000)
+    if(this.socket) {
+      setInterval(() => {
+        this.socket.emit('clientPositionUpdate', this.tank.getAttribute('position'))
+      }, 1000)
+    }
   }
 
   render () {
@@ -32,7 +34,7 @@ class TankBody extends React.Component {
         kinematic-body='radius: 2.5; enableSlopes: false'>
 
           <a-entity id='camera' position={`0 1 ${driverCameraOffset}`}
-          camera='near: 0.05' look-controls />
+          camera='near: 0.05;' look-controls />
 
           {/* Top and bottom driver plate */}
           <a-box width={this.bodyWidth} height='0.5' depth={this.bodyLength}
