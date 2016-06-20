@@ -10,13 +10,13 @@ class TankBody extends React.Component {
     this.bodyWidth = props.bodyWidth || 3;
     this.driverCompartmentLength = Math.min(2, this.bodyLength);
     this.activeControl = props.activeControl || false;
+    this.socket = props.socket;
   }
 
   componentDidMount() {
     this.tank = document.querySelector('#tankBody').object3D.el;
-    var socket = this.props.socket;
     setInterval(() => {
-      socket.emit('clientPositionUpdate', this.tank.getAttribute('position'))
+      this.socket.emit('clientPositionUpdate', this.tank.getAttribute('position'))
     }, 1000)
   }
 

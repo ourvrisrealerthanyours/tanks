@@ -23,9 +23,9 @@ class JoinGameScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeigh={8} >
-          <Tank position='-5 1 -10' rotation='0 -120 0'/>
-          <Tank position='5 1 -10' rotation='0 120 0'/>
-          <a-camera position='0 1.78 0' wasd-controls='enabled: false;'>
+          <Tank position='-6 1 -8' rotation='0 -110 0'/>
+          <Tank position='6 1 -8' rotation='0 110 0'/>
+          <a-camera position='0 3 0' wasd-controls='enabled: false;'>
             <a-cursor/>
           </a-camera>
         </Arena>
