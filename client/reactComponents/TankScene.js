@@ -4,6 +4,7 @@ import Tank from './Tank';
 import Turret from './Turret';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
+import EnemyTarget from './EnemyTarget';
 import extras from 'aframe-extras';
 
 require('./../aframeComponents/tank-controls');
@@ -41,7 +42,8 @@ class TankScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          <Tank/>
+          <Tank socket={this.props.socket}/>
+          <EnemyTarget socket={this.props.socket}/>
         </Arena>
 
       </a-scene>
