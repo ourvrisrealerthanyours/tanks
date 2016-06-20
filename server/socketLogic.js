@@ -1,3 +1,5 @@
+const { rand } = require('../math/vectorHelpers');
+
 module.exports = io => {
   io.on('connection', client => {
     console.log('connected!');
@@ -33,12 +35,16 @@ module.exports = io => {
       console.log('What are mangos?:', data.are);
     });
 
+    const enemyPosition = { x: 0, y:2, z:0 };
+
     client.on('clientPositionUpdate', data => {
-      io.emit('enemyPositionUpdate', {
-        x: Math.random()*5,
-        y: Math.random()*5,
-        z: Math.random()*5,
-      });
+      enemyPosition.x += rand(-10, 10);
+      enemyPosition.x = Math.max(Math.min(enemyPosition.x, 100), -100);
+
+      enemyPosition.z += rand(-10, 10);
+      enemyPosition.z = Math.max(Math.min(enemyPosition.z, -1), -100);
+
+      io.emit('enemyPositionUpdate', enemyPosition);
     });
 
   });

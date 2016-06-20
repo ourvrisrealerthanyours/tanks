@@ -12,7 +12,7 @@ class Tank extends React.Component {
     this.bodyWidth = 3;
     this.state = {
       turretAngle: 0,
-      control: 't'
+      control: 'body'
     }
   }
 
@@ -29,7 +29,8 @@ class Tank extends React.Component {
       return (
         <a-entity id='tank' position='0 0 0' rotation='0 0 0'>
           <TankBody
-          activeControl={true}
+          //activeControl={true}
+          activeControl={false}
           position={this.position}
           rotation={this.rotation}
           bodyLength={this.bodyLength}

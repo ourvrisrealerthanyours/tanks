@@ -14,7 +14,9 @@ class EnemyTarget extends React.Component {
   render () {
     return(
       <a-entity position={this.position} socket-controls socket={this.props.socket}>
-        <a-cylinder color="white" height="3" radius="1.5"></a-cylinder>
+        <a-sphere color="white" radius="1.5" shader="flat">
+          <a-light type="point" color="white" />
+        </a-sphere>
       </a-entity>
     );
   }
