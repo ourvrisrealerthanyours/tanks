@@ -1,9 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router, Route, hashHistory} from 'react-router';
 import AFRAME from 'aframe';
 
-import WelcomePage from './reactComponents/WelcomePage'
+import WelcomePage from './reactComponents/WelcomePage';
+import TankScene from './reactComponents/TankScene';
 
+// TODO: switch to browser history
+// TODO: pass socketID in tanksURL? Is that even necessary?
 ReactDOM.render(
-  <WelcomePage/>
+  <Router history={hashHistory}>
+    <Route path='/' component = {WelcomePage}/>
+    <Route path='/tanks' component={TankScene}/>
+  </Router>
 , document.getElementById('app'));
