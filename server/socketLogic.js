@@ -31,8 +31,13 @@ module.exports = io => {
       console.log('our client disconnected...');
     });
 
-    client.on('mango', data => {
-      console.log('What are mangos?:', data.are);
+    client.on('enterRoom', socketId => {
+      console.log(`Socket ID ${socketId} just entered the room`);
+      // Do some stuff to put them in the room
+      io.emit('confirmEnterRoom', {
+        id: socketId,
+        role: 'turret',
+      });
     });
 
     const enemyPosition = { x: 0, y:2, z:0 };
