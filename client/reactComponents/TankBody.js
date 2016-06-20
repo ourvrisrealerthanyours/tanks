@@ -31,7 +31,7 @@ class TankBody extends React.Component {
         geometry={`primitive: box; width: ${this.bodyWidth}; height: 2.5; depth: ${this.bodyLength}`}
         position={this.position} rotation={this.rotation}
         tank-controls
-        kinematic-body='radius: 2.5; enableSlopes: false'>
+        kinematic-body='enableSlopes: false'>
 
           <a-entity id='camera' position={`0 1 ${driverCameraOffset}`}
           camera='near: 0.05;' look-controls />
@@ -68,7 +68,7 @@ class TankBody extends React.Component {
         position={this.position}  rotation={this.rotation}
         // tank-controls
         // velocity='0 0 -5'
-        kinematic-body='radius: 2.5; enableSlopes: false'>
+        kinematic-body='enableSlopes: false'>
 
           {/* Top and bottom driver plate */}
           <a-box width={this.bodyWidth} height='0.5' depth={this.bodyLength}
