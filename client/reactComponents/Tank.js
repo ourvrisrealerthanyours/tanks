@@ -41,6 +41,13 @@ class Tank extends React.Component {
             activeControl={true}
             position={'0 2.75 0'}
             socket={this.props.socket}/>
+          <a-cone
+          position='0 0 -5'
+          rotation='-90 0 0'
+          radius-top='0'
+          radius-bottom='0.25'
+          height='1'
+          material='color: blue; opacity: 0.5;'/>
           </TankBody>
         </a-entity>
       );
