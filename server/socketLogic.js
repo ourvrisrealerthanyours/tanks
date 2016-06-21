@@ -48,13 +48,13 @@ module.exports = io => {
 
       enemyPosition.z += rand(-10, 10);
       enemyPosition.z = Math.max(Math.min(enemyPosition.z, -1), -100);
-      console.log('got deets from client:', data)
+      // console.log('got deets from client:', data)
 
       io.emit('enemyPositionUpdate', enemyPosition);
     });
 
     client.on('shotFired', data => {
-      console.log('SHOTS FIRED!!', data);
+      // console.log('SHOTS FIRED!!', data);
     })
 
   });
