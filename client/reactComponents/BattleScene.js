@@ -1,6 +1,7 @@
 import React from 'react';
 import Arena from './Arena';
 import Tank from './Tank';
+import PlayerDriver from './PlayerDriver';
 import Turret from './Turret';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
@@ -35,8 +36,7 @@ class BattleScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          <Tank socket={this.props.socket} control='turret'/>
-          <EnemyTarget socket={this.props.socket}/>
+          <PlayerDriver socket={this.props.socket}/>
         </Arena>
 
       </a-scene>
