@@ -5,13 +5,6 @@ import Turret from './Turret';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import EnemyTarget from './EnemyTarget';
-import extras from 'aframe-extras';
-
-require('./../aframeComponents/tank-controls');
-require('./../aframeComponents/kinematic-body');
-require('./../aframeComponents/quick-rotate');
-require('./../aframeComponents/spawner');
-extras.physics.registerAll();
 
 class TankScene extends React.Component {
 

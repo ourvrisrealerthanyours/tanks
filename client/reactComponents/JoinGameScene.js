@@ -1,6 +1,7 @@
 import React from 'react';
 import Arena from './Arena';
-import Tank from './Tank';
+import EnemyTank from './EnemyTank';
+import WallMixin from './WallMixin';
 
 class JoinGameScene extends React.Component {
 
@@ -16,15 +17,16 @@ class JoinGameScene extends React.Component {
 
   render () {
     return (
-      <a-scene >
+      <a-scene physics='debug: true;'>
         <a-assets>
+          <WallMixin height={8}/>
         </a-assets>
 
         <a-sky color='blue' />
 
-        <Arena wallHeigh={8} >
-          <Tank position='-6 1 -8' rotation='0 -110 0'/>
-          <Tank position='6 1 -8' rotation='0 110 0'/>
+        <Arena wallHeight={8} >
+          <EnemyTank position='-6 1.3 -8' rotation='0 -110 0' material='color: red;'/>
+          <EnemyTank position='6 1.3 -8' rotation='0 110 0' material='color: green;'/>
           <a-camera position='0 3 0' wasd-controls='enabled: false;'>
             <a-cursor>
               <a-animation begin="fusing" easing="ease-in" attribute="scale"
