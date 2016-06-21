@@ -8,6 +8,7 @@ require('./aframeComponents/tank-controls');
 // require('./aframeComponents/kinematic-body');
 require('./aframeComponents/quick-rotate');
 require('./aframeComponents/spawner');
+require('./aframeComponents/event-listener');
 
 import WelcomePage from './reactComponents/WelcomePage'
 
