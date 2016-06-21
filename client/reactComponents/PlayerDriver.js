@@ -41,7 +41,7 @@ class PlayerDriver extends React.Component {
   render () {
     return (
       <a-entity position='0 0 0' rotation='0 0 0'>
-        <a-entity id='tank' material='opacity: 0;'
+        <a-entity class='tankBody' material='opacity: 0;'
         position={this.position} rotation={this.rotation}
         tank-controls
         kinematic-body='enableSlopes: false'>

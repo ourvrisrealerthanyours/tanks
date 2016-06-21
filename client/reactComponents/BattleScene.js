@@ -37,8 +37,7 @@ class BattleScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          {/*<PlayerTurret socket={this.props.socket}/>*/}
-          {<Tank control='turret' socket={this.props.socket}/>}
+          <Tank control='turret' socket={this.props.socket}/>
         </Arena>
 
       </a-scene>
