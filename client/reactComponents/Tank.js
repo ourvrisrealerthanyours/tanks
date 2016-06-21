@@ -56,7 +56,8 @@ class Tank extends React.Component {
             <Turret
             activeControl={true}
             position={'0 2.75 0'}
-            turretRadius={this.bodyWidth/2}/>
+            turretRadius={this.bodyWidth/2}
+            socket={this.props.socket}/>
           </TankBody>
         </a-entity>
       );
@@ -67,8 +68,7 @@ class Tank extends React.Component {
           position={this.position}
           rotation={this.rotation}
           bodyLength={this.bodyLength}
-          bodyWidth={this.bodyWidth}
-          socket={this.props.socket}>
+          bodyWidth={this.bodyWidth}>
             <Turret
             position={'0 2.75 0'}
             turretRadius={this.bodyWidth/2}/>

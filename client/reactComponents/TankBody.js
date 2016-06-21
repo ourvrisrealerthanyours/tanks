@@ -14,10 +14,18 @@ class TankBody extends React.Component {
   }
 
   componentDidMount() {
-    this.tank = document.querySelector('#tankBody').object3D.el;
-    if(this.socket) {
+    if(this.socket && this.activeControl) {
+      this.tank = document.querySelector('#tankBody').object3D.el;
       setInterval(() => {
-        this.socket.emit('clientPositionUpdate', this.tank.getAttribute('position'))
+        let position = this.tank.getAttribute('position');
+        let rotation = this.tank.getAttribute('rotation');
+        this.socket.emit('clientPositionUpdate', {
+          user:'NOT SET', 
+          role: 'body',
+          tankNo: 'NOT SET',
+          position: position,
+          rotation: rotation
+        });
       }, 1000)
     }
   }
