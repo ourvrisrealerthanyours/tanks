@@ -1,5 +1,5 @@
 import React from 'react';
-import TankScene from './TankScene';
+import BattleScene from './BattleScene';
 import JoinGameScene from './JoinGameScene';
 const uuid = require('uuid');
 const io = require('socket.io-client/socket.io');
@@ -38,7 +38,7 @@ class WelcomePage extends React.Component {
       )
     } else if (this.state.scene === 'battleMode') {
       return (
-        <TankScene socket={this.socket}/>
+        <BattleScene socket={this.socket}/>
       )
     }
   }

@@ -6,7 +6,7 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import EnemyTarget from './EnemyTarget';
 
-class TankScene extends React.Component {
+class BattleScene extends React.Component {
 
   constructor(props) {
     super(props);
@@ -44,4 +44,4 @@ class TankScene extends React.Component {
   }
 }
 
-module.exports = TankScene;
+module.exports = BattleScene;
