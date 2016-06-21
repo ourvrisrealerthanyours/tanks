@@ -7,7 +7,6 @@ class Turret extends React.Component {
     super(props);
     this.position = props.position || '0 0 0';
     this.rotation = props.rotation || '0 0 0';
-    this.turretRadius = props.turretRadius || 1;
     this.barrelLength = props.barrelLength || 5;
     this.activeControl = props.activeControl || false;
     this.material = props.material || 'color: red;';
@@ -34,13 +33,14 @@ class Turret extends React.Component {
   render () {
     if(this.activeControl) {
       return (
-        <a-entity id='turret' position={this.position}>
+        <a-entity class='turretContainer' position={this.position}>
           <a-sphere // Turret
           position={`0 0 0`}
           rotation='0 0 0' 
           material={this.material}
           radius={1.5}>
-            <a-entity id='camera' position={`0 1 0`} 
+            <a-entity id='camera' class='turret' 
+            position={`0 1 0`} 
             rotation={this.rotation}
             camera='near: 0.05' look-controls >
               <Barrel
@@ -53,10 +53,10 @@ class Turret extends React.Component {
       )
     } else {
       return (
-        <a-entity id='turret' position={this.position}>
-          <a-sphere // Turret
+        <a-entity class='turretContainer' position={this.position}>
+          <a-sphere class='turret'
           position={`0 0 0`}
-          rotation='0 0 0' 
+          rotation={this.rotation}
           material={this.material}
           radius={1.5}>
             <Barrel
