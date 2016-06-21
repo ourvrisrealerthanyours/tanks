@@ -1,4 +1,5 @@
 import React from 'react';
+import Barrel from './Barrel';
 
 class Turret extends React.Component {
 
@@ -9,6 +10,7 @@ class Turret extends React.Component {
     this.turretRadius = props.turretRadius || 1;
     this.barrelLength = props.barrelLength || 5;
     this.activeControl = props.activeControl || false;
+    this.material = props.material || 'color: red;';
     this.socket = props.socket;
   }
 
@@ -33,30 +35,35 @@ class Turret extends React.Component {
     if(this.activeControl) {
       return (
         <a-entity id='turret' position={this.position}>
-          <a-cylinder height='1' radius={this.turretRadius} />
-          <a-entity id='camera' position={`0 1 0`} 
-          rotation={this.rotation}
-          camera='near: 0.05' look-controls >
-            <a-cylinder height={this.barrelLength} radius='0.08' 
-            position={`0 -1 ${-this.barrelLength / 2}`} rotation='90 0 0' />
-            <a-cylinder height='0.3' radius='0.12'
-            spawner='mixin: projectile;' 
-            click-listener='callback: handleClick;'
-            position={`0 -1 ${-this.barrelLength}`}
-            rotation='90 0 0' />
-          </a-entity>
+          <a-sphere // Turret
+          position={`0 0 0`}
+          rotation='0 0 0' 
+          material={this.material}
+          radius={1.5}>
+            <a-entity id='camera' position={`0 1 0`} 
+            rotation={this.rotation}
+            camera='near: 0.05' look-controls >
+              <Barrel
+              position='0 -1 0'
+              fireEvent='on: click; callback:handleClick;' 
+              material={this.material}/>
+            </a-entity>
+          </a-sphere>
         </a-entity>
       )
     } else {
       return (
-        <a-entity id='turret' position={this.position}
-        quick-rotate={`nextAngle: ${this.props.turretAngle}`}>
-          <a-cylinder height='1' radius={this.turretRadius} />
-          <a-cylinder height={this.barrelLength} radius='0.08' 
-          position={`0 0 ${-this.barrelLength / 2}`} rotation='90 0 0' />
-          <a-cylinder height='0.3' radius='0.12' 
-          position={`0 0 ${-this.barrelLength}`}
-          rotation='90 0 0' />
+        <a-entity id='turret' position={this.position}>
+          <a-sphere // Turret
+          position={`0 0 0`}
+          rotation='0 0 0' 
+          material={this.material}
+          radius={1.5}>
+            <Barrel
+            position='0 0 0'
+            // fireEvent='on: click; callback:handleClick;' 
+            material={this.material}/>
+          </a-sphere>
         </a-entity>
       )
     }
@@ -75,20 +82,3 @@ window.handleClick = () => {
     absRotation: 'NOT SET'
   });
 }
-
-AFRAME.registerComponent('click-listener', {
- schema: {
-    callback: {default: null},
-  },
-
-  init: function () {
-    var el = this.el;
-    var callback = window[this.data.callback];
-    window.addEventListener('click', function () {
-      el.emit('click', null, false);
-      if(callback) {
-        callback();
-      }
-    });
-  }
-});
