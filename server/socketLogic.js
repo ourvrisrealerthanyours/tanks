@@ -1,10 +1,30 @@
 const { rand } = require('../math/vectorHelpers');
+const { Simulation, Room, Player, ControlledPlayer } = require('./SimulationClasses');
+
 
 module.exports = io => {
+  const simulation = new Simulation(io);
   io.on('connection', client => {
     console.log('connected!');
-    // Set Up
-    client.on('createRoom', data => {
+
+    client.on('createPlayer', playerId => {
+      const newPlayer = new Player(playerId);
+      let firstRoom = simulation.getFirstRoom();
+      if (firstRoom) {
+        firstRoom.addPlayer(newPlayer);
+        console.log('player ', newPlayer.playerId, ' joined room ', firstRoom.roomId);
+      } else {
+        firstRoom = simulation.createRoom(newPlayer);
+        console.log('player ', newPlayer.playerId, ' created room ', firstRoom.roomId);
+      }
+      io.emit('playerAdmittedToRoom', {
+        player: newPlayer,
+        roomId: firstRoom.roomId,
+      });
+    });
+
+    client.on('createRoom', roomInfo => {
+      simulation.addRoom()
       // data has:
         // room number
         // user id? name?
@@ -26,30 +46,25 @@ module.exports = io => {
         // playerId?
     });
 
+    client.on('playerUpdate', playerData => {
+      // console.log('playerData', playerData);
+      simulation.update(playerData)
+    });
+
+
 
     client.on('disconnect', data => {
       console.log('our client disconnected...');
+      // absolutely essential to delete player and room
     });
 
     client.on('enterRoom', socketId => {
-      console.log(`Socket ID ${socketId} just entered the room`);
-      // Do some stuff to put them in the room
-      io.emit('confirmEnterRoom', {
-        id: socketId,
-        role: 'turret',
-      });
-    });
-
-    const enemyPosition = { x: 0, y:2, z:0 };
-
-    client.on('clientPositionUpdate', data => {
-      enemyPosition.x += rand(-10, 10);
-      enemyPosition.x = Math.max(Math.min(enemyPosition.x, 100), -100);
-
-      enemyPosition.z += rand(-10, 10);
-      enemyPosition.z = Math.max(Math.min(enemyPosition.z, -1), -100);
-
-      io.emit('enemyPositionUpdate', enemyPosition);
+      // console.log(`Socket ID ${socketId} just entered the room`);
+      // // Do some stuff to put them in the room
+      // io.emit('confirmEnterRoom', {
+      //   id: socketId,
+      //   role: 'turret',
+      // });
     });
 
   });

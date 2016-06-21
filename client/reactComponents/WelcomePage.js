@@ -14,10 +14,6 @@ class WelcomePage extends React.Component {
   }
 
   componentDidMount() {
-    this.socket.emit('enterRoom', window.uuid);
-    this.socket.on('confirmEnterRoom', sessionInfo => {
-      console.log('sessionInfo', sessionInfo);
-    });
   }
 
   render () {
