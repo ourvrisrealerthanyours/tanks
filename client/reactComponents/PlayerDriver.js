@@ -16,14 +16,6 @@ class PlayerDriver extends React.Component {
     this.compartmentRadius = 0.8;
   }
 
-   // componentDidMount() {
-  //   setInterval(() => {
-  //     this.setState({
-  //       turretAngle: Math.random() * 60 - 30
-  //     })
-  //   }, 1000)
-  // }
-
   componentDidMount() {
     if(this.socket) {
       this.tank = document.querySelector('#tank').object3D.el;
@@ -54,28 +46,9 @@ class PlayerDriver extends React.Component {
         tank-controls
         kinematic-body='enableSlopes: false'>
 
-          <a-cylinder 
-          position='0 0 -1'
-          rotation='0 0 90'
-          height={this.compartmentWidth}
-          radius={this.compartmentRadius}
-          open-ended='true'
-          theta-length='285' // Larger angle rotates hood over top of head 
-          theta-start='210'
-          material='side: back; color: red;'>
-            <a-ring
-            position={`0 ${-this.compartmentWidth/2 + 0.01} 0`}
-            rotation='90 0 0'
-            radius-outer={this.compartmentRadius}
-            radius-inner={this.compartmentRadius * 0.4}
-            material='side:double; color: red;'/>
-            <a-ring
-            position={`0 ${this.compartmentWidth/2} 0`}
-            rotation='90 0 0'
-            radius-outer={this.compartmentRadius + 0.01}
-            radius-inner={this.compartmentRadius * 0.4}
-            material='side:double; color: red;'/>
-          </a-cylinder>
+          <Compartment 
+          compartmentWidth={this.compartmentWidth} 
+          compartmentRadius={this.compartmentRadius}/>
 
           <a-entity id='camera' position={`0 0 -1`}
           camera='near: 0.05;' look-controls />
@@ -92,3 +65,30 @@ class PlayerDriver extends React.Component {
 }
 
 module.exports = PlayerDriver;
+
+const Compartment = (props) => {
+  return (
+    <a-cylinder 
+    position='0 0 -1'
+    rotation='0 0 90'
+    height={props.compartmentWidth}
+    radius={props.compartmentRadius}
+    open-ended='true'
+    theta-length='285' // Larger angle rotates hood over top of head 
+    theta-start='210'
+    material='side: back; color: red;'>
+      <a-ring
+      position={`0 ${-props.compartmentWidth/2 + 0.01} 0`}
+      rotation='90 0 0'
+      radius-outer={props.compartmentRadius}
+      radius-inner={props.compartmentRadius * 0.4}
+      material='side:double; color: red;'/>
+      <a-ring
+      position={`0 ${props.compartmentWidth/2} 0`}
+      rotation='90 0 0'
+      radius-outer={props.compartmentRadius + 0.01}
+      radius-inner={props.compartmentRadius * 0.4}
+      material='side:double; color: red;'/>
+    </a-cylinder>
+  )
+}
