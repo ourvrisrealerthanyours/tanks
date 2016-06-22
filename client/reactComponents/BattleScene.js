@@ -1,15 +1,11 @@
 import React from 'react';
 import Arena from './Arena';
-// import PlayerTank from './PlayerTank';
-// import PlayerDriver from './PlayerDriver';
-// import PlayerTurret from './PlayerTurret';
-// import Turret from './Turret';
+import PlayerTank from './PlayerTank';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import Enemy from './Enemy';
 import EnemyTank from './EnemyTank';
 import Player from './Player';
-// import extras from 'aframe-extras';
 import uuid from 'uuid';
 
 class BattleScene extends React.Component {
@@ -56,11 +52,14 @@ class BattleScene extends React.Component {
     return this.state.players.map(playerId => {
       if (playerId === this.playerId) {
         return (
-          <Player key={playerId} 
+          <PlayerTank key={playerId} 
           roomId={this.roomId} 
           role='driver'
           playerId={playerId}
-          copilot={undefined}/>
+          copilotPlayerId={undefined}/>
+          // <Player key={playerId} 
+          // roomId={this.roomId} 
+          // playerId={playerId}/>
         )
       } else {
         return (

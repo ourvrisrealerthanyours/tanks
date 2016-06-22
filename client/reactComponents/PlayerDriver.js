@@ -19,7 +19,8 @@ class PlayerDriver extends React.Component {
       <a-entity position='0 0 0' rotation='0 0 0'>
         <a-entity id='tankBody' 
         material='opacity: 0;'
-        position={this.position} rotation={this.rotation}
+        position={this.position} 
+        rotation={this.rotation}
         tank-controls
         kinematic-body
         data-emitter={`roomId: ${this.props.roomId}; playerId: ${this.props.playerId}`}>
