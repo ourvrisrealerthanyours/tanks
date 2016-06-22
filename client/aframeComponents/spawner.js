@@ -1,4 +1,3 @@
-
 AFRAME.registerComponent('spawner', {
   schema: {
     on: { default: 'click' },

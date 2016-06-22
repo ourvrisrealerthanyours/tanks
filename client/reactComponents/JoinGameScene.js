@@ -9,7 +9,7 @@ class JoinGameScene extends React.Component {
     super(props);
     this.socket = props.socket;
     this.enterBattle = props.enterBattle;
-    setTimeout(this.enterBattle, 10000);
+    setTimeout(this.enterBattle, 2000);
   }
 
   componentDidMount() {

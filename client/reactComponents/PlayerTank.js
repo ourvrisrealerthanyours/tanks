@@ -26,6 +26,7 @@ class PlayerTank extends React.Component {
           position='0 2 0'
           material={'color:red;'} 
           barrelLength={6} 
+          fireEvent='on: click; callback:handleClick;' 
           socket={this.props.socket}
           copilotPlayerId={this.props.copilotPlayerId}/>
         </PlayerDriver>
@@ -59,3 +60,14 @@ class PlayerTank extends React.Component {
 }
 
 module.exports = PlayerTank;
+
+window.handleClick = () => {
+  var camera = document.querySelector('#camera').object3D.el;
+  window.socket.emit('shotFired', {
+    user: 'NOT SET',
+    tankNo: 'NOT SET',
+    rotation: camera.getAttribute('rotation'),
+    tankVel: 'NOT SET',
+    absRotation: 'NOT SET'
+  });
+}
