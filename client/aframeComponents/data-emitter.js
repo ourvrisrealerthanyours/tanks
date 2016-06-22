@@ -2,8 +2,8 @@ const { UPLOAD_PERIOD } = require('../../simulation/constants');
 
 AFRAME.registerComponent('data-emitter', {
   schema: {
-    roomId: {default: ''},
-    playerId: {default: ''},
+    roomId: {default: window.roomId},
+    playerId: {default: window.playerId},
     socket: {default: null},
     lastUpdateTime: {default: 0},
   },
@@ -11,12 +11,6 @@ AFRAME.registerComponent('data-emitter', {
   init: function() {
     const data = this.data;
     data.socket = window.socket;
-    data.socket.on('playerAdmittedToRoom', admission => {
-      if (admission.playerId === data.playerId) {
-        data.roomId = admission.roomId;
-        window.roomId = admission.roomId;
-      }
-    });
   },
 
   tick: function(t, dt) {
