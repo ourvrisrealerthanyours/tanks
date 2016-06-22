@@ -12,7 +12,7 @@ AFRAME.registerComponent('data-emitter', {
     const data = this.data;
     data.socket = window.socket;
     data.socket.on('playerAdmittedToRoom', admission => {
-      if (admission.player.playerId === data.playerId) {
+      if (admission.playerId === data.playerId) {
         data.roomId = admission.roomId;
         window.roomId = admission.roomId;
       }

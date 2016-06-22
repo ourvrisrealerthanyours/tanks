@@ -18,8 +18,9 @@ module.exports = io => {
         console.log('player ', newPlayer.playerId, ' created room ', firstRoom.roomId);
       }
       io.emit('playerAdmittedToRoom', {
-        player: newPlayer,
+        playerId: newPlayer.playerId,
         roomId: firstRoom.roomId,
+        players: firstRoom.players,
       });
     });
 

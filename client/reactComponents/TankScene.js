@@ -23,12 +23,17 @@ class TankScene extends React.Component {
     };
     window.socket.on('playerAdmittedToRoom', admissionData => {
       if (admissionData.roomId === window.roomId) {
-        this.state.enemies.push(admissionData.player)
+        this.state.enemies.push(admissionData.playerId)
         this.setState({
           enemies: this.state.enemies
         });
+      } else if (admissionData.playerId === window.playerId) {
+        delete admissionData.players[window.playerId];
+        this.setState({
+          enemies: Object.keys(admissionData.players)
+        });
       }
-    })
+    });
   }
 
   // componentDidMount() {
@@ -56,7 +61,7 @@ class TankScene extends React.Component {
         <Arena wallHeight={8}>
           {/*<Tank socket={this.props.socket}/>*/}
           <Player socket={this.props.socket}/>
-          {this.state.enemies.map(player => <Enemy key={player.playerId} playerId={player.playerId}/>)}
+          {this.state.enemies.map(playerId => <Enemy key={playerId} playerId={playerId}/>)}
         </Arena>
 
       </a-scene>
