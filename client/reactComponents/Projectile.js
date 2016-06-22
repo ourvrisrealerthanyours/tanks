@@ -6,6 +6,7 @@ const Projectile = (props) => {
     id='projectile'
     dynamic-body
     geometry='primitive: sphere; radius: 0.25;'
+    explode
     // velocity='0 0 -10'
     material='color: black;' />
   )
