@@ -5,8 +5,9 @@ AFRAME.registerComponent('explode', {
   },
 
   init: function() {
+    const entity = this.el;
     entity.addEventListener('collide', function (e) {
-      console.log('Shot has collided with ' + e.detail.body.el);
+      // console.log('Shot has collided with ' + e.detail.body.el);
       const position = entity.getAttribute('position');
       // console.log(entity.body);
       setTimeout(() => {
@@ -24,7 +25,6 @@ AFRAME.registerComponent('explode', {
         opacityAnimation.setAttribute('dur', 200);
         opacityAnimation.setAttribute('easing', 'ease-out');
 
-        entity.components['dynamic-body'].remove();
         entity.setAttribute('material', 'color:red;');
         entity.setAttribute('velocity', '0 0 0');
         entity.appendChild(expandAnimation);
