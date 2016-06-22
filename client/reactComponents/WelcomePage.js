@@ -17,9 +17,6 @@ class WelcomePage extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
-
   changeScene(nextScene) {
     this.setState({
       scene: nextScene

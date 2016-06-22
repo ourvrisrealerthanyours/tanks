@@ -1,14 +1,14 @@
 import React from 'react';
 import Arena from './Arena';
-import PlayerTank from './PlayerTank';
-import PlayerDriver from './PlayerDriver';
+// import PlayerTank from './PlayerTank';
+// import PlayerDriver from './PlayerDriver';
 // import PlayerTurret from './PlayerTurret';
-import Turret from './Turret';
+// import Turret from './Turret';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import Enemy from './Enemy';
 import Player from './Player';
-import extras from 'aframe-extras';
+// import extras from 'aframe-extras';
 import uuid from 'uuid';
 
 class BattleScene extends React.Component {
@@ -18,19 +18,17 @@ class BattleScene extends React.Component {
     this.state = {
       players: [],
     };
-
     // playerId has to be initialized on client
     this.playerId = uuid.v4();
-
     props.socket.emit('createPlayer', this.playerId);
     props.socket.on('playerAdmittedToRoom', data => this.admitPlayersIntoRoom(data));
   }
 
   admitPlayersIntoRoom(admissionData) {
     if (admissionData.roomId === this.roomId) {
-      this.state.players.push(admissionData.playerId)
+      let players = [...this.state.players, admissionData.playerId];
       this.setState({
-        players: this.state.players
+        players: players
       });
     } else if (admissionData.playerId === this.playerId) {
       this.roomId = admissionData.roomId;
@@ -51,6 +49,15 @@ class BattleScene extends React.Component {
   //     e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
   //   });
   // }
+  renderPlayers () {
+    return this.state.players.map(playerId => {
+      if (playerId === this.playerId) {
+        return <Player key={playerId} roomId={this.roomId} playerId={playerId}/>
+      } else {
+        return <Enemy key={playerId} roomId={this.roomId} playerId={playerId}/>
+      }
+    });
+  }
 
   render () {
     return (
@@ -63,14 +70,7 @@ class BattleScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          {/*<Tank socket={this.props.socket}/>*/}
-          {this.state.players.map(playerId => {
-            if (playerId === this.playerId) {
-              return <Player key={playerId} roomId={this.roomId} playerId={playerId}/>
-            } else {
-              return <Enemy key={playerId} roomId={this.roomId} playerId={playerId}/>
-            }
-          })}
+          {this.renderPlayers.call(this)}
         </Arena>
 
       </a-scene>
