@@ -23,26 +23,26 @@ class JoinGameScene extends React.Component {
       redBody.setAttribute('material', 'color', 'red');
       greenBody.setAttribute('material', 'color', 'green');
       greenTurret.setAttribute('material', 'color', 'green');
-      this.setAttribute('material', 'color', 'blue');
+      this.setAttribute('material', 'color', 'white');
     });
     redBody.addEventListener('click', function (event) {
       redTurret.setAttribute('material', 'color', 'red');
       greenBody.setAttribute('material', 'color', 'green');
       greenTurret.setAttribute('material', 'color', 'green');
-      this.setAttribute('material', 'color', 'blue');
+      this.setAttribute('material', 'color', 'white');
     });
     greenTurret.addEventListener('click', function (event) {
       event.stopPropagation();
       redBody.setAttribute('material', 'color', 'red');
       greenBody.setAttribute('material', 'color', 'green');
       redTurret.setAttribute('material', 'color', 'red');
-      this.setAttribute('material', 'color', 'blue');
+      this.setAttribute('material', 'color', 'white');
     });
     greenBody.addEventListener('click', function (event) {
       redTurret.setAttribute('material', 'color', 'red');
       redBody.setAttribute('material', 'color', 'red');
       greenTurret.setAttribute('material', 'color', 'green');
-      this.setAttribute('material', 'color', 'blue');
+      this.setAttribute('material', 'color', 'white');
     });
   }
 
