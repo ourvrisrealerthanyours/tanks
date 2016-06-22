@@ -5,7 +5,6 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import Enemy from './Enemy';
 import EnemyTank from './EnemyTank';
-import Player from './Player';
 import uuid from 'uuid';
 
 class BattleScene extends React.Component {
@@ -13,63 +12,61 @@ class BattleScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      players: [],
+      characters: [],
     };
-    // playerId has to be initialized on client
-    this.playerId = uuid.v4();
-    props.socket.emit('createPlayer', this.playerId);
-    props.socket.on('playerAdmittedToRoom', data => this.admitPlayersIntoRoom(data));
+    // characterId has to be initialized on client
+    this.characterId = uuid.v4();
+    props.socket.emit('createCharacter', this.characterId);
+    props.socket.on('characterAdmittedToRoom', data => this.admitCharactersIntoRoom(data));
   }
 
-  admitPlayersIntoRoom(admissionData) {
+  admitCharactersIntoRoom(admissionData) {
     if (admissionData.roomId === this.roomId) {
-      let players = [...this.state.players, admissionData.playerId];
+      let characters = [...this.state.characters, admissionData.characterId];
       this.setState({
-        players: players
+        characters: characters
       });
-    } else if (admissionData.playerId === this.playerId) {
+    } else if (admissionData.characterId === this.characterId) {
       this.roomId = admissionData.roomId;
       this.setState({
-        players: Object.keys(admissionData.players)
+        characters: Object.keys(admissionData.characters)
       });
     }
   }
 
   // componentDidMount() {
-  //   var playerEl = document.querySelector('#tank');
-  //   playerEl.addEventListener('collide', function (e) {
-  //     console.log('Player has collided with body #' + e.detail.body.id);
+  //   var characterEl = document.querySelector('#tank');
+  //   characterEl.addEventListener('collide', function (e) {
+  //     console.log('Character has collided with body #' + e.detail.body.id);
   //
-  //     e.detail.target.el;  // Original entity (playerEl).
-  //     e.detail.body.el;    // Other entity, which playerEl touched.
+  //     e.detail.target.el;  // Original entity (characterEl).
+  //     e.detail.body.el;    // Other entity, which characterEl touched.
   //     e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
   //     e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
   //   });
   // }
 
-  renderPlayers () {
-    // TODO: How do we map if two players per tank?
-    return this.state.players.map(playerId => {
-      if (playerId === this.playerId) {
+  renderCharacters () {
+    // TODO: How do we map if two characters per tank?
+    return this.state.characters.map(characterId => {
+      if (characterId === this.characterId) {
         return (
-          <PlayerTank key={playerId} 
-          roomId={this.roomId} 
+          <PlayerTank key={characterId}
+          roomId={this.roomId}
           role='driver'
-          playerId={playerId}
+          characterId={characterId}
           copilotPlayerId={undefined}/>
-          // <Player key={playerId} 
-          // roomId={this.roomId} 
-          // playerId={playerId}/>
         )
       } else {
         return (
-          <EnemyTank key={playerId} 
-          roomId={this.roomId} 
-          driverPlayerId={playerId}
+          <EnemyTank key={characterId}
+          roomId={this.roomId}
+          characterId={characterId}
+          driverPlayerId={characterId}
           gunnerPlayerId={undefined}/>
-          // <Enemy key={playerId}
+          // <Enemy key={characterId}
           // roomId={this.roomId}
-          // playerId={playerId}/>
+          // characterId={characterId}/>
         )
       }
     });
@@ -86,7 +83,7 @@ class BattleScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          {this.renderPlayers.call(this)}
+          {this.renderCharacters.call(this)}
         </Arena>
 
       </a-scene>

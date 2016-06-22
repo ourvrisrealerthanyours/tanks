@@ -13,14 +13,14 @@ class TankBody extends React.Component {
   // TODO: Why is kinematic body shape not setting??
   render () {
     return (
-      <a-sphere id='tankBody' 
+      <a-sphere id='tankBody'
       radius='2.49'
       material='opacity: 0;'
-      position={this.position} 
+      position={this.position}
       rotation={this.rotation}
       kinematic-body
-      socket-controls={`playerId: ${this.props.playerId}; enabled: ${!!this.props.playerId}`}>
-        <a-sphere 
+      socket-controls={`characterId: ${this.props.characterId}; enabled: ${!!this.props.characterId}`}>
+        <a-sphere
         id={this.props.bodyId}
         position='0 0 0'
         rotation='0 0 0'

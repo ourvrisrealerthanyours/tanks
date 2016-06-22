@@ -3,7 +3,7 @@
 AFRAME.registerComponent('socket-controls', {
   schema: {
     updateRate: {default: 100}, // Dynamic updateRate in Hz
-    playerId: {default: ''},
+    characterId: {default: ''},
     socket: {default: null},
     posEnabled: {default: true},
     rotEnabled: {default: true},
@@ -14,7 +14,7 @@ AFRAME.registerComponent('socket-controls', {
     const data = this.data;
     const socket = window.socket;
     if(data.enabled) {
-      
+
       if(data.posEnabled) {
         this.previousPos = new THREE.Vector3();
         this.currentPos = new THREE.Vector3();
@@ -31,15 +31,15 @@ AFRAME.registerComponent('socket-controls', {
       this.updateWaiting = false;
       this.updateRate = data.updateRate;
 
-      socket.on('simulationUpdate', players => {
+      socket.on('simulationUpdate', characters => {
         this.updateWaiting = true;
         if(data.posEnabled) {
           this.previousPos = this.nextPos;
-          this.nextPos = players[data.playerId].position;
+          this.nextPos = characters[data.characterId].position;
         }
         if(data.rotEnabled) {
           this.previousRot = this.nextRot;
-          this.nextRot = players[data.playerId].rotation;
+          this.nextRot = characters[data.characterId].tankRotation;
         }
       });
     }

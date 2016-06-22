@@ -16,16 +16,16 @@ class PlayerTank extends React.Component {
   render () {
     if(this.props.role === 'driver') {
       return (
-        <PlayerDriver 
+        <PlayerDriver
         socket={this.props.socket}
         position={this.position}
         rotation={this.rotation}
-        playerId={this.props.playerId}
+        characterId={this.props.characterId}
         roomId={this.props.roomId}>
-          <Barrel 
+          <Barrel
           position='0 2 0'
-          material={'color:red;'} 
-          barrelLength={6} 
+          material={'color:red;'}
+          barrelLength={6}
           socket={this.props.socket}
           copilotPlayerId={this.props.copilotPlayerId}/>
         </PlayerDriver>
@@ -37,10 +37,10 @@ class PlayerTank extends React.Component {
           position={this.state.position}
           rotation={this.state.rotation}
           socket={this.props.socket}
-          playerId={this.props.copilotPlayerId}>
+          character={this.props.copilotPlayerId}>
             <Turret
             activeControl={true}
-            playerId={this.props.playerId}
+            characterId={this.props.characterId}
             position={'0 2.75 0'}
             socket={this.props.socket}
             roomId={this.props.roomId}/>
@@ -54,7 +54,7 @@ class PlayerTank extends React.Component {
           </TankBody>
         </a-entity>
       );
-    } 
+    }
   }
 }
 

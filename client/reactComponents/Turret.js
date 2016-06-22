@@ -20,18 +20,18 @@ class Turret extends React.Component {
           <a-sphere // Turret
           id={this.props.turretId}
           position={`0 0 0`}
-          rotation='0 0 0' 
+          rotation='0 0 0'
           material={this.material}
           radius={1.5}>
-            <a-entity id='camera' class='turret' 
-            position={`0 1 0`} 
+            <a-entity id='camera' class='turret'
+            position={`0 1 0`}
             rotation={this.rotation}
-            camera='near: 0.05' 
-            look-controls 
-            data-emitter={`roomId: ${this.props.roomId}; playerId: ${this.props.playerId}`}>
+            camera='near: 0.05'
+            look-controls
+            data-emitter={`roomId: ${this.props.roomId}; characterId: ${this.props.character}`}>
               <Barrel
               position='0 -1 0'
-              fireEvent='on: click; callback:handleClick;' 
+              fireEvent='on: click; callback:handleClick;'
               material={this.material}/>
             </a-entity>
           </a-sphere>
@@ -48,7 +48,7 @@ class Turret extends React.Component {
           radius={1.5}>
             <Barrel
             position='0 0 0'
-            // fireEvent='on: click; callback:handleClick;' 
+            // fireEvent='on: click; callback:handleClick;'
             material={this.material}/>
           </a-sphere>
         </a-entity>

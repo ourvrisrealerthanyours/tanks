@@ -1,7 +1,7 @@
 const { rand } = require('../math/vectorHelpers');
 const Simulation = require('../simulation/Simulation');
 const Room = require('../simulation/Room');
-const Player = require('../simulation/Player');
+const Character = require('../simulation/Character');
 
 
 module.exports = io => {
@@ -9,23 +9,23 @@ module.exports = io => {
   io.on('connection', client => {
     console.log('connected!');
 
-    client.on('createPlayer', playerId => {
-      const newPlayer = new Player(playerId);
+    client.on('createCharacter', characterId => {
+      const newCharacter = new Character(characterId);
       // currently there can only be one room. Ideally the data passed with this
       // event would include a roomId if they were joining one, and no room Id if
       // they were creating one
       let firstRoom = simulation.getFirstRoom();
       if (firstRoom) {
-        firstRoom.addPlayer(newPlayer);
-        console.log('player ', newPlayer.playerId, ' joined room ', firstRoom.roomId);
+        firstRoom.addCharacter(newCharacter);
+        console.log('character ', newCharacter.characterId, ' joined room ', firstRoom.roomId);
       } else {
-        firstRoom = simulation.createRoom(newPlayer);
-        console.log('player ', newPlayer.playerId, ' created room ', firstRoom.roomId);
+        firstRoom = simulation.createRoom(newCharacter);
+        console.log('character ', newCharacter.characterId, ' created room ', firstRoom.roomId);
       }
-      io.emit('playerAdmittedToRoom', {
-        playerId: newPlayer.playerId,
+      io.emit('characterAdmittedToRoom', {
+        characterId: newCharacter.characterId,
         roomId: firstRoom.roomId,
-        players: firstRoom.players,
+        characters: firstRoom.characters,
       });
     });
 
@@ -49,19 +49,18 @@ module.exports = io => {
       // data has:
         // tankId
         // role
-        // playerId?
+        // character?
     });
 
-    client.on('playerUpdate', playerData => {
-      // console.log('playerData', playerData);
-      simulation.update(playerData)
+    client.on('characterUpdate', characterData => {
+      simulation.update(characterData)
     });
 
 
 
     client.on('disconnect', data => {
       console.log('our client disconnected...');
-      // essential to delete player and room
+      // essential to delete character and room
     });
 
     client.on('enterRoom', socketId => {
