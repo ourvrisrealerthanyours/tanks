@@ -9,7 +9,7 @@ class JoinGameScene extends React.Component {
     super(props);
     this.socket = props.socket;
     this.enterBattle = props.enterBattle;
-    setTimeout(this.enterBattle, 2000);
+    setTimeout(this.enterBattle, 200000);
   }
 
   componentDidMount() {
@@ -54,6 +54,8 @@ class JoinGameScene extends React.Component {
         </a-assets>
 
         <a-sky color='blue' />
+        <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
+        <a-entity light="type: hemisphere; color: #882; groundColor: #333; intensity: 2"/>
 
         <Arena wallHeight={8} >
           <EnemyTank turretId='redTurret' bodyId='redBody'
