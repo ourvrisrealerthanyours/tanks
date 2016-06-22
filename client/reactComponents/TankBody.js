@@ -10,7 +10,7 @@ class TankBody extends React.Component {
     this.radius = props.radius || 2.5;
     this.material = props.material || 'color: red;'
   }
-  // TODO: Why is kinematic body ruining things??
+  // TODO: Why is kinematic body shape not setting??
   render () {
     return (
       <a-sphere id='tankBody' 
@@ -18,7 +18,7 @@ class TankBody extends React.Component {
       material='opacity: 0;'
       position={this.position} 
       rotation={this.rotation}
-      // kinematic-body='radius: 3;' 
+      kinematic-body
       socket-controls={`playerId: ${this.props.playerId}; enabled: ${!!this.props.playerId}`}>
         <a-sphere 
         position='0 0 0'

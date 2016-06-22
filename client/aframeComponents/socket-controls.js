@@ -35,7 +35,12 @@ AFRAME.registerComponent('socket-controls', {
       // linear interp from data.lastPos to data.nextPos
       const alpha = (t - this.lastUpdateTime) / this.updateRate;
       this.currentPos.lerpVectors(this.previousPos, this.nextPos, alpha);
-      this.el.setAttribute('position', this.currentPos);
+      // Don't update y to enable compatibility with kinematic-body physics
+      this.el.setAttribute('position', {
+        x: this.currentPos.x,
+        y: this.el.getAttribute('position').y,
+        z: this.currentPos.z
+      });
     }
   }
 
