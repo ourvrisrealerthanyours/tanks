@@ -11,6 +11,9 @@ module.exports = io => {
 
     client.on('createPlayer', playerId => {
       const newPlayer = new Player(playerId);
+      // currently there can only be one room. Ideally the data passed with this 
+      // event would include a roomId if they were joining one, and no room Id if
+      // they were creating one
       let firstRoom = simulation.getFirstRoom();
       if (firstRoom) {
         firstRoom.addPlayer(newPlayer);
@@ -58,7 +61,7 @@ module.exports = io => {
 
     client.on('disconnect', data => {
       console.log('our client disconnected...');
-      // absolutely essential to delete player and room
+      // essential to delete player and room
     });
 
     client.on('enterRoom', socketId => {
