@@ -5,7 +5,6 @@ import extras from 'aframe-extras';
 
 extras.physics.registerAll();
 require('./aframeComponents/tank-controls');
-// require('./aframeComponents/kinematic-body');
 require('./aframeComponents/quick-rotate');
 require('./aframeComponents/spawner');
 require('./aframeComponents/event-listener');
