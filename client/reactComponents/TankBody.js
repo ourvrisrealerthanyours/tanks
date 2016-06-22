@@ -14,13 +14,14 @@ class TankBody extends React.Component {
   render () {
     return (
       <a-sphere id='tankBody' 
-      radius='3'
+      radius='2.49'
       material='opacity: 0;'
       position={this.position} 
       rotation={this.rotation}
       kinematic-body
       socket-controls={`playerId: ${this.props.playerId}; enabled: ${!!this.props.playerId}`}>
         <a-sphere 
+        id={this.props.bodyId}
         position='0 0 0'
         rotation='0 0 0'
         material={this.material}
