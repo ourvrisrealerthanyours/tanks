@@ -73,5 +73,9 @@ module.exports = io => {
       // });
     });
 
+    client.on('shotFired', data => {
+      // console.log('SHOTS FIRED!!', data);
+    })
+
   });
 }

@@ -21,6 +21,7 @@ AFRAME.registerComponent('data-emitter', {
         roomId: data.roomId,
         playerId: data.playerId,
         position: this.el.getAttribute('position'),
+        rotation: this.el.getAttribute('rotation')
       })
     }
   },

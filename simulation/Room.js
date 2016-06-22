@@ -22,6 +22,7 @@ class Room {
 
   update(freshData) {
     this.players[freshData.playerId].position = freshData.position;
+    this.players[freshData.playerId].rotation = freshData.rotation;
   }
 
   emitPlayerAdded(player) {

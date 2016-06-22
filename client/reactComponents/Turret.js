@@ -1,4 +1,5 @@
 import React from 'react';
+import Barrel from './Barrel';
 
 class Turret extends React.Component {
 
@@ -6,39 +7,48 @@ class Turret extends React.Component {
     super(props);
     this.position = props.position || '0 0 0';
     this.rotation = props.rotation || '0 0 0';
-    this.turretRadius = props.turretRadius || 1;
     this.barrelLength = props.barrelLength || 5;
     this.activeControl = props.activeControl || false;
+    this.material = props.material || 'color: red;';
+    this.socket = props.socket;
   }
 
   render () {
     if(this.activeControl) {
       return (
-        <a-entity id='turret' position={this.position}>
-          <a-cylinder height='1' radius={this.turretRadius} />
-          <a-entity id='camera' position={`0 1 0`} 
-          rotation={this.rotation}
-          camera='near: 0.05' look-controls >
-            <a-cylinder height={this.barrelLength} radius='0.08' 
-            position={`0 -1 ${-this.barrelLength / 2}`} rotation='90 0 0' />
-            <a-cylinder height='0.3' radius='0.12'
-            spawner='mixin: projectile;' 
-            click-listener
-            position={`0 -1 ${-this.barrelLength}`}
-            rotation='90 0 0' />
-          </a-entity>
+        <a-entity class='turretContainer' position={this.position}>
+          <a-sphere // Turret
+          position={`0 0 0`}
+          rotation='0 0 0' 
+          material={this.material}
+          radius={1.5}>
+            <a-entity id='camera' class='turret' 
+            position={`0 1 0`} 
+            rotation={this.rotation}
+            camera='near: 0.05' 
+            look-controls 
+            data-emitter={`roomId: ${this.props.roomId}; playerId: ${this.props.playerId}`}>
+              <Barrel
+              position='0 -1 0'
+              fireEvent='on: click; callback:handleClick;' 
+              material={this.material}/>
+            </a-entity>
+          </a-sphere>
         </a-entity>
       )
     } else {
       return (
-        <a-entity id='turret' position={this.position}
-        quick-rotate={`nextAngle: ${this.props.turretAngle}`}>
-          <a-cylinder height='1' radius={this.turretRadius} />
-          <a-cylinder height={this.barrelLength} radius='0.08' 
-          position={`0 0 ${-this.barrelLength / 2}`} rotation='90 0 0' />
-          <a-cylinder height='0.3' radius='0.12' 
-          position={`0 0 ${-this.barrelLength}`}
-          rotation='90 0 0' />
+        <a-entity class='turretContainer' position={this.position}>
+          <a-sphere class='turret'
+          position={`0 0 0`}
+          rotation={this.rotation}
+          material={this.material}
+          radius={1.5}>
+            <Barrel
+            position='0 0 0'
+            // fireEvent='on: click; callback:handleClick;' 
+            material={this.material}/>
+          </a-sphere>
         </a-entity>
       )
     }
@@ -47,11 +57,13 @@ class Turret extends React.Component {
 
 module.exports = Turret;
 
-AFRAME.registerComponent('click-listener', {
-  init: function () {
-    var el = this.el;
-    window.addEventListener('click', function () {
-      el.emit('click', null, false);
-    });
-  }
-});
+window.handleClick = () => {
+  var camera = document.querySelector('#camera').object3D.el;
+  window.socket.emit('shotFired', {
+    user: 'NOT SET',
+    tankNo: 'NOT SET',
+    rotation: camera.getAttribute('rotation'),
+    tankVel: 'NOT SET',
+    absRotation: 'NOT SET'
+  });
+}
