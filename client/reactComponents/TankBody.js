@@ -9,6 +9,13 @@ class TankBody extends React.Component {
     this.socket = props.socket;
     this.radius = props.radius || 2.5;
     this.material = props.material || 'color: red;'
+    console.log('TB constructor:', this.position)
+  }
+
+  componentWillpdate(props) {
+    this.position = props.position;
+    this.rotation = props.rotation;
+    console.log('TB update:', props.position);
   }
 
   render () {

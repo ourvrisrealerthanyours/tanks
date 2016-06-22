@@ -1,8 +1,8 @@
 import React from 'react';
 import Arena from './Arena';
-import Tank from './Tank';
+import PlayerTank from './PlayerTank';
 import PlayerDriver from './PlayerDriver';
-import PlayerTurret from './PlayerTurret';
+// import PlayerTurret from './PlayerTurret';
 import Turret from './Turret';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
@@ -15,7 +15,7 @@ class BattleScene extends React.Component {
   }
 
   componentDidMount() {
-    var playerEl = document.querySelector('#tank');
+    var playerEl = document.querySelector('#tankBody');
     playerEl.addEventListener('collide', function (e) {
       console.log('Player has collided with body #' + e.detail.body.id);
 
@@ -37,7 +37,7 @@ class BattleScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8}>
-          <Tank control='turret' socket={this.props.socket}/>
+          <PlayerTank control='turret' socket={this.props.socket}/>
         </Arena>
 
       </a-scene>

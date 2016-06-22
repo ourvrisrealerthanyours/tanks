@@ -13,22 +13,22 @@ class Turret extends React.Component {
     this.socket = props.socket;
   }
 
-  componentDidMount() {
-    if(this.socket && this.activeControl) {
-      this.camera = document.querySelector('#camera').object3D.el;
-      window.socket = this.socket;
-      setInterval(() => {
-        let rotation = this.camera.getAttribute('rotation');
-        this.socket.emit('clientPositionUpdate', {
-          user:'NOT SET', 
-          role: 'turret',
-          tankNo: 'NOT SET',
-          rotation: rotation,
-          absRotation: 'NOT SET'
-        });
-      }, 1000)
-    }
-  }
+  // componentDidMount() {
+  //   if(this.socket && this.activeControl) {
+  //     this.camera = document.querySelector('#camera').object3D.el;
+  //     window.socket = this.socket;
+  //     setInterval(() => {
+  //       let rotation = this.camera.getAttribute('rotation');
+  //       this.socket.emit('clientPositionUpdate', {
+  //         user:'NOT SET', 
+  //         role: 'turret',
+  //         tankNo: 'NOT SET',
+  //         rotation: rotation,
+  //         absRotation: 'NOT SET'
+  //       });
+  //     }, 1000)
+  //   }
+  // }
 
   render () {
     if(this.activeControl) {
