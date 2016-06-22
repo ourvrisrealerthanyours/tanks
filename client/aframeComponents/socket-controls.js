@@ -1,3 +1,5 @@
+// TODO: Remove unnecessary bits from schema
+
 AFRAME.registerComponent('socket-controls', {
   schema: {
     previousPos: {default: new THREE.Vector3()},

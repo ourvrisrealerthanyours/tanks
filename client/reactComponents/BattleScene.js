@@ -49,6 +49,7 @@ class BattleScene extends React.Component {
   //     e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
   //   });
   // }
+  
   renderPlayers () {
     return this.state.players.map(playerId => {
       if (playerId === this.playerId) {
