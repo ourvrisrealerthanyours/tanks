@@ -7,6 +7,7 @@ import Arena from './Arena';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import Enemy from './Enemy';
+import EnemyTank from './EnemyTank';
 import Player from './Player';
 // import extras from 'aframe-extras';
 import uuid from 'uuid';
@@ -49,13 +50,28 @@ class BattleScene extends React.Component {
   //     e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
   //   });
   // }
-  
+
   renderPlayers () {
+    // TODO: How do we map if two players per tank?
     return this.state.players.map(playerId => {
       if (playerId === this.playerId) {
-        return <Player key={playerId} roomId={this.roomId} playerId={playerId}/>
+        return (
+          <Player key={playerId} 
+          roomId={this.roomId} 
+          role='driver'
+          playerId={playerId}
+          copilot={undefined}/>
+        )
       } else {
-        return <Enemy key={playerId} roomId={this.roomId} playerId={playerId}/>
+        return (
+          <EnemyTank key={playerId} 
+          roomId={this.roomId} 
+          driverPlayerId={playerId}
+          gunnerPlayerId={undefined}/>
+          // <Enemy key={playerId}
+          // roomId={this.roomId}
+          // playerId={playerId}/>
+        )
       }
     });
   }

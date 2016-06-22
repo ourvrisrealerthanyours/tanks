@@ -20,17 +20,17 @@ class EnemyTank extends React.Component {
     return (
       <a-entity position='0 0 0' rotation='0 0 0'>
         <TankBody class='enemyTank'
-        position={this.state.position}
-        rotation={this.state.rotation}
+        position={this.position}
+        rotation={this.rotation}
         material={this.material}
         socket={this.props.socket}
-        socket-controls={`playerId: ${this.props.driverPlayerId}`}>
+        playerId={this.props.driverPlayerId}>
           <Turret
           position={`0 ${this.radius - 0.5} 0`}
-          rotation={this.state.turretAngle} 
+          rotation={this.turretAngle} 
           material={this.material}
           socket={this.props.socket}
-          socket-controls={`playerId: ${this.props.gunnerPlayerId}`}/>
+          playerId={this.props.gunnerPlayerId}/>
         </TankBody>
       </a-entity>
     )

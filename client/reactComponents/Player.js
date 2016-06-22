@@ -7,7 +7,7 @@ class Player extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || '0 2 0';
+    this.position = props.position || '0 4 0';
     this.playerId = props.playerId;
     this.roomId = props.roomId;
   }
@@ -17,7 +17,7 @@ class Player extends React.Component {
 
   render () {
     return(
-      <a-entity position={this.position} wasd-controls
+      <a-entity position={this.position} tank-controls
       data-emitter={`roomId: ${this.roomId}; playerId: ${this.playerId}`}>
         <a-sphere color="white" radius="1.5" shader="flat">
           <a-light type="point" color="white" />

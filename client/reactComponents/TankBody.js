@@ -4,20 +4,13 @@ class TankBody extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || '0 3 0'; // TODO reason for floating?
+    this.position = props.position || '0 0 0';
     this.rotation = props.rotation || '0 0 0';
     this.socket = props.socket;
     this.radius = props.radius || 2.5;
     this.material = props.material || 'color: red;'
-    console.log('TB constructor:', this.position)
   }
-
-  componentWillpdate(props) {
-    this.position = props.position;
-    this.rotation = props.rotation;
-    console.log('TB update:', props.position);
-  }
-
+  // TODO: Why is kinematic body ruining things??
   render () {
     return (
       <a-sphere id='tankBody' 
@@ -25,7 +18,8 @@ class TankBody extends React.Component {
       material='opacity: 0;'
       position={this.position} 
       rotation={this.rotation}
-      kinematic-body='enableSlopes: false'>
+      // kinematic-body='radius: 3;' 
+      socket-controls={`playerId: ${this.props.playerId}; enabled: ${!!this.props.playerId}`}>
         <a-sphere 
         position='0 0 0'
         rotation='0 0 0'
