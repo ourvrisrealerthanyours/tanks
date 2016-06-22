@@ -11,9 +11,15 @@ AFRAME.registerComponent('socket-controls', {
   init: function() {
     const data = this.data;
     const socket = window.socket;
+
     this.previousPos = new THREE.Vector3();
     this.currentPos = new THREE.Vector3();
     this.nextPos = new THREE.Vector3();
+
+    this.previousRot = new THREE.Vector3();
+    this.currentRot = new THREE.Vector3();
+    this.nextRot = new THREE.Vector3();
+
     this.lastUpdateTime = 0;
     this.updateWaiting = false;
     this.updateRate = data.updateRate;
@@ -23,6 +29,8 @@ AFRAME.registerComponent('socket-controls', {
         this.updateWaiting = true;
         this.previousPos = this.nextPos;
         this.nextPos = players[data.playerId].position;
+        this.previousRot = this.nextRot;
+        this.nextRot = players[data.playerId].rotation;
       });
     }
   },
@@ -32,8 +40,9 @@ AFRAME.registerComponent('socket-controls', {
       this.updateRate = (t - this.lastUpdateTime);
       this.lastUpdateTime = t;
       this.updateWaiting = false;
-      // linear interp from data.lastPos to data.nextPos
+
       const alpha = (t - this.lastUpdateTime) / this.updateRate;
+      // linear interp from data.lastPos to data.nextPos
       this.currentPos.lerpVectors(this.previousPos, this.nextPos, alpha);
       // Don't update y to enable compatibility with kinematic-body physics
       this.el.setAttribute('position', {
@@ -41,6 +50,12 @@ AFRAME.registerComponent('socket-controls', {
         y: this.el.getAttribute('position').y,
         z: this.currentPos.z
       });
+
+      // linear interp from data.lastRot to data.nextRot
+      if(this.previousRot && this.nextRot) {
+        this.currentRot.lerpVectors(this.previousRot, this.nextRot, alpha);
+        this.el.setAttribute('rotation', this.currentRot);
+      }
     }
   }
 
