@@ -1,5 +1,7 @@
 const { rand } = require('../math/vectorHelpers');
-const { Simulation, Room, Player, ControlledPlayer } = require('./SimulationClasses');
+const Simulation = require('../simulation/Simulation');
+const Room = require('../simulation/Room');
+const Player = require('../simulation/Player');
 
 
 module.exports = io => {
