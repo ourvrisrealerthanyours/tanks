@@ -17,18 +17,18 @@ const Barrel = (props) => {
         rotation='90 0 0' 
         height={barrelLength} 
         radius='0.2' 
-        open-ended='true'
+        open-ended='false'
         theta-length='360'
-        material={props.material}/>
+        material={`side:double; ${props.material}`}/>
         <a-cylinder 
         position={`0 0 ${-barrelLength}`}
         rotation='90 0 0' 
         spawner={`mixin: projectile; ${event}`}
         height='0.3' 
         radius='0.25' 
-        open-ended='true'
+        open-ended='false'
         theta-length='360'
-        material={props.material}
+        material={`side:double; ${props.material}`}
         event-listener={props.fireEvent}/>
 
         {props.children}
@@ -45,17 +45,17 @@ const Barrel = (props) => {
         rotation='90 0 0' 
         height={barrelLength} 
         radius='0.2' 
-        open-ended='true'
+        open-ended='false'
         theta-length='360'
-        material={props.material}/>
+        material={`side:double; ${props.material}`}/>
         <a-cylinder 
         position={`0 0 ${-barrelLength}`}
         rotation='90 0 0' 
         height='0.3' 
         radius='0.25' 
-        open-ended='true'
+        open-ended='false'
         theta-length='360'
-        material={props.material}/>
+        material={`side:double; ${props.material}`}/>
 
         {props.children}
 
