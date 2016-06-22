@@ -1,7 +1,7 @@
 import React from 'react';
 require('./../aframeComponents/socket-controls');
 
-class EnemyTarget extends React.Component {
+class Enemy extends React.Component {
 
   constructor(props) {
     super(props);
@@ -13,7 +13,8 @@ class EnemyTarget extends React.Component {
 
   render () {
     return(
-      <a-entity position={this.position} socket-controls socket={this.props.socket}>
+      <a-entity position={this.position} socket={this.props.socket}
+      socket-controls={`playerId: ${this.props.playerId}`}>
         <a-sphere color="white" radius="1.5" shader="flat">
           <a-light type="point" color="white" />
         </a-sphere>
@@ -22,4 +23,4 @@ class EnemyTarget extends React.Component {
   }
 }
 
-module.exports = EnemyTarget;
+module.exports = Enemy;

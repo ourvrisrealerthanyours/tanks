@@ -2,14 +2,17 @@
 AFRAME.registerComponent('spawner', {
   schema: {
     on: { default: 'click' },
-    mixin: { default: '' }
+    mixin: { default: '' },
+    enabled: {default: true}
   },
 
   /**
    * Add event listener.
    */
   update: function (oldData) {
-    this.el.addEventListener(this.data.on, this.spawn.bind(this));
+    if(this.data.enabled) {
+      this.el.addEventListener(this.data.on, this.spawn.bind(this));
+    }
   },
 
   /**
@@ -21,12 +24,18 @@ AFRAME.registerComponent('spawner', {
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
     var rotation = el.getAttribute('rotation');
-    var cameraEl = el.parentElement;
-    var tankEl = cameraEl.parentElement.parentElement;
+    var cameraEl = document.querySelector('#camera').object3D.el;
+    // var cameraEl = el.parentElement.parentElement;
+    var tankEl = document.querySelector('#tankBody').object3D.el;
+    // var tankEl = cameraEl.parentElement.parentElement;
     var cameraRotation = cameraEl.getAttribute('rotation');
     var tankRotation = tankEl.getAttribute('rotation');
     var tankVel = tankEl.getAttribute('velocity');
     var entityRotation;
+
+    // console.log('El', el);
+    // console.log('cameraEl', cameraEl);
+    // console.log('tankEl', tankEl);
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);

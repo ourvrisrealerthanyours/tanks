@@ -1,5 +1,6 @@
 import React from 'react';
-import TankScene from './TankScene';
+import BattleScene from './BattleScene';
+import JoinGameScene from './JoinGameScene';
 const uuid = require('uuid');
 const io = require('socket.io-client/socket.io');
 const server = 'http://localhost:3000'; // change for production
@@ -11,19 +12,28 @@ class WelcomePage extends React.Component {
     this.socket = io.connect(server);
     window.socket = this.socket; // figure out a better way for everyone to have access to this socket
     window.uuid = uuid.v4();
+    this.state = {
+      scene: 'joinGame'
+    };
   }
 
-  componentDidMount() {
-    this.socket.emit('enterRoom', window.uuid);
-    this.socket.on('confirmEnterRoom', sessionInfo => {
-      console.log('sessionInfo', sessionInfo);
+  changeScene(nextScene) {
+    this.setState({
+      scene: nextScene
     });
   }
 
   render () {
-    return (
-      <TankScene socket={this.socket}/>
-    )
+    if(this.state.scene === 'joinGame') {
+      return (
+        <JoinGameScene socket={this.socket} 
+        enterBattle={this.changeScene.bind(this, 'battleMode')}/>
+      )
+    } else if (this.state.scene === 'battleMode') {
+      return (
+        <BattleScene socket={this.socket}/>
+      )
+    }
   }
 }
 
