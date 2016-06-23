@@ -31,7 +31,7 @@ class Turret extends React.Component {
             data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
               <Barrel
               position='0 -1 0'
-              fireEvent='on: click; callback:handleClick;'
+              fireEvent='on: click;'
               material={this.material}/>
             </a-entity>
           </a-sphere>
@@ -48,7 +48,7 @@ class Turret extends React.Component {
           radius={1.5}>
             <Barrel
             position='0 0 0'
-            // fireEvent='on: click; callback:handleClick;'
+            // fireEvent='on: click;'
             material={this.material}/>
           </a-sphere>
         </a-entity>
@@ -58,14 +58,3 @@ class Turret extends React.Component {
 }
 
 module.exports = Turret;
-
-window.handleClick = () => {
-  var camera = document.querySelector('#camera').object3D.el;
-  window.socket.emit('shotFired', {
-    user: 'NOT SET',
-    tankNo: 'NOT SET',
-    rotation: camera.getAttribute('rotation'),
-    tankVel: 'NOT SET',
-    absRotation: 'NOT SET'
-  });
-}

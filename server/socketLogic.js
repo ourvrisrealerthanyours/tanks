@@ -31,8 +31,8 @@ module.exports = io => {
       // essential to delete character
     });
 
-    client.on('shotFired', data => {
-      // console.log('SHOTS FIRED!!', data);
+    client.on('shotFired', projectileData => {
+      client.broadcast.emit('shotFired', projectileData);
     })
 
   });
