@@ -42,8 +42,8 @@ AFRAME.registerComponent('spawner', {
     var tankVel = tankEl.getAttribute('velocity');
 
     // console.log('El', el);
-    console.log('cameraEl', cameraEl);
-    console.log('tankEl', tankEl);
+    // console.log('cameraEl', cameraEl);
+    // console.log('tankEl', tankEl);
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);

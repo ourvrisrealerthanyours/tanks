@@ -16,7 +16,6 @@ class PlayerTank extends React.Component {
 
   render () {
     if(this.props.role === 'driver') {
-      console.log('PlayerTank characterId:', this.props.characterId);
       return (
         <PlayerDriver
         socket={this.props.socket}

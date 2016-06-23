@@ -35,9 +35,7 @@ const Barrel = (props) => {
 
       </a-entity>
     )
-  } else {
-    console.log('Barrel characterId:', props.characterId);
-    
+  } else {    
     return (
       <a-entity class='barrel'
       socket-controls={`characterId: ${props.characterId}; type: turret`}
