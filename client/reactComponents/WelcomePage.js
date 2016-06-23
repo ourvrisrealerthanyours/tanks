@@ -1,6 +1,9 @@
 import React from 'react';
 import BattleScene from './BattleScene';
 import JoinGameScene from './JoinGameScene';
+import WallMixin from './WallMixin';
+import Projectile from './Projectile';
+
 const io = require('socket.io-client/socket.io');
 const server = 'http://10.6.30.55:8080'; // change for production
 
@@ -33,7 +36,7 @@ class WelcomePage extends React.Component {
     });
   }
 
-  render () {
+  renderScene() {
     if(this.state.scene === 'joinGame') {
       return (
         <JoinGameScene socket={this.socket} playerId={this.state.playerId}
@@ -46,6 +49,21 @@ class WelcomePage extends React.Component {
       )
     }
   }
+
+  render () {
+    return (
+      <a-scene id='scene' physics='debug:false'>
+        <a-assets>
+          <WallMixin height={8}/>
+          <Projectile />
+        </a-assets>
+
+        {this.renderScene.call(this)}
+
+      </a-scene>
+    )
+  }
+    
 }
 
 module.exports = WelcomePage;
