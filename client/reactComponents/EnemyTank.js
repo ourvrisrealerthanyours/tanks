@@ -7,7 +7,7 @@ class EnemyTank extends React.Component {
   constructor(props) {
     super(props);
     this.radius = 2.5;
-    this.position = props.position || `0 ${this.radius} 0`;
+    this.position = props.position || `0 ${this.radius + 0.1} 0`;
     this.rotation = props.rotation || '0 0 0';
     this.turretAngle = props.turretAngle || '0 0 0';
     this.material = props.material || 'color: red;'
@@ -23,6 +23,7 @@ class EnemyTank extends React.Component {
         bodyId={this.props.bodyId}
         position={this.position}
         rotation={this.rotation}
+        radius={this.radius}
         material={this.material}
         socket={this.props.socket}
         characterId={this.props.characterId}>

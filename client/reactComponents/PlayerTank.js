@@ -9,7 +9,7 @@ class PlayerTank extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || `${rand(-100, 100)} 3 ${rand(-100, 100)}`;
+    this.position = props.position || `${rand(-100, 100)} 2.6 ${rand(-100, 100)}`;
     this.rotation = props.rotation || '0 0 0';
     this.socket = props.socket;
   }
