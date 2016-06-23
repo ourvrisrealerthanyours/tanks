@@ -6,7 +6,7 @@ class PlayerDriver extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || '0 3 0';
+    this.position = props.position || '0 2.6 0';
     this.rotation = props.rotation || '0 0 0';
     this.socket = props.socket;
     this.compartmentWidth = 1.5;
@@ -22,7 +22,8 @@ class PlayerDriver extends React.Component {
         position={this.position}
         rotation={this.rotation}
         tank-controls
-        kinematic-body
+        // universal-controls
+        kinematic-body='radius: 2.5; height:2.5;'
         data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
           <Compartment
