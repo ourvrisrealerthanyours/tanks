@@ -33,11 +33,8 @@ class BattleScene extends React.Component {
 
   renderCharacters () {
     // TODO: How do we map if two characters per tank?
-    console.log('characters:', this.state.characters);
-    console.log('this.characterId:', typeof this.characterId, this.characterId);
     return this.state.characters.map(character => {
       if (character.characterId === this.characterId) {
-        console.log('character pippin');
         return (
           <PlayerTank key={character.characterId}
           role={this.role}

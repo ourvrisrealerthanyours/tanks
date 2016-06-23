@@ -10,7 +10,6 @@ AFRAME.registerComponent('data-emitter', {
 
   init: function() {
     const data = this.data;
-    console.log('data-emitter:', data.characterId);
     data.socket = window.socket;
   },
 
