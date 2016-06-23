@@ -65,7 +65,7 @@ class BattleScene extends React.Component {
 
   render () {
     return (
-      <a-scene physics='debug:true'>
+      <a-scene physics='debug:false'>
         <a-assets>
           <WallMixin height={8}/>
           <Projectile />

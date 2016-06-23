@@ -40,5 +40,11 @@ AFRAME.registerComponent('explode', {
       // e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
       // e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
     });
-  }
+
+    setTimeout(() => {
+      if(entity.sceneEl.contains(entity)) {
+        entity.sceneEl.removeChild(entity);
+      }
+    }, 15000)
+  },
 });
