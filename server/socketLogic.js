@@ -8,18 +8,29 @@ module.exports = io => {
   simulation.start();
 
   io.on('connection', client => {
-    console.log('connected!');
+    console.log('connected client', client.id);
+    io.to(client.id).emit('assignPlayerId', client.id);
+
+    client.on('requestPlayerId', () => {
+      io.to(client.id).emit('assignPlayerId', client.id);
+    })
 
     client.on('requestCharacters', () => {
-      io.emit('roleUpdate', simulation.characters);
+      io.to(client.id).emit('roleUpdate', simulation.characters);
     });
 
     client.on('requestSeat', requestData => {
       const character = simulation.characters[requestData.characterId];
       if (!character || character[requestData.role]) {
-        requestData.playerId = null;
+        io.to(client.id).emit('seatConfirmation', false);
+      } else {
+        io.to(client.id).emit('seatConfirmation', {
+          characterId: requestData.characterId,
+          role: requestData.role
+        });
+        simulation.updateCharacterRoles(requestData.characterId, requestData.role, requestData.playerId);
+        client.broadcast.emit('roleUpdate', simulation.characters);
       }
-      io.emit('seatConfirmation', requestData);
     });
 
     client.on('characterUpdate', characterData => {
@@ -27,7 +38,9 @@ module.exports = io => {
     });
 
     client.on('disconnect', data => {
-      console.log('our client disconnected...');
+      console.log(`our client ${client.id} disconnected...`);
+      simulation.removePlayer(client.id);
+      client.broadcast.emit('roleUpdate', simulation.characters);
       // essential to delete character
     });
 

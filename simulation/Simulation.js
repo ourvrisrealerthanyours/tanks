@@ -18,6 +18,8 @@ class Simulation {
   update(freshData) {
     if (this.characters[freshData.characterId]) {
       this.characters[freshData.characterId].update(freshData);
+    } else {
+      console.error('Character does not exist!');
     }
   }
 
@@ -28,6 +30,28 @@ class Simulation {
   addCharacter(character) {
     this.characters[character.characterId] = character;
     this[character.tankColor] = character.characterId;
+  }
+
+  updateCharacterRoles(characterId, role, playerId) {
+    // TODO: Check if spot is already filled? (will require emptying spots on disconnect)
+    if(this.characters[characterId]) {
+      this.characters[characterId][role] = playerId;
+    } else {
+      console.error('Character does not exist!');
+    }
+    return this.characters[characterId][role] === playerId;
+  }
+
+  removePlayer(playerId) {
+    // TODO: Make this function prettier
+    for(const characterId in this.characters) {
+      if(playerId === this.characters[characterId].driver) {
+        this.updateCharacterRoles(characterId, 'driver', undefined);
+      }
+      if(playerId === this.characters[characterId].gunner) {
+        this.updateCharacterRoles(characterId, 'gunner', undefined);
+      }
+    }
   }
 }
 

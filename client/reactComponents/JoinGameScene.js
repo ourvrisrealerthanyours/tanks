@@ -17,9 +17,10 @@ class JoinGameScene extends React.Component {
     this.socket.on('roleUpdate', characters => {
       this.setState({ characters: characters, loaded: true });
     });
-    this.socket.on('seatConfirmation', seatData => {
-      if (seatData.playerId === props.playerId) {
-        this.enterBattle(seatData.characterId, seatData.role);
+    this.socket.on('seatConfirmation', confirmation => {
+      if (confirmation) {
+        console.log('should be entering battlescene');
+        this.enterBattle(confirmation.characterId, confirmation.role);
       } else {
         this.socket.emit('requestCharacters', this.roomId);
       }
@@ -27,32 +28,25 @@ class JoinGameScene extends React.Component {
   }
 
   requestSeat(characterId, role) {
-    this.socket.emit('requestSeat', {
-      playerId: this.props.playerId,
-      characterId,
-      role,
-      roomId: this.props.roomId,
-    });
-    // change seat color/opacity/ or whatever
+    if(this.props.playerId) {
+      this.socket.emit('requestSeat', {
+        playerId: this.props.playerId,
+        characterId,
+        role,
+        roomId: this.props.roomId,
+      });
+    } else {
+      this.socket.emit('requestPlayerId'); // Just in case they somehow didn't get one
+    }
   }
 
   componentDidUpdate() {
     if (this.state.loaded) {
-      const redTurret = document.querySelector('#redTurret');
-      const redBody = document.querySelector('#redBody');
       const greenTurret = document.querySelector('#greenTurret');
       const greenBody = document.querySelector('#greenBody');
+      const redTurret = document.querySelector('#redTurret');
+      const redBody = document.querySelector('#redBody');
 
-      redTurret.addEventListener('click', event => {
-        if (!this.state.characters[1].gunner) {
-          this.requestSeat('1', 'gunner')
-        }
-      });
-      redBody.addEventListener('click', event => {
-        if (!this.state.characters[1].driver) {
-          this.requestSeat('1', 'driver')
-        }
-      });
       greenTurret.addEventListener('click', event => {
         if (!this.state.characters[0].gunner) {
           this.requestSeat('0', 'gunner')
@@ -61,6 +55,16 @@ class JoinGameScene extends React.Component {
       greenBody.addEventListener('click', event => {
         if (!this.state.characters[0].driver) {
           this.requestSeat('0', 'driver')
+        }
+      });
+      redTurret.addEventListener('click', event => {
+        if (!this.state.characters[1].gunner) {
+          this.requestSeat('1', 'gunner')
+        }
+      });
+      redBody.addEventListener('click', event => {
+        if (!this.state.characters[1].driver) {
+          this.requestSeat('1', 'driver')
         }
       });
     }
