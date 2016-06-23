@@ -27,23 +27,23 @@ AFRAME.registerComponent('spawner', {
     var cameraRotation;
 
     // For Two Player:
-    // var tankEl = cameraEl.parentElement.parentElement;
-    // var cameraRotation = cameraEl.getAttribute('rotation');
+    var tankEl = cameraEl.parentElement.parentElement.parentElement.parentElement;
+    var cameraRotation = cameraEl.getAttribute('rotation');
     /*
     // var cameraEl = el.parentElement.parentElement;
     // var tankEl = document.querySelector('#tankBody').object3D.el;
     */
 
     // For Single Player:
-    var tankEl = el.parentElement.parentElement;
+    // var tankEl = el.parentElement.parentElement;
 
 
     var tankRotation = tankEl.getAttribute('rotation');
     var tankVel = tankEl.getAttribute('velocity');
 
     // console.log('El', el);
-    // console.log('cameraEl', cameraEl);
-    // console.log('tankEl', tankEl);
+    console.log('cameraEl', cameraEl);  
+    console.log('tankEl', tankEl);
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);
