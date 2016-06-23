@@ -16,17 +16,17 @@ class PlayerDriver extends React.Component {
 
   render () {
     return (
-      <a-entity position='0 0 0' rotation='0 0 0'>
-        <a-entity id='tankBody' 
+      <a-entity rotation='0 0 0'>
+        <a-entity id='tankBody'
         material='opacity: 0;'
-        position={this.position} 
+        position={this.position}
         rotation={this.rotation}
         tank-controls
         kinematic-body
-        data-emitter={`roomId: ${this.props.roomId}; playerId: ${this.props.playerId}`}>
+        data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
-          <Compartment 
-          compartmentWidth={this.compartmentWidth} 
+          <Compartment
+          compartmentWidth={this.compartmentWidth}
           compartmentRadius={this.compartmentRadius}/>
 
           <a-entity id='camera' position={`0 0 -1`}
@@ -44,13 +44,13 @@ module.exports = PlayerDriver;
 
 const Compartment = (props) => {
   return (
-    <a-cylinder 
+    <a-cylinder
     position='0 0 -1'
     rotation='0 0 90'
     height={props.compartmentWidth}
     radius={props.compartmentRadius}
     open-ended='true'
-    theta-length='285' // Larger angle rotates hood over top of head 
+    theta-length='285' // Larger angle rotates hood over top of head
     theta-start='210'
     material='side: back; color: red;'>
       <a-ring

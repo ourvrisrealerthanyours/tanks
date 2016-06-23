@@ -8,6 +8,8 @@ require('./aframeComponents/tank-controls');
 require('./aframeComponents/quick-rotate');
 require('./aframeComponents/spawner');
 require('./aframeComponents/event-listener');
+require('./aframeComponents/data-emitter');
+require('./aframeComponents/socket-controls');
 
 import WelcomePage from './reactComponents/WelcomePage'
 

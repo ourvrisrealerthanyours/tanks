@@ -14,25 +14,25 @@ class EnemyTank extends React.Component {
   }
 
   render () {
-    // TODO: Figure out why kinematic-body radius isn't working 
+    // TODO: Figure out why kinematic-body radius isn't working
     // (making 1.2 height necessary to be flush with ground)
     // TODO: Add flash component for when shooting
     return (
       <a-entity position='0 0 0' rotation='0 0 0'>
-        <TankBody class='enemyTank' 
+        <TankBody class='enemyTank'
         bodyId={this.props.bodyId}
         position={this.position}
         rotation={this.rotation}
         material={this.material}
         socket={this.props.socket}
-        playerId={this.props.driverPlayerId}>
+        characterId={this.props.characterId}>
           <Turret
           turretId={this.props.turretId}
           position={`0 ${this.radius - 0.5} 0`}
-          rotation={this.turretAngle} 
+          rotation={this.turretAngle}
           material={this.material}
           socket={this.props.socket}
-          playerId={this.props.gunnerPlayerId}/>
+          characterId={this.props.gunnerPlayerId}/>
         </TankBody>
       </a-entity>
     )

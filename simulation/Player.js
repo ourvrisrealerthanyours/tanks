@@ -2,15 +2,11 @@ const v0 = { x: 0, y: 0, z: 0 };
 const uuid = require('uuid');
 
 class Player {
-  constructor(playerId = uuid.v4(), position = v0, rotation = v0) {
+  constructor(playerId = uuid.v4()) {
     this.playerId = playerId;
-    this.position = position;
-    this.rotation = rotation;
-  }
-
-  joinRoom(simulation, roomId) {
-    let self = this;
-    simulation.rooms[roomId].addPlayer(self); // self may be unnecessary
+    this.position = v0;
+    this.tankRotation = v0;
+    this.turretRotation = v0;
   }
 }
 

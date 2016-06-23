@@ -2,37 +2,35 @@ const uuid = require('uuid');
 const { DOWNLOAD_PERIOD  } = require('../simulation/constants');
 
 class Room {
-  constructor(host, socket) {
+  constructor(roomId, socket) {
     this.socket = socket;
-    this.roomId = uuid.v4();
-    this.hostId = host.playerId;
-    this.players = {}; // { playerId: Player}
-    this.addPlayer(host);
+    this.roomId = roomId;
+    this.characters = {}; // { characterId: character}
     setInterval(() => this.updatePositions(), DOWNLOAD_PERIOD)
   }
 
-  addPlayer(player) {
-    this.players[player.playerId] = player;
-    this.emitPlayerAdded(player);
+  addCharacter(character) {
+    this.characters[character.characterId] = character;
+    this[character.tankColor] = character.characterId;
   }
 
-  removePlayer(player) {
+  removeCharacter(character) {
     // figure this out
   }
 
   update(freshData) {
-    this.players[freshData.playerId].position = freshData.position;
-    this.players[freshData.playerId].rotation = freshData.rotation;
+    this.characters[freshData.characterId] && this.characters[freshData.characterId].update(freshData);
   }
 
-  emitPlayerAdded(player) {
-    this.socket.emit('playerAdded', {
-      roomId: this.roomId,
-      player: player,
-    });
-  }
+  // emitCharacterAdded(character) {
+  //   this.socket.emit('characterAdded', {
+  //     roomId: this.roomId,
+  //     character: character,
+  //   });
+  // }
+
   updatePositions() {
-    this.socket.emit('simulationUpdate', this.players);
+    this.socket.emit('simulationUpdate', this.characters);
   }
 }
 
