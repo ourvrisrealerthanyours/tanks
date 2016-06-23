@@ -87,5 +87,10 @@ AFRAME.registerComponent('spawner', {
     //   });
     // });
     el.sceneEl.appendChild(entity);
+    var projectileData = {
+      position: entity.getAttribute('position'),
+      velocity: entity.getAttribute('velocity'),
+    }
+    window.socket.emit('shotFired', projectileData);
   }
 });
