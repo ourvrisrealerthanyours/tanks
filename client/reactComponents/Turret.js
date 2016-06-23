@@ -60,14 +60,3 @@ class Turret extends React.Component {
 }
 
 module.exports = Turret;
-
-window.handleClick = () => {
-  var camera = document.querySelector('#camera').object3D.el;
-  window.socket.emit('shotFired', {
-    user: 'NOT SET',
-    tankNo: 'NOT SET',
-    rotation: camera.getAttribute('rotation'),
-    tankVel: 'NOT SET',
-    absRotation: 'NOT SET'
-  });
-}

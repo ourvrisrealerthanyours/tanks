@@ -63,14 +63,3 @@ class PlayerTank extends React.Component {
 }
 
 module.exports = PlayerTank;
-
-window.handleClick = () => {
-  var camera = document.querySelector('#camera').object3D.el;
-  window.socket.emit('shotFired', {
-    user: 'NOT SET',
-    tankNo: 'NOT SET',
-    rotation: camera.getAttribute('rotation'),
-    tankVel: 'NOT SET',
-    absRotation: 'NOT SET'
-  });
-}

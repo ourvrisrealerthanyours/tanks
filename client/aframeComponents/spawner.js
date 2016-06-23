@@ -27,15 +27,15 @@ AFRAME.registerComponent('spawner', {
     var cameraRotation;
 
     // For Two Player:
-    // var tankEl = cameraEl.parentElement.parentElement;
-    // var cameraRotation = cameraEl.getAttribute('rotation');
+    var tankEl = cameraEl.parentElement.parentElement;
+    var cameraRotation = cameraEl.getAttribute('rotation');
     /*
     // var cameraEl = el.parentElement.parentElement;
     // var tankEl = document.querySelector('#tankBody').object3D.el;
     */
 
     // For Single Player:
-    var tankEl = el.parentElement.parentElement;
+    // var tankEl = el.parentElement.parentElement;
 
 
     var tankRotation = tankEl.getAttribute('rotation');
@@ -50,12 +50,12 @@ AFRAME.registerComponent('spawner', {
     entity.setAttribute('mixin', this.data.mixin);
 
     // Rotate to heading based on turret rotation and tank rotation
-    var velocity = new THREE.Vector3(0, 0, -30); 
+    var velocity = new THREE.Vector3(0, 0, -30);
     if (cameraRotation) {
       const cameraHeading = new THREE.Euler(0, 0, 0, 'YXZ');
       cameraHeading.set(
-        THREE.Math.degToRad(cameraRotation.x), 
-        THREE.Math.degToRad(cameraRotation.y), 
+        THREE.Math.degToRad(cameraRotation.x),
+        THREE.Math.degToRad(cameraRotation.y),
         THREE.Math.degToRad(cameraRotation.z)
       );
       velocity.applyEuler(cameraHeading);
@@ -63,11 +63,11 @@ AFRAME.registerComponent('spawner', {
     if(tankRotation) {
       const tankHeading = new THREE.Euler(0, 0, 0, 'YXZ');
       tankHeading.set(
-        THREE.Math.degToRad(tankRotation.x), 
-        THREE.Math.degToRad(tankRotation.y), 
+        THREE.Math.degToRad(tankRotation.x),
+        THREE.Math.degToRad(tankRotation.y),
         THREE.Math.degToRad(tankRotation.z)
       );
-      velocity.applyEuler(tankHeading); 
+      velocity.applyEuler(tankHeading);
     }
 
     // Add momentum from tank
@@ -87,5 +87,10 @@ AFRAME.registerComponent('spawner', {
     //   });
     // });
     el.sceneEl.appendChild(entity);
+    var projectileData = {
+      position: entity.getAttribute('position'),
+      velocity: entity.getAttribute('velocity'),
+    }
+    window.socket.emit('shotFired', projectileData);
   }
 });

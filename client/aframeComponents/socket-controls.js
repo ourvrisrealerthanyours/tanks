@@ -28,8 +28,6 @@ AFRAME.registerComponent('socket-controls', {
       this.lastUpdateTime = 0;
       this.updateWaiting = false;
       this.updateRate = DOWNLOAD_PERIOD;
-      console.log('type:', data.type);
-      console.log('characterId:', data.characterId);
 
       socket.on('simulationUpdate', characters => {
         if (characters[data.characterId]) {

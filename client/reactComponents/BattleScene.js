@@ -27,6 +27,13 @@ class BattleScene extends React.Component {
       // TODO: make sure the update was for this room
       this.setState({ characters: charactersArr });
     });
+    this.socket.on('shotFired', projectileData => {
+      const projectile = document.createElement('a-entity');
+      projectile.setAttribute('mixin', 'projectile');
+      projectile.setAttribute('position', projectileData.position);
+      projectile.setAttribute('velocity', projectileData.velocity);
+      document.querySelector('#scene').appendChild(projectile);
+    });
   }
 
   renderCharacters () {
@@ -50,7 +57,7 @@ class BattleScene extends React.Component {
 
   render () {
     return (
-      <a-scene physics='debug:false'>
+      <a-scene id='scene' physics='debug:false'>
         <a-assets>
           <WallMixin height={8}/>
           <Projectile />
