@@ -31,7 +31,8 @@ class Turret extends React.Component {
             data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
               <Barrel
               position='0 -1 0'
-              fireEvent='on: click; callback:handleClick;'
+              characterId={this.props.characterId}
+              fireEvent='on: click'
               material={this.material}/>
             </a-entity>
           </a-sphere>
@@ -48,6 +49,7 @@ class Turret extends React.Component {
           radius={1.5}>
             <Barrel
             position='0 0 0'
+            characterId={this.props.characterId}
             // fireEvent='on: click; callback:handleClick;'
             material={this.material}/>
           </a-sphere>

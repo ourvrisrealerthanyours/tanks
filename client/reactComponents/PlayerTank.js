@@ -16,6 +16,7 @@ class PlayerTank extends React.Component {
 
   render () {
     if(this.props.role === 'driver') {
+      console.log('PlayerTank characterId:', this.props.characterId);
       return (
         <PlayerDriver
         socket={this.props.socket}
@@ -26,9 +27,8 @@ class PlayerTank extends React.Component {
         roomId={this.props.roomId}>
           <Barrel
           position='0 2 0'
-          material={'color:red;'} 
-          barrelLength={6} 
-          fireEvent='on: click; callback:handleClick;' 
+          material={'color:red;'}
+          barrelLength={6}
           socket={this.props.socket}
           characterId={this.props.characterId}/>
         </PlayerDriver>
