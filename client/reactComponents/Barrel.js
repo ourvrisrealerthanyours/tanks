@@ -35,11 +35,11 @@ const Barrel = (props) => {
 
       </a-entity>
     )
-  } else {
+  } else {    
     return (
       <a-entity class='barrel'
-      position={position}
-      rotation={rotation}>
+      socket-controls={`characterId: ${props.characterId}; type: turret`}
+      position={position}>
         <a-cylinder
         position={`0 0 ${-barrelLength / 2}`}
         rotation='90 0 0'

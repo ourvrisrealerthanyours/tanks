@@ -3,7 +3,6 @@ import Arena from './Arena';
 import PlayerTank from './PlayerTank';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
-import Enemy from './Enemy';
 import EnemyTank from './EnemyTank';
 import uuid from 'uuid';
 

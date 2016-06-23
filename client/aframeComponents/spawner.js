@@ -42,20 +42,20 @@ AFRAME.registerComponent('spawner', {
     var tankVel = tankEl.getAttribute('velocity');
 
     // console.log('El', el);
-    console.log('cameraEl', cameraEl);  
-    console.log('tankEl', tankEl);
+    // console.log('cameraEl', cameraEl);
+    // console.log('tankEl', tankEl);
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);
     entity.setAttribute('mixin', this.data.mixin);
 
     // Rotate to heading based on turret rotation and tank rotation
-    var velocity = new THREE.Vector3(0, 0, -30); 
+    var velocity = new THREE.Vector3(0, 0, -30);
     if (cameraRotation) {
       const cameraHeading = new THREE.Euler(0, 0, 0, 'YXZ');
       cameraHeading.set(
-        THREE.Math.degToRad(cameraRotation.x), 
-        THREE.Math.degToRad(cameraRotation.y), 
+        THREE.Math.degToRad(cameraRotation.x),
+        THREE.Math.degToRad(cameraRotation.y),
         THREE.Math.degToRad(cameraRotation.z)
       );
       velocity.applyEuler(cameraHeading);
@@ -63,11 +63,11 @@ AFRAME.registerComponent('spawner', {
     if(tankRotation) {
       const tankHeading = new THREE.Euler(0, 0, 0, 'YXZ');
       tankHeading.set(
-        THREE.Math.degToRad(tankRotation.x), 
-        THREE.Math.degToRad(tankRotation.y), 
+        THREE.Math.degToRad(tankRotation.x),
+        THREE.Math.degToRad(tankRotation.y),
         THREE.Math.degToRad(tankRotation.z)
       );
-      velocity.applyEuler(tankHeading); 
+      velocity.applyEuler(tankHeading);
     }
 
     // Add momentum from tank
