@@ -22,7 +22,7 @@ function lerpRotations(output, start, end, alpha) {
 
 function lerpRotation(start, end, alpha) {
   shortest_angle=((((end - start) % 360) + 540) % 360) - 180;
-  return start + shortest_angle * alpha;
+  return (360 + start + shortest_angle * alpha) % 360;
 }
 
 module.exports = {
