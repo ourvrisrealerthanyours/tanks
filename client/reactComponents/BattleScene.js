@@ -1,10 +1,7 @@
 import React from 'react';
 import Arena from './Arena';
 import PlayerTank from './PlayerTank';
-import WallMixin from './WallMixin';
-import Projectile from './Projectile';
 import EnemyTank from './EnemyTank';
-import uuid from 'uuid';
 
 class BattleScene extends React.Component {
 
@@ -48,8 +45,7 @@ class BattleScene extends React.Component {
       } else {
         return (
           <EnemyTank key={character.characterId}
-          characterId={character.characterId}
-          />
+          characterId={character.characterId}/>
         )
       }
     });
@@ -57,11 +53,7 @@ class BattleScene extends React.Component {
 
   render () {
     return (
-      <a-scene id='scene' physics='debug:false'>
-        <a-assets>
-          <WallMixin height={8}/>
-          <Projectile />
-        </a-assets>
+      <a-entity>
 
         <a-sky color='blue' />
         <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
@@ -71,7 +63,7 @@ class BattleScene extends React.Component {
           {this.renderCharacters.call(this)}
         </Arena>
 
-      </a-scene>
+      </a-entity>
     )
   }
 }
