@@ -23,10 +23,11 @@ class PlayerTank extends React.Component {
         rotation={this.rotation}
         role={this.props.role}
         characterId={this.props.characterId}
+        material={this.props.material}
         roomId={this.props.roomId}>
           <Barrel
           position='0 2 0'
-          material={'color:red;'}
+          material={this.props.material}
           barrelLength={6}
           socket={this.props.socket}
           characterId={this.props.characterId}/>
@@ -38,6 +39,7 @@ class PlayerTank extends React.Component {
           <TankBody
           characterId={this.props.characterId}
           position={this.position}
+          material={this.props.material}
           rotation={this.rotation}
           socket={this.props.socket}>
             <Turret
@@ -45,6 +47,7 @@ class PlayerTank extends React.Component {
             role={this.props.role}
             characterId={this.props.characterId}
             position={'0 2.75 0'}
+            material={this.props.material}
             socket={this.props.socket}
             roomId={this.props.roomId}/>
             <a-cone

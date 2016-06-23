@@ -15,6 +15,8 @@ function randStart(rangeX, rangeY, rangeZ) {
 }
 
 function lerpRotations(output, start, end, alpha) {
+  if (!output || !start || !end) { return; }
+
   output.x = lerpRotation(start.x, end.x, alpha);
   output.y = lerpRotation(start.y, end.y, alpha);
   output.z = lerpRotation(start.z, end.z, alpha);

@@ -3,6 +3,8 @@ import Arena from './Arena';
 import PlayerTank from './PlayerTank';
 import EnemyTank from './EnemyTank';
 
+const colors = ['green', 'red', 'blue', 'orange', 'black'];
+
 class BattleScene extends React.Component {
 
   constructor(props) {
@@ -39,12 +41,14 @@ class BattleScene extends React.Component {
       if (character.characterId === this.characterId) {
         return (
           <PlayerTank key={character.characterId}
+          material={`color: ${colors[character.characterId]}`}
           role={this.role}
           characterId={character.characterId}/>
         )
       } else {
         return (
           <EnemyTank key={character.characterId}
+          material={`color: ${colors[character.characterId]}`}
           characterId={character.characterId}/>
         )
       }

@@ -24,14 +24,14 @@ class EnemyTank extends React.Component {
         position={this.position}
         rotation={this.rotation}
         radius={this.radius}
-        material={this.material}
+        material={this.props.material}
         socket={this.props.socket}
         characterId={this.props.characterId}>
           <Turret
           turretId={this.props.turretId}
           position={`0 ${this.radius - 0.5} 0`}
           rotation={this.turretAngle}
-          material={this.material}
+          material={this.props.material}
           socket={this.props.socket}
           characterId={this.props.characterId}/>
         </TankBody>
