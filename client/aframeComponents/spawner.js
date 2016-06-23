@@ -27,7 +27,7 @@ AFRAME.registerComponent('spawner', {
     var cameraRotation;
 
     // For Two Player:
-    var tankEl = cameraEl.parentElement.parentElement;
+    var tankEl = cameraEl.parentElement.parentElement.parentElement.parentElement;
     var cameraRotation = cameraEl.getAttribute('rotation');
     /*
     // var cameraEl = el.parentElement.parentElement;
@@ -42,8 +42,8 @@ AFRAME.registerComponent('spawner', {
     var tankVel = tankEl.getAttribute('velocity');
 
     // console.log('El', el);
-    // console.log('cameraEl', cameraEl);
-    // console.log('tankEl', tankEl);
+    console.log('cameraEl', cameraEl);
+    console.log('tankEl', tankEl);
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);
