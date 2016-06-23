@@ -1,6 +1,8 @@
 // This file could have a better name
 
-function rand(min = 0, max = 1) {
+function rand(min, max) {
+  min = min || 0;
+  max = max || 1;
   return min + Math.random() * (max - min);
 }
 
