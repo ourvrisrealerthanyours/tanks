@@ -1,4 +1,3 @@
-
 AFRAME.registerComponent('spawner', {
   schema: {
     on: { default: 'click' },
@@ -25,13 +24,22 @@ AFRAME.registerComponent('spawner', {
     var position = new THREE.Vector3();
     var rotation = el.getAttribute('rotation');
     var cameraEl = document.querySelector('#camera').object3D.el;
-    // var cameraEl = el.parentElement.parentElement;
-    var tankEl = document.querySelector('#tankBody').object3D.el;
+    var cameraRotation;
+
+    // For Two Player:
     // var tankEl = cameraEl.parentElement.parentElement;
-    var cameraRotation = cameraEl.getAttribute('rotation');
+    // var cameraRotation = cameraEl.getAttribute('rotation');
+    /*
+    // var cameraEl = el.parentElement.parentElement;
+    // var tankEl = document.querySelector('#tankBody').object3D.el;
+    */
+
+    // For Single Player:
+    var tankEl = el.parentElement.parentElement;
+
+
     var tankRotation = tankEl.getAttribute('rotation');
     var tankVel = tankEl.getAttribute('velocity');
-    var entityRotation;
 
     // console.log('El', el);
     // console.log('cameraEl', cameraEl);
@@ -71,7 +79,7 @@ AFRAME.registerComponent('spawner', {
     // Have the spawned entity face the same direction as the entity.
     // Allow the entity to further modify the inherited rotation.
     // entity.addEventListener('loaded', function () {
-    //   entityRotation = entity.getComputedAttribute('rotation');
+    //   const entityRotation = entity.getComputedAttribute('rotation');
     //   entity.setAttribute('rotation', {
     //     x: entityRotation.x + rotation.x,
     //     y: entityRotation.y + rotation.y,

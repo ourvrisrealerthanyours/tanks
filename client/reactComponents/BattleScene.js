@@ -18,7 +18,6 @@ class BattleScene extends React.Component {
     this.characterId = props.characterId;
     this.role = props.role;
     this.playerId = props.playerId
-
     this.socket = props.socket;
     this.socket.emit('requestCharacters', this.props.roomId);
     this.socket.on('roleUpdate', characters => {
@@ -52,7 +51,7 @@ class BattleScene extends React.Component {
 
   render () {
     return (
-      <a-scene physics='debug:true'>
+      <a-scene physics='debug:false'>
         <a-assets>
           <WallMixin height={8}/>
           <Projectile />

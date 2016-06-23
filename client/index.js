@@ -8,6 +8,7 @@ require('./aframeComponents/tank-controls');
 require('./aframeComponents/quick-rotate');
 require('./aframeComponents/spawner');
 require('./aframeComponents/event-listener');
+require('./aframeComponents/explode');
 require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
 
