@@ -38,7 +38,6 @@ class WelcomePage extends React.Component {
 
   renderScene() {
     if(this.state.scene === 'joinGame') {
-      console.log('render join game scene:')
       return (
         <JoinGameScene socket={this.socket} playerId={this.state.playerId}
         enterBattle={this.changeScene.bind(this, 'battleMode')} roomId={this.roomId}/>
