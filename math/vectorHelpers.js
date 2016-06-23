@@ -14,7 +14,19 @@ function randStart(rangeX, rangeY, rangeZ) {
   };
 }
 
+function lerpRotations(output, start, end, alpha) {
+  output.x = lerpRotation(start.x, end.x, alpha);
+  output.y = lerpRotation(start.y, end.y, alpha);
+  output.z = lerpRotation(start.z, end.z, alpha);
+}
+
+function lerpRotation(start, end, alpha) {
+  shortest_angle=((((end - start) % 360) + 540) % 360) - 180;
+  return start + shortest_angle * alpha;
+}
+
 module.exports = {
   rand,
   randStart,
+  lerpRotations,
 }
