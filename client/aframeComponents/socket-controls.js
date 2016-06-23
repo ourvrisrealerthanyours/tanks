@@ -1,9 +1,10 @@
 // TODO: Remove unnecessary bits from schema
+const { DOWNLOAD_PERIOD } = require('../../simulation/constants');
 
 AFRAME.registerComponent('socket-controls', {
   schema: {
-    updateRate: {default: 100}, // Dynamic updateRate in Hz
     characterId: {default: ''},
+    type: {default: 'turret'},
     socket: {default: null},
     posEnabled: {default: true},
     rotEnabled: {default: true},
@@ -14,32 +15,36 @@ AFRAME.registerComponent('socket-controls', {
     const data = this.data;
     const socket = window.socket;
     if(data.enabled) {
+      this.previousRot = new THREE.Vector3();
+      this.currentRot = new THREE.Vector3();
+      this.nextRot = new THREE.Vector3();
 
-      if(data.posEnabled) {
+      if(data.type === 'body') {
         this.previousPos = new THREE.Vector3();
         this.currentPos = new THREE.Vector3();
         this.nextPos = new THREE.Vector3();
       }
 
-      if(data.rotEnabled) {
-        this.previousRot = new THREE.Vector3();
-        this.currentRot = new THREE.Vector3();
-        this.nextRot = new THREE.Vector3();
-      }
-
       this.lastUpdateTime = 0;
       this.updateWaiting = false;
-      this.updateRate = data.updateRate;
+      this.updateRate = DOWNLOAD_PERIOD;
 
       socket.on('simulationUpdate', characters => {
-        this.updateWaiting = true;
-        if(data.posEnabled) {
+        if (characters[data.characterId]) {
+          if (data.type === 'turret' && data.characterId === '0') {
+            console.log('try:', characters[data.characterId].turretRotation.y);
+          }
+          this.updateWaiting = true;
+
           this.previousPos = this.nextPos;
-          this.nextPos = characters[data.characterId].position;
-        }
-        if(data.rotEnabled) {
           this.previousRot = this.nextRot;
-          this.nextRot = characters[data.characterId].tankRotation;
+
+          this.nextRot = characters[data.characterId].turretRotation;
+
+          if (data.type === 'body') {
+            this.nextPos = characters[data.characterId].position;
+            this.nextRot = characters[data.characterId].tankRotation;
+          }
         }
       });
     }
@@ -47,29 +52,26 @@ AFRAME.registerComponent('socket-controls', {
 
   tick: function(t, dt) {
     const data = this.data;
-    if(data.enabled && this.updateWaiting) {
+    if(this.updateWaiting) {
       this.updateRate = (t - this.lastUpdateTime);
       this.lastUpdateTime = t;
       this.updateWaiting = false;
+    }
+    const alpha = (t - this.lastUpdateTime) / this.updateRate;
 
-      const alpha = (t - this.lastUpdateTime) / this.updateRate;
+    this.currentRot.lerpVectors(this.previousRot, this.nextRot, alpha);
+    this.el.setAttribute('rotation', this.currentRot);
 
-      if(data.posEnabled) {
-        // linear interp from data.lastPos to data.nextPos
-        this.currentPos.lerpVectors(this.previousPos, this.nextPos, alpha);
-        // Don't update y to enable compatibility with kinematic-body physics
-        this.el.setAttribute('position', {
-          x: this.currentPos.x,
-          y: this.el.getAttribute('position').y,
-          z: this.currentPos.z
-        });
-      }
+    if(data.type === 'body') {
+      // linear interp from data.lastPos to data.nextPos
+      this.currentPos.lerpVectors(this.previousPos, this.nextPos, alpha);
 
-      if(data.rotEnabled && this.previousRot && this.nextRot) {
-        // linear interp from data.lastRot to data.nextRot
-        this.currentRot.lerpVectors(this.previousRot, this.nextRot, alpha);
-        this.el.setAttribute('rotation', this.currentRot);
-      }
+      // Don't update y to enable compatibility with kinematic-body physics
+      this.el.setAttribute('position', {
+        x: this.currentPos.x,
+        y: this.el.getAttribute('position').y,
+        z: this.currentPos.z
+      });
     }
   }
 

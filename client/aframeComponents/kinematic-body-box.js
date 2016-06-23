@@ -167,8 +167,6 @@ AFRAME.registerComponent('kinematic-body', {
       }
 
       body.velocity.copy(velocity);
-      // console.log('velocity3', velocity.clone());
-      // debugger;
       this.el.setAttribute('velocity', velocity);
     };
   }()),

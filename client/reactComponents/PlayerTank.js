@@ -26,9 +26,8 @@ class PlayerTank extends React.Component {
         roomId={this.props.roomId}>
           <Barrel
           position='0 2 0'
-          material={'color:red;'} 
-          barrelLength={6} 
-          fireEvent='on: click;' 
+          material={'color:red;'}
+          barrelLength={6}
           socket={this.props.socket}
           characterId={this.props.characterId}/>
         </PlayerDriver>

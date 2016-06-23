@@ -32,7 +32,7 @@ class EnemyTank extends React.Component {
           rotation={this.turretAngle}
           material={this.material}
           socket={this.props.socket}
-          characterId={this.props.gunnerPlayerId}/>
+          characterId={this.props.characterId}/>
         </TankBody>
       </a-entity>
     )

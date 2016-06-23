@@ -19,7 +19,8 @@ class TankBody extends React.Component {
       position={this.position}
       rotation={this.rotation}
       kinematic-body
-      socket-controls={`characterId: ${this.props.characterId}; enabled: ${!!this.props.characterId}`}>
+      socket-controls={`characterId: ${this.props.characterId}; type: body`}
+      >
         <a-sphere
         id={this.props.bodyId}
         position='0 0 0'
