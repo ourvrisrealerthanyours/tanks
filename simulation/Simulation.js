@@ -33,7 +33,6 @@ class Simulation {
   }
 
   updateCharacterRoles(characterId, role, playerId) {
-    // TODO: Check if spot is already filled? (will require emptying spots on disconnect)
     if(this.characters[characterId]) {
       this.characters[characterId][role] = playerId;
     } else {

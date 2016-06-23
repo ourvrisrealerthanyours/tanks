@@ -29,7 +29,7 @@ module.exports = io => {
           role: requestData.role
         });
         simulation.updateCharacterRoles(requestData.characterId, requestData.role, requestData.playerId);
-        client.broadcast.emit('roleUpdate', simulation.characters);
+        io.emit('roleUpdate', simulation.characters);
       }
     });
 
@@ -41,7 +41,6 @@ module.exports = io => {
       console.log(`our client ${client.id} disconnected...`);
       simulation.removePlayer(client.id);
       client.broadcast.emit('roleUpdate', simulation.characters);
-      // essential to delete character
     });
 
     client.on('shotFired', projectileData => {

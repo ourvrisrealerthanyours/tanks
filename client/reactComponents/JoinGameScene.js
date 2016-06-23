@@ -19,7 +19,6 @@ class JoinGameScene extends React.Component {
     });
     this.socket.on('seatConfirmation', confirmation => {
       if (confirmation) {
-        console.log('should be entering battlescene');
         this.enterBattle(confirmation.characterId, confirmation.role);
       } else {
         this.socket.emit('requestCharacters', this.roomId);
