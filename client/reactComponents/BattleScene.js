@@ -3,6 +3,8 @@ import Arena from './Arena';
 import PlayerTank from './PlayerTank';
 import EnemyTank from './EnemyTank';
 
+const colors = ['green', 'red', 'blue', 'orange', 'black'];
+
 class BattleScene extends React.Component {
 
   constructor(props) {
@@ -36,15 +38,25 @@ class BattleScene extends React.Component {
   renderCharacters () {
     // TODO: How do we map if two characters per tank?
     return this.state.characters.map(character => {
+      const position = [
+        character.position.x,
+        character.position.y,
+        character.position.z
+      ].join(' ');
+
       if (character.characterId === this.characterId) {
         return (
           <PlayerTank key={character.characterId}
+          position={position}
+          material={`color: ${colors[character.characterId]}`}
           role={this.role}
           characterId={character.characterId}/>
         )
       } else {
         return (
           <EnemyTank key={character.characterId}
+          position={position}
+          material={`color: ${colors[character.characterId]}`}
           characterId={character.characterId}/>
         )
       }

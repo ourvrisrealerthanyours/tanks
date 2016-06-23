@@ -14,7 +14,7 @@ class WelcomePage extends React.Component {
     this.roomId = '0';
     this.socket = io.connect(server);
     window.socket = this.socket; // figure out a better way for everyone to have access to this socket
-    
+
     this.socket.on('assignPlayerId', (playerId) => {
       this.setState({ playerId });
       window.playerId = this.state.playerId;
@@ -63,7 +63,7 @@ class WelcomePage extends React.Component {
       </a-scene>
     )
   }
-    
+
 }
 
 module.exports = WelcomePage;

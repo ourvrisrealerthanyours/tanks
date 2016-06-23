@@ -1,5 +1,6 @@
 // TODO: Remove unnecessary bits from schema
 const { DOWNLOAD_PERIOD } = require('../../simulation/constants');
+const { lerpRotations } = require('../../math/vectorHelpers');
 
 AFRAME.registerComponent('socket-controls', {
   schema: {
@@ -31,13 +32,10 @@ AFRAME.registerComponent('socket-controls', {
 
       socket.on('simulationUpdate', characters => {
         if (characters[data.characterId]) {
-          if (data.type === 'turret' && data.characterId === '0') {
-            console.log('try:', characters[data.characterId].turretRotation.y);
-          }
           this.updateWaiting = true;
 
-          this.previousPos = this.nextPos;
-          this.previousRot = this.nextRot;
+          this.previousPos = this.el.getAttribute('position');
+          this.previousRot = this.el.getAttribute('rotation');
 
           this.nextRot = characters[data.characterId].turretRotation;
 
@@ -53,13 +51,14 @@ AFRAME.registerComponent('socket-controls', {
   tick: function(t, dt) {
     const data = this.data;
     if(this.updateWaiting) {
-      this.updateRate = (t - this.lastUpdateTime);
+      this.updateRate = Math.max(DOWNLOAD_PERIOD, (t - this.lastUpdateTime));
       this.lastUpdateTime = t;
       this.updateWaiting = false;
     }
     const alpha = (t - this.lastUpdateTime) / this.updateRate;
 
-    this.currentRot.lerpVectors(this.previousRot, this.nextRot, alpha);
+    // this.currentRot.lerpVectors(this.previousRot, this.nextRot, alpha);
+    lerpRotations(this.currentRot, this.previousRot, this.nextRot, alpha);
     this.el.setAttribute('rotation', this.currentRot);
 
     if(data.type === 'body') {

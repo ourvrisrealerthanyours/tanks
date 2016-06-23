@@ -9,7 +9,6 @@ class Turret extends React.Component {
     this.rotation = props.rotation || '0 0 0';
     this.barrelLength = props.barrelLength || 5;
     this.activeControl = props.activeControl || false;
-    this.material = props.material || 'color: red;';
     this.socket = props.socket;
   }
 
@@ -21,7 +20,7 @@ class Turret extends React.Component {
           id={this.props.turretId}
           position={`0 0 0`}
           rotation='0 0 0'
-          material={this.material}
+          material={this.props.material}
           radius={1.5}>
             <a-entity id='camera' class='turret'
             position={`0 1 0`}
@@ -33,7 +32,7 @@ class Turret extends React.Component {
               position='0 -1 0'
               characterId={this.props.characterId}
               fireEvent='on: click'
-              material={this.material}/>
+              material={this.props.material}/>
             </a-entity>
           </a-sphere>
         </a-entity>
@@ -45,13 +44,13 @@ class Turret extends React.Component {
           id={this.props.turretId}
           position={`0 0 0`}
           rotation={this.rotation}
-          material={this.material}
+          material={this.props.material}
           radius={1.5}>
             <Barrel
             position='0 0 0'
             characterId={this.props.characterId}
             // fireEvent='on: click; callback:handleClick;'
-            material={this.material}/>
+            material={this.props.material}/>
           </a-sphere>
         </a-entity>
       )

@@ -21,17 +21,17 @@ class PlayerDriver extends React.Component {
         material='opacity: 0;'
         position={this.position}
         rotation={this.rotation}
-        tank-controls
-        // universal-controls
+        universal-controls
         kinematic-body='radius: 2.5; height:2.5;'
         data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
           <Compartment
           compartmentWidth={this.compartmentWidth}
-          compartmentRadius={this.compartmentRadius}/>
+          compartmentRadius={this.compartmentRadius}
+          material={this.props.material}/>
 
           <a-entity id='camera' position={`0 0 -1`}
-          camera='near: 0.05;' look-controls />
+          camera='near: 0.05;' />
 
           {this.props.children}
 
@@ -53,19 +53,19 @@ const Compartment = (props) => {
     open-ended='true'
     theta-length='285' // Larger angle rotates hood over top of head
     theta-start='210'
-    material='side: back; color: red;'>
+    material={`side: back; ${props.material}`}>
       <a-ring
       position={`0 ${-props.compartmentWidth/2 + 0.01} 0`}
       rotation='90 0 0'
       radius-outer={props.compartmentRadius}
       radius-inner={props.compartmentRadius * 0.4}
-      material='side:double; color: red;'/>
+      material={`side: double; ${props.material}`}/>
       <a-ring
       position={`0 ${props.compartmentWidth/2} 0`}
       rotation='90 0 0'
       radius-outer={props.compartmentRadius + 0.01}
       radius-inner={props.compartmentRadius * 0.4}
-      material='side:double; color: red;'/>
+      material={`side: double; ${props.material}`}/>
     </a-cylinder>
   )
 }

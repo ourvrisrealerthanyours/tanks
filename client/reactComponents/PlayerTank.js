@@ -9,7 +9,6 @@ class PlayerTank extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || `${rand(-100, 100)} 2.6 ${rand(-100, 100)}`;
     this.rotation = props.rotation || '0 0 0';
     this.socket = props.socket;
   }
@@ -19,14 +18,15 @@ class PlayerTank extends React.Component {
       return (
         <PlayerDriver
         socket={this.props.socket}
-        position={this.position}
+        position={this.props.position}
         rotation={this.rotation}
         role={this.props.role}
         characterId={this.props.characterId}
+        material={this.props.material}
         roomId={this.props.roomId}>
           <Barrel
           position='0 2 0'
-          material={'color:red;'}
+          material={this.props.material}
           barrelLength={6}
           socket={this.props.socket}
           characterId={this.props.characterId}/>
@@ -37,7 +37,8 @@ class PlayerTank extends React.Component {
         <a-entity position='0 0 0' rotation='0 0 0'>
           <TankBody
           characterId={this.props.characterId}
-          position={this.position}
+          position={this.props.position}
+          material={this.props.material}
           rotation={this.rotation}
           socket={this.props.socket}>
             <Turret
@@ -45,6 +46,7 @@ class PlayerTank extends React.Component {
             role={this.props.role}
             characterId={this.props.characterId}
             position={'0 2.75 0'}
+            material={this.props.material}
             socket={this.props.socket}
             roomId={this.props.roomId}/>
             <a-cone
