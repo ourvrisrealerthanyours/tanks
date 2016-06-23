@@ -2,8 +2,8 @@ const { UPLOAD_PERIOD } = require('../../simulation/constants');
 
 AFRAME.registerComponent('data-emitter', {
   schema: {
-    roomId: {default: window.roomId},
-    playerId: {default: window.playerId},
+    characterId: {default: window.characterId},
+    role: {default: window.role},
     socket: {default: null},
     lastUpdateTime: {default: 0},
   },
@@ -15,11 +15,10 @@ AFRAME.registerComponent('data-emitter', {
 
   tick: function(t, dt) {
     const data = this.data;
-
-    if (data.playerId && t - data.lastUpdateTime >= UPLOAD_PERIOD) {
-      data.socket.emit('playerUpdate', {
-        roomId: data.roomId,
-        playerId: data.playerId,
+    if (data.characterId && t - data.lastUpdateTime >= UPLOAD_PERIOD) {
+      data.socket.emit('characterUpdate', {
+        characterId: data.characterId,
+        role: data.role,
         position: this.el.getAttribute('position'),
         rotation: this.el.getAttribute('rotation')
       })

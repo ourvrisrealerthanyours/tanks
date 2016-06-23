@@ -9,23 +9,23 @@ const Barrel = (props) => {
     const fireEventArray = props.fireEvent.replace(' ', '').split(';');
     const event = fireEventArray.filter(params => params.slice(0,3) === 'on:')[0];
     return (
-      <a-entity class='barrel' 
-      position={position} 
+      <a-entity class='barrel'
+      position={position}
       rotation={rotation}>
-        <a-cylinder 
-        position={`0 0 ${-barrelLength / 2}`} 
-        rotation='90 0 0' 
-        height={barrelLength} 
-        radius='0.2' 
+        <a-cylinder
+        position={`0 0 ${-barrelLength / 2}`}
+        rotation='90 0 0'
+        height={barrelLength}
+        radius='0.2'
         open-ended='false'
         theta-length='360'
         material={`side:double; ${props.material}`}/>
-        <a-cylinder 
+        <a-cylinder
         position={`0 0 ${-barrelLength}`}
-        rotation='90 0 0' 
+        rotation='90 0 0'
         spawner={`mixin: projectile; ${event}`}
-        height='0.3' 
-        radius='0.25' 
+        height='0.3'
+        radius='0.25'
         open-ended='false'
         theta-length='360'
         material={`side:double; ${props.material}`}
@@ -37,22 +37,22 @@ const Barrel = (props) => {
     )
   } else {
     return (
-      <a-entity class='barrel' 
-      position={position} 
+      <a-entity class='barrel'
+      position={position}
       rotation={rotation}>
-        <a-cylinder 
-        position={`0 0 ${-barrelLength / 2}`} 
-        rotation='90 0 0' 
-        height={barrelLength} 
-        radius='0.2' 
+        <a-cylinder
+        position={`0 0 ${-barrelLength / 2}`}
+        rotation='90 0 0'
+        height={barrelLength}
+        radius='0.2'
         open-ended='false'
         theta-length='360'
         material={`side:double; ${props.material}`}/>
-        <a-cylinder 
+        <a-cylinder
         position={`0 0 ${-barrelLength}`}
-        rotation='90 0 0' 
-        height='0.3' 
-        radius='0.25' 
+        rotation='90 0 0'
+        height='0.3'
+        radius='0.25'
         open-ended='false'
         theta-length='360'
         material={`side:double; ${props.material}`}/>

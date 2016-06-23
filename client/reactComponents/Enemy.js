@@ -14,7 +14,7 @@ class Enemy extends React.Component {
   render () {
     return(
       <a-entity position={this.position} socket={this.props.socket}
-      socket-controls={`playerId: ${this.props.playerId}`}>
+      socket-controls={`characterId: ${this.props.characterId}`}>
         <a-sphere color="white" radius="1.5" shader="flat">
           <a-light type="point" color="white" />
         </a-sphere>

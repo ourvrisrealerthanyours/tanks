@@ -5,7 +5,6 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 import Enemy from './Enemy';
 import EnemyTank from './EnemyTank';
-import Player from './Player';
 import uuid from 'uuid';
 
 class BattleScene extends React.Component {
@@ -13,51 +12,38 @@ class BattleScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      players: [],
+      characters: [],
     };
-    // playerId has to be initialized on client
-    this.playerId = uuid.v4();
-    props.socket.emit('createPlayer', this.playerId);
-    props.socket.on('playerAdmittedToRoom', data => this.admitPlayersIntoRoom(data));
+
+    this.characterId = props.characterId;
+    this.role = props.role;
+    this.playerId = props.playerId
+    this.socket = props.socket;
+    this.socket.emit('requestCharacters', this.props.roomId);
+    this.socket.on('roleUpdate', characters => {
+      const charactersArr = [];
+      for (var characterId in characters) {
+        charactersArr.push(characters[characterId]);
+      }
+      // TODO: make sure the update was for this room
+      this.setState({ characters: charactersArr });
+    });
   }
 
-  admitPlayersIntoRoom(admissionData) {
-    if (admissionData.roomId === this.roomId) {
-      let players = [...this.state.players, admissionData.playerId];
-      this.setState({
-        players: players
-      });
-    } else if (admissionData.playerId === this.playerId) {
-      this.roomId = admissionData.roomId;
-      this.setState({
-        players: Object.keys(admissionData.players)
-      });
-    }
-  }
-
-  renderPlayers () {
-    // TODO: How do we map if two players per tank?
-    return this.state.players.map(playerId => {
-      if (playerId === this.playerId) {
+  renderCharacters () {
+    // TODO: How do we map if two characters per tank?
+    return this.state.characters.map(character => {
+      if (character.characterId === this.characterId) {
         return (
-          <PlayerTank key={playerId} 
-          roomId={this.roomId} 
-          role='driver'
-          playerId={playerId}
-          copilotPlayerId={undefined}/>
-          // <Player key={playerId} 
-          // roomId={this.roomId} 
-          // playerId={playerId}/>
+          <PlayerTank key={character.characterId}
+          role={this.role}
+          characterId={character.characterId}/>
         )
       } else {
         return (
-          <EnemyTank key={playerId} 
-          roomId={this.roomId} 
-          driverPlayerId={playerId}
-          gunnerPlayerId={undefined}/>
-          // <Enemy key={playerId}
-          // roomId={this.roomId}
-          // playerId={playerId}/>
+          <EnemyTank key={character.characterId}
+          characterId={character.characterId}
+          />
         )
       }
     });
@@ -72,9 +58,11 @@ class BattleScene extends React.Component {
         </a-assets>
 
         <a-sky color='blue' />
+        <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
+        <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
 
         <Arena wallHeight={8}>
-          {this.renderPlayers.call(this)}
+          {this.renderCharacters.call(this)}
         </Arena>
 
       </a-scene>
