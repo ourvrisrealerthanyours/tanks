@@ -1,4 +1,5 @@
 // This file could have a better name
+var ARENA_WIDTH = require('../simulation/constants').ARENA_WIDTH;
 
 function rand(min, max) {
   min = min || 0;
@@ -6,11 +7,11 @@ function rand(min, max) {
   return min + Math.random() * (max - min);
 }
 
-function randStart(rangeX, rangeY, rangeZ) {
+function randStart() {
   return {
-    x: rand(-rangeX/2, rangeX/2),
-    y: rand(-rangeY/2, rangeY/2),
-    z: rand(-rangeZ/2, rangeZ/2),
+    x: rand(-ARENA_WIDTH/2, ARENA_WIDTH/2),
+    y: 5,
+    z: rand(-ARENA_WIDTH/2, ARENA_WIDTH/2),
   };
 }
 

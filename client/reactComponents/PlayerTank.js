@@ -9,7 +9,6 @@ class PlayerTank extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || `${rand(-100, 100)} 2.6 ${rand(-100, 100)}`;
     this.rotation = props.rotation || '0 0 0';
     this.socket = props.socket;
   }
@@ -19,7 +18,7 @@ class PlayerTank extends React.Component {
       return (
         <PlayerDriver
         socket={this.props.socket}
-        position={this.position}
+        position={this.props.position}
         rotation={this.rotation}
         role={this.props.role}
         characterId={this.props.characterId}
@@ -38,7 +37,7 @@ class PlayerTank extends React.Component {
         <a-entity position='0 0 0' rotation='0 0 0'>
           <TankBody
           characterId={this.props.characterId}
-          position={this.position}
+          position={this.props.position}
           material={this.props.material}
           rotation={this.rotation}
           socket={this.props.socket}>

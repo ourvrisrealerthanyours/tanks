@@ -6,7 +6,7 @@ const { ARENA_WIDTH } = require('./constants');
 class Character {
   constructor(characterId = uuid.v4()) {
     this.characterId = characterId;
-    this.position = v0;
+    this.position = randStart();
     this.tankRotation = v0;
     this.turretRotation = v0;
     this.gunner = null;
