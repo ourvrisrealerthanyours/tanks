@@ -11,7 +11,7 @@ module.exports = io => {
 
     client.on('createPlayer', playerId => {
       const newPlayer = new Player(playerId);
-      // currently there can only be one room. Ideally the data passed with this 
+      // currently there can only be one room. Ideally the data passed with this
       // event would include a roomId if they were joining one, and no room Id if
       // they were creating one
       let firstRoom = simulation.getFirstRoom();

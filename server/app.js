@@ -3,10 +3,10 @@ var app = express();
 var server = require('http').createServer(app);
 var path = require('path');
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8080;
 var ENV = process.env.NODE_ENV || 'development';
 
-server.listen(PORT, '127.0.0.1'); // change for production
+server.listen(PORT); // change for production
 
 // Sockets
 var io = require('socket.io')(server);
