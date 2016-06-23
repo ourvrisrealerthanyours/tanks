@@ -9,45 +9,66 @@ class JoinGameScene extends React.Component {
     super(props);
     this.socket = props.socket;
     this.enterBattle = props.enterBattle;
-    setTimeout(this.enterBattle, 2000);
+    this.state = {
+      loaded: false,
+      characters: {}
+    }
+    this.socket.emit('requestCharacters', props.roomId);
+    this.socket.on('roleUpdate', characters => {
+      this.setState({ characters: characters, loaded: true });
+    });
+    this.socket.on('seatConfirmation', seatData => {
+      if (seatData.playerId === props.playerId) {
+        this.enterBattle(seatData.characterId, seatData.role);
+      } else {
+        this.socket.emit('requestCharacters', this.roomId);
+      }
+    })
   }
 
-  componentDidMount() {
-    const redTurret = document.querySelector('#redTurret');
-    const redBody = document.querySelector('#redBody');
-    const greenTurret = document.querySelector('#greenTurret');
-    const greenBody = document.querySelector('#greenBody');
+  requestSeat(characterId, role) {
+    this.socket.emit('requestSeat', {
+      playerId: this.props.playerId,
+      characterId,
+      role,
+      roomId: this.props.roomId,
+    });
+    // change seat color/opacity/ or whatever
+  }
 
-    redTurret.addEventListener('click', function (event) {
-      event.stopPropagation();
-      redBody.setAttribute('material', 'color', 'red');
-      greenBody.setAttribute('material', 'color', 'green');
-      greenTurret.setAttribute('material', 'color', 'green');
-      this.setAttribute('material', 'color', 'white');
-    });
-    redBody.addEventListener('click', function (event) {
-      redTurret.setAttribute('material', 'color', 'red');
-      greenBody.setAttribute('material', 'color', 'green');
-      greenTurret.setAttribute('material', 'color', 'green');
-      this.setAttribute('material', 'color', 'white');
-    });
-    greenTurret.addEventListener('click', function (event) {
-      event.stopPropagation();
-      redBody.setAttribute('material', 'color', 'red');
-      greenBody.setAttribute('material', 'color', 'green');
-      redTurret.setAttribute('material', 'color', 'red');
-      this.setAttribute('material', 'color', 'white');
-    });
-    greenBody.addEventListener('click', function (event) {
-      redTurret.setAttribute('material', 'color', 'red');
-      redBody.setAttribute('material', 'color', 'red');
-      greenTurret.setAttribute('material', 'color', 'green');
-      this.setAttribute('material', 'color', 'white');
-    });
+  componentDidUpdate() {
+    if (this.state.loaded) {
+      const redTurret = document.querySelector('#redTurret');
+      const redBody = document.querySelector('#redBody');
+      const greenTurret = document.querySelector('#greenTurret');
+      const greenBody = document.querySelector('#greenBody');
+
+      redTurret.addEventListener('click', event => {
+        if (!this.state.characters[1].gunner) {
+          this.requestSeat('1', 'gunner')
+        }
+      });
+      redBody.addEventListener('click', event => {
+        if (!this.state.characters[1].driver) {
+          this.requestSeat('1', 'driver')
+        }
+      });
+      greenTurret.addEventListener('click', event => {
+        if (!this.state.characters[0].gunner) {
+          this.requestSeat('0', 'gunner')
+        }
+      });
+      greenBody.addEventListener('click', event => {
+        if (!this.state.characters[0].driver) {
+          this.requestSeat('0', 'driver')
+        }
+      });
+    }
   }
 
   render () {
-    return (
+
+    return this.state.loaded ? (
       <a-scene physics='debug: true;'>
         <a-assets>
           <WallMixin height={8}/>
@@ -58,10 +79,15 @@ class JoinGameScene extends React.Component {
         <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
 
         <Arena wallHeight={8} >
-          <EnemyTank turretId='redTurret' bodyId='redBody'
-          position='-6 1.3 -8' rotation='0 -110 0' material='color: red;'/>
-          <EnemyTank turretId='greenTurret' bodyId='greenBody'
-          position='6 1.3 -8' rotation='0 110 0' material='color: green;'/>
+          <a-box id='greenTurret' position='-6 3.3 -8'
+          material={`color: green; opacity: ${1 - 0.5 * !!this.state.characters[0].gunner}`}/>
+          <a-box id='greenBody' position='-6 1.3 -8'
+          material={`color: green; opacity: ${1 - 0.5 * !!this.state.characters[0].driver}`}/>
+          <a-box id='redTurret' position='6 3.3 -8'
+          material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].gunner}`}/>
+          <a-box id='redBody' position='6 1.3 -8'
+          material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].driver}`}/>
+
           <a-camera position='0 3 0' wasd-controls='enabled: false;'>
             <a-cursor maxDistance='10'>
               <a-animation begin="fusing" easing="ease-in" attribute="scale"
@@ -74,7 +100,7 @@ class JoinGameScene extends React.Component {
         </Arena>
 
       </a-scene>
-    )
+    ) : <div />;
   }
 }
 

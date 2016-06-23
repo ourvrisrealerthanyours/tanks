@@ -14,59 +14,40 @@ class BattleScene extends React.Component {
     this.state = {
       characters: [],
     };
-    // characterId has to be initialized on client
-    this.characterId = uuid.v4();
-    props.socket.emit('createCharacter', this.characterId);
-    props.socket.on('characterAdmittedToRoom', data => this.admitCharactersIntoRoom(data));
-  }
 
-  admitCharactersIntoRoom(admissionData) {
-    if (admissionData.roomId === this.roomId) {
-      let characters = [...this.state.characters, admissionData.characterId];
-      this.setState({
-        characters: characters
-      });
-    } else if (admissionData.characterId === this.characterId) {
-      this.roomId = admissionData.roomId;
-      this.setState({
-        characters: Object.keys(admissionData.characters)
-      });
-    }
-  }
+    this.characterId = props.characterId;
+    this.role = props.role;
+    this.playerId = props.playerId
 
-  // componentDidMount() {
-  //   var characterEl = document.querySelector('#tank');
-  //   characterEl.addEventListener('collide', function (e) {
-  //     console.log('Character has collided with body #' + e.detail.body.id);
-  //
-  //     e.detail.target.el;  // Original entity (characterEl).
-  //     e.detail.body.el;    // Other entity, which characterEl touched.
-  //     e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
-  //     e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
-  //   });
-  // }
+    this.socket = props.socket;
+    this.socket.emit('requestCharacters', this.props.roomId);
+    this.socket.on('roleUpdate', characters => {
+      const charactersArr = [];
+      for (var characterId in characters) {
+        charactersArr.push(characters[characterId]);
+      }
+      // TODO: make sure the update was for this room
+      this.setState({ characters: charactersArr });
+    });
+  }
 
   renderCharacters () {
     // TODO: How do we map if two characters per tank?
-    return this.state.characters.map(characterId => {
-      if (characterId === this.characterId) {
+    console.log('characters:', this.state.characters);
+    console.log('this.characterId:', typeof this.characterId, this.characterId);
+    return this.state.characters.map(character => {
+      if (character.characterId === this.characterId) {
+        console.log('character pippin');
         return (
-          <PlayerTank key={characterId}
-          roomId={this.roomId}
-          role='driver'
-          characterId={characterId}
-          copilotPlayerId={undefined}/>
+          <PlayerTank key={character.characterId}
+          role={this.role}
+          characterId={character.characterId}/>
         )
       } else {
         return (
-          <EnemyTank key={characterId}
-          roomId={this.roomId}
-          characterId={characterId}
-          driverPlayerId={characterId}
-          gunnerPlayerId={undefined}/>
-          // <Enemy key={characterId}
-          // roomId={this.roomId}
-          // characterId={characterId}/>
+          <EnemyTank key={character.characterId}
+          characterId={character.characterId}
+          />
         )
       }
     });

@@ -4,14 +4,13 @@ const { randStart } = require('../math/vectorHelpers');
 const { ARENA_WIDTH } = require('./constants');
 
 class Character {
-  constructor(characterId = uuid.v4(),
-              position = randStart(ARENA_WIDTH, 0, ARENA_WIDTH),
-              tankRotation = randStart(0, 360, 0),
-              turretRotation = v0) {
+  constructor(characterId = uuid.v4()) {
     this.characterId = characterId;
-    this.position = position;
-    this.tankRotation = tankRotation;
-    this.turretRotation = turretRotation;
+    this.position = v0;
+    this.tankRotation = v0;
+    this.turretRotation = v0;
+    this.gunner = null;
+    this.driver = null;
   }
 
   update(freshData) {

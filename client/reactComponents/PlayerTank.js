@@ -21,6 +21,7 @@ class PlayerTank extends React.Component {
         socket={this.props.socket}
         position={this.position}
         rotation={this.rotation}
+        role={this.props.role}
         characterId={this.props.characterId}
         roomId={this.props.roomId}>
           <Barrel
@@ -28,19 +29,20 @@ class PlayerTank extends React.Component {
           material={'color:red;'}
           barrelLength={6}
           socket={this.props.socket}
-          copilotPlayerId={this.props.copilotPlayerId}/>
+          characterId={this.props.characterId}/>
         </PlayerDriver>
       )
     } else if(this.props.role === 'gunner') {
       return (
         <a-entity position='0 0 0' rotation='0 0 0'>
           <TankBody
-          position={this.state.position}
-          rotation={this.state.rotation}
-          socket={this.props.socket}
-          character={this.props.copilotPlayerId}>
+          characterId={this.props.characterId}
+          position={this.position}
+          rotation={this.rotation}
+          socket={this.props.socket}>
             <Turret
             activeControl={true}
+            role={this.props.role}
             characterId={this.props.characterId}
             position={'0 2.75 0'}
             socket={this.props.socket}

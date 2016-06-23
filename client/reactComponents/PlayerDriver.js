@@ -23,7 +23,7 @@ class PlayerDriver extends React.Component {
         rotation={this.rotation}
         tank-controls
         kinematic-body
-        data-emitter={`roomId: ${this.props.roomId}; characterId: ${this.props.characterId}`}>
+        data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
           <Compartment
           compartmentWidth={this.compartmentWidth}

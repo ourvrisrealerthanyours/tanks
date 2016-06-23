@@ -2,17 +2,16 @@ const uuid = require('uuid');
 const { DOWNLOAD_PERIOD  } = require('../simulation/constants');
 
 class Room {
-  constructor(host, socket) {
+  constructor(roomId, socket) {
     this.socket = socket;
-    this.roomId = uuid.v4();
+    this.roomId = roomId;
     this.characters = {}; // { characterId: character}
-    this.addCharacter(host);
     setInterval(() => this.updatePositions(), DOWNLOAD_PERIOD)
   }
 
   addCharacter(character) {
     this.characters[character.characterId] = character;
-    // this.emitCharacterAdded(character);
+    this[character.tankColor] = character.characterId;
   }
 
   removeCharacter(character) {

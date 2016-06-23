@@ -14,7 +14,7 @@ class Turret extends React.Component {
   }
 
   render () {
-    if(this.activeControl) {
+    if (this.activeControl) {
       return (
         <a-entity class='turretContainer' position={this.position}>
           <a-sphere // Turret
@@ -28,7 +28,7 @@ class Turret extends React.Component {
             rotation={this.rotation}
             camera='near: 0.05'
             look-controls
-            data-emitter={`roomId: ${this.props.roomId}; characterId: ${this.props.character}`}>
+            data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
               <Barrel
               position='0 -1 0'
               fireEvent='on: click; callback:handleClick;'
