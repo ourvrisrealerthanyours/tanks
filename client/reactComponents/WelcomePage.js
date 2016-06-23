@@ -63,7 +63,7 @@ class WelcomePage extends React.Component {
       </a-scene>
     )
   }
-    
+
 }
 
 module.exports = WelcomePage;

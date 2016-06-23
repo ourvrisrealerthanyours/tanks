@@ -21,7 +21,7 @@ class PlayerDriver extends React.Component {
         material='opacity: 0;'
         position={this.position}
         rotation={this.rotation}
-        tank-controls
+        universal-controls
         kinematic-body
         data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
@@ -30,7 +30,7 @@ class PlayerDriver extends React.Component {
           compartmentRadius={this.compartmentRadius}/>
 
           <a-entity id='camera' position={`0 0 -1`}
-          camera='near: 0.05;' look-controls />
+          camera='near: 0.05;' />
 
           {this.props.children}
 

@@ -31,9 +31,6 @@ AFRAME.registerComponent('socket-controls', {
 
       socket.on('simulationUpdate', characters => {
         if (characters[data.characterId]) {
-          if (data.type === 'turret' && data.characterId === '0') {
-            console.log('try:', characters[data.characterId].turretRotation.y);
-          }
           this.updateWaiting = true;
 
           this.previousPos = this.nextPos;
