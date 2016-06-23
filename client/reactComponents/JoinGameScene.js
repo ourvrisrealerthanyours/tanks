@@ -70,13 +70,8 @@ class JoinGameScene extends React.Component {
   }
 
   render () {
-
     return this.state.loaded ? (
-      <a-scene physics='debug: true;'>
-        <a-assets>
-          <WallMixin height={8}/>
-        </a-assets>
-
+      <a-entity>
         <a-sky color='blue' />
         <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
         <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
@@ -100,10 +95,10 @@ class JoinGameScene extends React.Component {
               fill="backwards" from="1 1 1" to="1.8 1.8 1.8" dur='80'/>
             </a-cursor>
           </a-camera>
+          
         </Arena>
-
-      </a-scene>
-    ) : <div />;
+      </a-entity>
+    ) : <a-entity />;
   }
 }
 
