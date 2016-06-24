@@ -22,28 +22,17 @@ AFRAME.registerComponent('spawner', {
     var entity = document.createElement('a-entity');
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
-    var rotation = el.getAttribute('rotation');
-    var cameraEl = document.querySelector('#camera').object3D.el;
-    var cameraRotation;
+    var rotationEl = document.querySelector('#turretRotator').object3D.el;
 
     // For Two Player:
-    var tankEl = cameraEl.parentElement.parentElement.parentElement.parentElement;
-    var cameraRotation = cameraEl.getAttribute('rotation');
-    /*
-    // var cameraEl = el.parentElement.parentElement;
-    // var tankEl = document.querySelector('#tankBody').object3D.el;
-    */
-
-    // For Single Player:
-    // var tankEl = el.parentElement.parentElement;
-
-
-    var tankRotation = tankEl.getAttribute('rotation');
-    var tankVel = tankEl.getAttribute('velocity');
+    var tankEl = rotationEl.parentElement.parentElement;
+    var turretRotation = rotationEl.getAttribute('rotation');
 
     // console.log('El', el);
-    // console.log('cameraEl', cameraEl);
+    // console.log('rotationEl', rotationEl);
     // console.log('tankEl', tankEl);
+    
+    var tankVel = tankEl.getAttribute('velocity');
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);
@@ -51,23 +40,14 @@ AFRAME.registerComponent('spawner', {
 
     // Rotate to heading based on turret rotation and tank rotation
     var velocity = new THREE.Vector3(0, 0, -30);
-    if (cameraRotation) {
-      const cameraHeading = new THREE.Euler(0, 0, 0, 'YXZ');
-      cameraHeading.set(
-        THREE.Math.degToRad(cameraRotation.x),
-        THREE.Math.degToRad(cameraRotation.y),
-        THREE.Math.degToRad(cameraRotation.z)
+    if (turretRotation) {
+      const turretHeading = new THREE.Euler(0, 0, 0, 'YXZ');
+      turretHeading.set(
+        THREE.Math.degToRad(turretRotation.x),
+        THREE.Math.degToRad(turretRotation.y),
+        THREE.Math.degToRad(turretRotation.z)
       );
-      velocity.applyEuler(cameraHeading);
-    }
-    if(tankRotation) {
-      const tankHeading = new THREE.Euler(0, 0, 0, 'YXZ');
-      tankHeading.set(
-        THREE.Math.degToRad(tankRotation.x),
-        THREE.Math.degToRad(tankRotation.y),
-        THREE.Math.degToRad(tankRotation.z)
-      );
-      velocity.applyEuler(tankHeading);
+      velocity.applyEuler(turretHeading);
     }
 
     // Add momentum from tank
@@ -76,16 +56,6 @@ AFRAME.registerComponent('spawner', {
     // Set velocity on projectile
     entity.setAttribute('velocity', velocity);
 
-    // Have the spawned entity face the same direction as the entity.
-    // Allow the entity to further modify the inherited rotation.
-    // entity.addEventListener('loaded', function () {
-    //   const entityRotation = entity.getComputedAttribute('rotation');
-    //   entity.setAttribute('rotation', {
-    //     x: entityRotation.x + rotation.x,
-    //     y: entityRotation.y + rotation.y,
-    //     z: entityRotation.z + rotation.z
-    //   });
-    // });
     el.sceneEl.appendChild(entity);
     var projectileData = {
       position: entity.getAttribute('position'),

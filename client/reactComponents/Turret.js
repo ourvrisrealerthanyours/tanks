@@ -17,7 +17,7 @@ class Turret extends React.Component {
       return (
         <a-entity class='turretContainer' position={this.position}>
           <a-sphere // Turret
-          id={this.props.turretId}
+          id='turretRotator'
           position={`0 0 0`}
           rotation={this.rotation}
           material={this.props.material}
@@ -47,7 +47,6 @@ class Turret extends React.Component {
             <Barrel
             position='0 0 0'
             characterId={this.props.characterId}
-            // fireEvent='on: click; callback:handleClick;'
             material={this.props.material}/>
           </a-sphere>
         </a-entity>
