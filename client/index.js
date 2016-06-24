@@ -13,7 +13,7 @@ require('./aframeComponents/explode');
 require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
 
-AFRAME.registerComponent('proxy-controls', require('aframe-proxy-controls'));
+// AFRAME.registerComponent('proxy-controls', require('aframe-proxy-controls'));
 
 import WelcomePage from './reactComponents/WelcomePage'
 

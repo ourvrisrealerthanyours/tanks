@@ -17,23 +17,22 @@ class EnemyTank extends React.Component {
     // (making 1.2 height necessary to be flush with ground)
     // TODO: Add flash component for when shooting
     return (
-      <a-entity position='0 0 0' rotation='0 0 0'>
-        <TankBody class='enemyTank'
-        bodyId={this.props.bodyId}
-        position={this.props.position}
-        rotation={this.rotation}
+      <a-entity 
+      position={this.props.position} 
+      kinematic-body={`radius: ${this.radius}; height: ${this.radius}`}
+      socket-controls={`characterId: ${this.props.characterId}; controlledAttribute: position; simulationAttribute: position`}>
+        <TankBody
         radius={this.radius}
+        material={this.props.material} 
+        rotation={this.rotation}
+        socket={this.props.socket}
+        characterId={this.props.characterId}/>
+        <Turret
+        position={`0 ${this.radius - 0.5} 0`}
+        rotation={this.turretAngle}
         material={this.props.material}
         socket={this.props.socket}
-        characterId={this.props.characterId}>
-          <Turret
-          turretId={this.props.turretId}
-          position={`0 ${this.radius - 0.5} 0`}
-          rotation={this.turretAngle}
-          material={this.props.material}
-          socket={this.props.socket}
-          characterId={this.props.characterId}/>
-        </TankBody>
+        characterId={this.props.characterId}/>
       </a-entity>
     )
   }

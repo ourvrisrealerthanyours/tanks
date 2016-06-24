@@ -19,40 +19,36 @@ class Turret extends React.Component {
           <a-sphere // Turret
           id={this.props.turretId}
           position={`0 0 0`}
-          rotation='0 0 0'
+          rotation={this.rotation}
           material={this.props.material}
+          look-controls
+          data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`} 
           radius={1.5}>
-            <a-entity id='camera' class='turret'
+            <a-entity id='camera'
             position={`0 1 0`}
-            rotation={this.rotation}
-            camera='near: 0.05'
-            look-controls
-            data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
-              <Barrel
-              position='0 -1 0'
-              characterId={this.props.characterId}
-              fireEvent='on: click'
-              material={this.props.material}/>
-            </a-entity>
+            camera='near: 0.05'/>
+            <Barrel
+            position='0 0 0'
+            characterId={this.props.characterId}
+            fireEvent='on: click'
+            material={this.props.material}/>
           </a-sphere>
         </a-entity>
       )
     } else {
       return (
-        <a-entity class='turretContainer' position={this.position}>
-          <a-sphere class='turret'
-          id={this.props.turretId}
-          position={`0 0 0`}
-          rotation={this.rotation}
-          material={this.props.material}
-          radius={1.5}>
-            <Barrel
-            position='0 0 0'
-            characterId={this.props.characterId}
-            // fireEvent='on: click; callback:handleClick;'
-            material={this.props.material}/>
-          </a-sphere>
-        </a-entity>
+        <a-sphere
+        position={this.position}
+        rotation={this.rotation}
+        socket-controls={`characterId: ${this.props.characterId}; controlledAttribute: rotation; simulationAttribute: turretRotation`}
+        material={this.props.material}
+        radius={1.5}>
+          <Barrel
+          position='0 0 0'
+          characterId={this.props.characterId}
+          // fireEvent='on: click; callback:handleClick;'
+          material={this.props.material}/>
+        </a-sphere>
       )
     }
   }
