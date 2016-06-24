@@ -68,8 +68,6 @@ class BattleScene extends React.Component {
       <a-entity>
 
         <a-sky color='blue' />
-        <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
-        <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
 
         <Arena wallHeight={8}>
           {this.renderCharacters.call(this)}

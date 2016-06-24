@@ -22,6 +22,7 @@ class PlayerDriver extends React.Component {
         position={this.position}
         rotation={this.rotation}
         universal-controls
+        //tank-controls
         kinematic-body='radius: 2.5; height:2.5;'
         data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
