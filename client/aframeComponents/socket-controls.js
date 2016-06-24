@@ -48,6 +48,7 @@ AFRAME.registerComponent('socket-controls', {
       lerpRotations(this.current, this.previous, this.next, alpha);
     } else {
       this.current.lerpVectors(this.previous, this.next, alpha);
+      this.current.y = 2.5;
     }
 
     this.el.setAttribute(data.controlledAttribute, this.current);

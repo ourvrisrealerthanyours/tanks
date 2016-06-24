@@ -22,7 +22,7 @@ class Turret extends React.Component {
           rotation={this.rotation}
           material={this.props.material}
           look-controls
-          data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`} 
+          data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: turretRotation;`} 
           radius={1.5}>
             <a-entity id='camera'
             position={`0 1 0`}

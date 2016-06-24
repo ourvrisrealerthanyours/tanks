@@ -1,6 +1,6 @@
 import React from 'react';
 import TankBody from './TankBody';
-import Barrel from './Barrel';
+import Turret from './Turret';
 
 class PlayerDriver extends React.Component {
 
@@ -16,14 +16,17 @@ class PlayerDriver extends React.Component {
 
   render () {
     return (
-      <a-entity rotation='0 0 0'>
+      <a-sphere id='playerTankContainer' 
+      material='opacity: 0;'
+      position={this.position}
+      kinematic-body='radius: 2.5; height:2.5;'
+      rotation='0 0 0'>
         <a-entity id='tankBody'
         material='opacity: 0;'
-        position={this.position}
+        position={'0 0 0'}
         rotation={this.rotation}
         // universal-controls
         tank-controls
-        kinematic-body='radius: 2.5; height:2.5;'
         data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
 
           <Compartment
@@ -34,10 +37,14 @@ class PlayerDriver extends React.Component {
           <a-entity id='camera' position={`0 0 -1`}
           camera='near: 0.05;' />
 
-          {this.props.children}
-
         </a-entity>
-      </a-entity>
+        <Turret
+        position={`0 ${this.radius - 0.5} 0`}
+        rotation={this.turretAngle}
+        material={this.props.material}
+        socket={this.props.socket}
+        characterId={this.props.characterId}/>
+      </a-sphere>
     )
   }
 }
