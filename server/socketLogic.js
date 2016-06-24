@@ -8,7 +8,7 @@ module.exports = io => {
   simulation.start();
 
   io.on('connection', client => {
-    console.log('connected client', client.id);
+    console.log('Client', client.id, 'connected');
     io.to(client.id).emit('assignPlayerId', client.id);
 
     client.on('requestPlayerId', () => {
@@ -38,14 +38,28 @@ module.exports = io => {
     });
 
     client.on('disconnect', data => {
-      console.log(`our client ${client.id} disconnected...`);
+      console.log(`Client ${client.id} disconnected...`);
       simulation.removePlayer(client.id);
       client.broadcast.emit('roleUpdate', simulation.characters);
     });
 
     client.on('shotFired', projectileData => {
       client.broadcast.emit('shotFired', projectileData);
-    })
+    });
+
+    client.on('shotHit', collisionDetails => {
+      // TODO: hit tanks that are nearby
+      // TODO: include amount of damage to apply
+      const hitCharacterId = collisionDetails.hitCharacterId;
+      const firedCharacterId = collisionDetails.firedCharacterId;
+      if(hitCharacterId) {
+        const remainingHealth = simulation.registerHit(hitCharacterId);
+        io.emit('shotHit', {
+          characterId: hitCharacterId,
+          remainingHealth
+        });
+      }
+    });
 
   });
 }
