@@ -20,7 +20,7 @@ class EnemyTank extends React.Component {
       <a-entity 
       position={this.props.position} 
       kinematic-body={`radius: ${this.radius}; height: ${this.radius}`}
-      socket-controls={`characterId: ${this.props.characterId}; controlledAttribute: position; simulationAttribute: position`}>
+      socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: position`}>
         <TankBody
         radius={this.radius}
         material={this.props.material} 

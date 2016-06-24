@@ -14,7 +14,7 @@ class TankBody extends React.Component {
       position='0 0 0'
       rotation={this.props.rotation}
       material={this.material}
-      socket-controls={`controlledAttribute: rotation; simulationAttribute: tankRotation; characterId: ${this.props.characterId}`}
+      socket-controls={`simulationAttribute: tankRotation; characterId: ${this.props.characterId}`}
       radius={this.radius}>
         <a-torus
         position='0 0 0'
