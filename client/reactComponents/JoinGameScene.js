@@ -15,7 +15,10 @@ class JoinGameScene extends React.Component {
     }
     this.socket.emit('requestCharacters', props.roomId);
     this.socket.on('roleUpdate', characters => {
+      console.log('got role update!');
+      console.log('================');
       this.setState({ characters: characters, loaded: true });
+      console.log('================');
     });
     this.socket.on('seatConfirmation', confirmation => {
       if (confirmation) {
@@ -45,25 +48,30 @@ class JoinGameScene extends React.Component {
       const greenBody = document.querySelector('#greenBody');
       const redTurret = document.querySelector('#redTurret');
       const redBody = document.querySelector('#redBody');
+      const self = this;
 
-      greenTurret.addEventListener('click', event => {
-        if (!this.state.characters[0].gunner) {
-          this.requestSeat('0', 'gunner')
+      greenTurret.addEventListener('click', function pickGreenTurret(event) {
+        if (!self.state.characters[0].gunner) {
+          self.requestSeat('0', 'gunner');
+          greenTurret.removeEventListener('click', pickGreenTurret);
         }
       });
-      greenBody.addEventListener('click', event => {
-        if (!this.state.characters[0].driver) {
-          this.requestSeat('0', 'driver')
+      greenBody.addEventListener('click', function pickGreenBody(event) {
+        if (!self.state.characters[0].driver) {
+          self.requestSeat('0', 'driver');
+          greenBody.removeEventListener('click', pickGreenBody);
         }
       });
-      redTurret.addEventListener('click', event => {
-        if (!this.state.characters[1].gunner) {
-          this.requestSeat('1', 'gunner')
+      redTurret.addEventListener('click', function pickRedTurret(event) {
+        if (!self.state.characters[1].gunner) {
+          self.requestSeat('1', 'gunner');
+          redTurret.removeEventListener('click', pickRedTurret);
         }
       });
-      redBody.addEventListener('click', event => {
-        if (!this.state.characters[1].driver) {
-          this.requestSeat('1', 'driver')
+      redBody.addEventListener('click', function pickRedBody(event) {
+        if (!self.state.characters[1].driver) {
+          self.requestSeat('1', 'driver');
+          redBody.removeEventListener('click', pickRedBody);
         }
       });
     }
