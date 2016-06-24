@@ -15,7 +15,6 @@ class Character {
 
   update(freshData) {
     this[freshData.simulationAttribute] = freshData.value;
-    // console.log(this[freshData.simulationAttribute]);
   }
 }
 
