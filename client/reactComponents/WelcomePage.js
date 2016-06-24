@@ -5,7 +5,7 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 
 const io = require('socket.io-client/socket.io');
-const server = 'http://10.6.30.55:8080'; // change for production
+const server = 'http://localhost:8080'; // change for production
 
 class WelcomePage extends React.Component {
 
@@ -57,6 +57,8 @@ class WelcomePage extends React.Component {
           <WallMixin height={8}/>
           <Projectile />
         </a-assets>
+        <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
+        <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
 
         {this.renderScene.call(this)}
 

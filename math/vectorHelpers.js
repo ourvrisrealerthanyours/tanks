@@ -28,8 +28,17 @@ function lerpRotation(start, end, alpha) {
   return (360 + start + shortest_angle * alpha) % 360;
 }
 
+function getVelocity(start, end, period) {
+  return {
+    x: (end.x - start.x)/period*1000,
+    y: (end.y - start.y)/period*1000,
+    z: (end.z - start.z)/period*1000,
+  }
+}
+
 module.exports = {
   rand,
   randStart,
   lerpRotations,
+  getVelocity,
 }

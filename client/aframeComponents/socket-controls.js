@@ -1,6 +1,6 @@
 // TODO: Remove unnecessary bits from schema
 const { DOWNLOAD_PERIOD } = require('../../simulation/constants');
-const { lerpRotations } = require('../../math/vectorHelpers');
+const { lerpRotations, getVelocity } = require('../../math/vectorHelpers');
 
 AFRAME.registerComponent('socket-controls', {
   schema: {
@@ -29,6 +29,7 @@ AFRAME.registerComponent('socket-controls', {
       this.lastUpdateTime = 0;
       this.updateWaiting = false;
       this.updateRate = DOWNLOAD_PERIOD;
+      this.velocity = { x: 0, y: 0, z: 0 };
 
       socket.on('simulationUpdate', characters => {
         if (characters[data.characterId]) {
@@ -42,6 +43,8 @@ AFRAME.registerComponent('socket-controls', {
           if (data.type === 'body') {
             this.nextPos = characters[data.characterId].position;
             this.nextRot = characters[data.characterId].tankRotation;
+            // this.velocity = getVelocity(this.previousPos, this.nextPos, DOWNLOAD_PERIOD);
+            // this.el.setAttribute('velocity', this.velocity);
           }
         }
       });
@@ -68,7 +71,7 @@ AFRAME.registerComponent('socket-controls', {
       // Don't update y to enable compatibility with kinematic-body physics
       this.el.setAttribute('position', {
         x: this.currentPos.x,
-        y: this.el.getAttribute('position').y,
+        y: 2.5, //this.el.getAttribute('position').y,
         z: this.currentPos.z
       });
     }

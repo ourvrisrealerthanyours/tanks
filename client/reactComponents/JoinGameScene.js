@@ -73,8 +73,6 @@ class JoinGameScene extends React.Component {
     return this.state.loaded ? (
       <a-entity>
         <a-sky color='blue' />
-        <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
-        <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
 
         <Arena wallHeight={8} >
           <a-box id='greenTurret' position='-6 3.3 -8'
@@ -95,7 +93,7 @@ class JoinGameScene extends React.Component {
               fill="backwards" from="1 1 1" to="1.8 1.8 1.8" dur='80'/>
             </a-cursor>
           </a-camera>
-          
+
         </Arena>
       </a-entity>
     ) : <a-entity />;
