@@ -5,45 +5,38 @@ AFRAME.registerComponent('explode', {
   },
 
   init: function() {
-    const entity = this.el;
-    entity.addEventListener('collide', function (e) {
-      // console.log('Shot has collided with ' + e.detail.body.el);
-      const position = entity.getAttribute('position');
-      // console.log(entity.body);
+    const el = this.el;
+    el.addEventListener('collide', function (e) {
+      const expandAnimation = document.createElement('a-animation');
+      // animation.setAttribute('mixin', 'explosion');
+      expandAnimation.setAttribute('attribute', 'geometry.radius');
+      expandAnimation.setAttribute('to', 3);
+      expandAnimation.setAttribute('dur', 200);
+      expandAnimation.setAttribute('easing', 'ease-out');
+
+      const opacityAnimation = document.createElement('a-animation');
+      // animation.setAttribute('mixin', 'explosion');
+      opacityAnimation.setAttribute('attribute', 'material.opacity');
+      opacityAnimation.setAttribute('to', 0);
+      opacityAnimation.setAttribute('dur', 200);
+      opacityAnimation.setAttribute('easing', 'ease-out');
+
+      el.setAttribute('material', 'color:red;');
+      el.setAttribute('velocity', '0 0 0');
+      el.appendChild(expandAnimation);
+      el.appendChild(opacityAnimation);
+
       setTimeout(() => {
-        const expandAnimation = document.createElement('a-animation');
-        // animation.setAttribute('mixin', 'explosion');
-        expandAnimation.setAttribute('attribute', 'geometry.radius');
-        expandAnimation.setAttribute('to', 3);
-        expandAnimation.setAttribute('dur', 200);
-        expandAnimation.setAttribute('easing', 'ease-out');
+        if(el.sceneEl.contains(el)) {
+          el.sceneEl.removeChild(el);
+        }
+      }, 200);
 
-        const opacityAnimation = document.createElement('a-animation');
-        // animation.setAttribute('mixin', 'explosion');
-        opacityAnimation.setAttribute('attribute', 'material.opacity');
-        opacityAnimation.setAttribute('to', 0);
-        opacityAnimation.setAttribute('dur', 200);
-        opacityAnimation.setAttribute('easing', 'ease-out');
-
-        entity.setAttribute('material', 'color:red;');
-        entity.setAttribute('velocity', '0 0 0');
-        entity.appendChild(expandAnimation);
-        entity.appendChild(opacityAnimation);
-
-        setTimeout(() => {
-          entity.sceneEl.removeChild(entity);
-        }, 200);
-
-      },1)
-      // e.detail.target.el;  // Original entity (playerEl).
-      // e.detail.body.el;    // Other entity, which playerEl touched.
-      // e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
-      // e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
     });
 
     setTimeout(() => {
-      if(entity.sceneEl.contains(entity)) {
-        entity.sceneEl.removeChild(entity);
+      if(el.sceneEl.contains(el)) {
+        el.sceneEl.removeChild(el);
       }
     }, 15000)
   },

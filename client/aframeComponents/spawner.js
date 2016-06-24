@@ -19,6 +19,7 @@ AFRAME.registerComponent('spawner', {
    */
   spawn: function () {
     var el = this.el;
+    var data = this.data;
     var entity = document.createElement('a-entity');
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
@@ -55,6 +56,19 @@ AFRAME.registerComponent('spawner', {
 
     // Set velocity on projectile
     entity.setAttribute('velocity', velocity);
+
+    entity.addEventListener('collide', function listener(e) {
+      window.socket.emit('shotHit', {
+        firedCharacterId: data.characterId,
+        hitCharacterId: e.detail.body.el.getAttribute('characterId'),
+        position: e.detail.target.el.getAttribute('position')
+      });
+      entity.removeEventListener('collide', listener);
+      // e.detail.target.el;  // Original entity (playerEl).
+      // e.detail.body.el;    // Other entity, which playerEl touched.
+      // e.detail.contact;    // Stats about the collision (CANNON.ContactEquation).
+      // e.detail.contact.ni; // Normal (direction) of the collision (CANNON.Vec3).
+    });
 
     el.sceneEl.appendChild(entity);
     var projectileData = {
