@@ -31,14 +31,11 @@ const Barrel = (props) => {
         material={`side:double; ${props.material}`}
         event-listener={props.fireEvent}/>
 
-        {props.children}
-
       </a-entity>
     )
   } else {    
     return (
       <a-entity class='barrel'
-      socket-controls={`characterId: ${props.characterId}; type: turret`}
       position={position}>
         <a-cylinder
         position={`0 0 ${-barrelLength / 2}`}

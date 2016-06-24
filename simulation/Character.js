@@ -14,12 +14,8 @@ class Character {
   }
 
   update(freshData) {
-    if (freshData.role === 'gunner') {
-      this.turretRotation = freshData.rotation;
-    } else { // assume role is driver
-      this.position = freshData.position;
-      this.tankRotation = freshData.rotation;
-    }
+    this[freshData.simulationAttribute] = freshData.value;
+    // console.log(this[freshData.simulationAttribute]);
   }
 }
 

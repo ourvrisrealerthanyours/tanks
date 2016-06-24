@@ -28,13 +28,14 @@ AFRAME.registerComponent('tank-controls', {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.attachVisibilityEventListeners();
+    this.parent = this.el.parentElement;
   },
 
   update: function (previousData) {
     // If data changed, reset velocity.
     this.angularVelocity = 0;
     this.velocity.set(0, 0, 0);
-    this.el.setAttribute('velocity', this.velocity);
+    this.parent.setAttribute('velocity', this.velocity);
   },
 
   tick: function (t, dt) {
@@ -43,7 +44,7 @@ AFRAME.registerComponent('tank-controls', {
     if (dt / 1000 > MAX_DELTA) {
       this.angularVelocity = 0;
       this.velocity.set(0, 0, 0);
-      this.el.setAttribute('velocity', this.velocity);
+      this.parent.setAttribute('velocity', this.velocity);
       return;
     }
 
@@ -67,11 +68,10 @@ AFRAME.registerComponent('tank-controls', {
     var velocity, dVelocity,
         data = this.data;
     var keys = this.keys;
-    var el = this.el;
 
     dVelocity = this.getVelocityDelta(dt);
     velocity = this.velocity;
-    velocity.copy(this.el.getAttribute('velocity'));
+    velocity.copy(this.parent.getAttribute('velocity'));
     velocity.x -= velocity.x * data.movementEasing * dt / 1000;
     velocity.z -= velocity.z * data.movementEasing * dt / 1000;
 
@@ -92,7 +92,7 @@ AFRAME.registerComponent('tank-controls', {
       velocity.add(dVelocity);
     }
 
-    this.el.setAttribute('velocity', velocity);
+    this.parent.setAttribute('velocity', velocity);
 
   },
 

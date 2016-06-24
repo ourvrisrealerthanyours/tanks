@@ -10,6 +10,7 @@ AFRAME.registerComponent('data-emitter', {
   },
 
   init: function() {
+    // console.log('INIT!', this.el)
     const data = this.data;
     data.socket = window.socket;
     if (data.simulationAttribute === 'position') {
@@ -17,6 +18,7 @@ AFRAME.registerComponent('data-emitter', {
     } else {
       this.attributeToEmit = 'rotation';
     }
+    // console.log(this.attributeToEmit);
   },
 
   tick: function(t, dt) {
@@ -25,8 +27,8 @@ AFRAME.registerComponent('data-emitter', {
       data.socket.emit('characterUpdate', {
         characterId: data.characterId,
         simulationAttribute: data.simulationAttribute,
-        value: this.el.getAttribute(this.attributeToEmit);
-      })
+        value: this.el.getAttribute(this.attributeToEmit)
+      });
     }
   },
 });

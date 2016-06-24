@@ -40,7 +40,7 @@ class BattleScene extends React.Component {
     return this.state.characters.map(character => {
       const position = [
         character.position.x,
-        character.position.y,
+        2.6,
         character.position.z
       ].join(' ');
 
