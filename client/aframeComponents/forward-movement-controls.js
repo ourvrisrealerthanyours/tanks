@@ -24,11 +24,8 @@ AFRAME.registerComponent('forward-movement-controls', {
     this.localKeys = {};
     this.rotatorEl = this.data.rotationElSelector ? 
       document.querySelector(this.data.rotationElSelector) : this.el;
-    this.listeners = {
-      keydown: this.onKeyDown.bind(this),
-      keyup: this.onKeyUp.bind(this),
-      blur: this.onBlur.bind(this)
-    };
+    
+    this.bindMethods();
     this.attachEventListeners();
   },
 
@@ -56,12 +53,12 @@ AFRAME.registerComponent('forward-movement-controls', {
     // if (keys.KeyA || keys.ArrowLeft)  { this.dVelocity.x -= 1; }
     if (keys[83] || keys[40])  { this.dVelocity.z += 1; } // S or Down Arrow
     // if (keys.KeyD || keys.ArrowRight) { this.dVelocity.x += 1; }
+    this.dVelocity.z = this.isMoving ? -1 : this.dVelocity.z;
 
     return this.dVelocity.clone();
   },
 
   updateVelocity: function(dt) {
-    console.log('updatinVel!')
     var velocity, dVelocity,
         data = this.data;
     var keys = this.getKeys();
@@ -110,15 +107,36 @@ AFRAME.registerComponent('forward-movement-controls', {
   },
 
   attachEventListeners: function () {
-    window.addEventListener('keydown', this.listeners.keydown, false);
-    window.addEventListener('keyup', this.listeners.keyup, false);
-    window.addEventListener('blur', this.listeners.blur, false);
+    var sceneEl = this.el.sceneEl;
+    var canvasEl = sceneEl.canvas;
+    if (!canvasEl) {
+      sceneEl.addEventListener('render-target-loaded', this.attachEventListeners.bind(this));
+      return;
+    }
+    canvasEl.addEventListener('touchstart', this.onTouchStart);
+    canvasEl.addEventListener('touchend', this.onTouchEnd);
+    window.addEventListener('keydown', this.onKeyDown, false);
+    window.addEventListener('keyup', this.onKeyUp, false);
+    window.addEventListener('blur', this.onBlur, false);
   },
 
   removeEventListeners: function () {
     window.removeEventListener('keydown', this.listeners.keydown);
     window.removeEventListener('keyup', this.listeners.keyup);
     window.removeEventListener('blur', this.listeners.blur);
+
+    var canvasEl = this.el.sceneEl && this.sceneEl.canvas;
+    if (!canvasEl) { return; }
+    canvasEl.removeEventListener('touchstart', this.listeners.touchstart);
+    canvasEl.removeEventListener('touchend', this.listeners.touchend);
+  },
+
+  bindMethods: function () {
+    this.onKeyUp = this.onKeyUp.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onTouchStart = this.onTouchStart.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
   },
 
   onKeyDown: function (event) {
@@ -129,6 +147,16 @@ AFRAME.registerComponent('forward-movement-controls', {
   onKeyUp: function (event) {
     if (!shouldCaptureKeyEvent(event)) { return; }
     this.localKeys[event.keyCode] = false;
+  },
+
+  onTouchStart: function (e) {
+    this.isMoving = true;
+    e.preventDefault();
+  },
+
+  onTouchEnd: function (e) {
+    this.isMoving = false;
+    e.preventDefault();
   },
 
   onBlur: function () {
