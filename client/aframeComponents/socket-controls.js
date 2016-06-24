@@ -5,7 +5,6 @@ const { lerpRotations, getVelocity } = require('../../math/vectorHelpers');
 AFRAME.registerComponent('socket-controls', {
   schema: {
     characterId: {default: ''},
-    controlledAttribute: {default: 'position'}, // one of 'position', 'rotation'
     simulationAttribute: {default: 'position'}, // one of 'position', 'tankRotation', 'turretRotation'
     posEnabled: {default: true},
     rotEnabled: {default: true},
@@ -25,10 +24,16 @@ AFRAME.registerComponent('socket-controls', {
       this.updateRate = DOWNLOAD_PERIOD;
       this.velocity = { x: 0, y: 0, z: 0 };
 
+      if (data.simulationAttribute === 'position') {
+        this.controlledAttribute = 'position';
+      } else {
+        this.controlledAttribute = 'rotation';
+      }
+
       socket.on('simulationUpdate', characters => {
         if (characters[data.characterId]) {
           this.updateWaiting = true;
-          this.previous = this.el.getAttribute(data.controlledAttribute);
+          this.previous = this.el.getAttribute(this.controlledAttribute);
           this.next = characters[data.characterId][data.simulationAttribute];
         }
       });
@@ -44,7 +49,7 @@ AFRAME.registerComponent('socket-controls', {
     }
     const alpha = (t - this.lastUpdateTime) / this.updateRate;
 
-    if (data.controlledAttribute === 'rotation') {
+    if (this.controlledAttribute === 'rotation') {
       lerpRotations(this.current, this.previous, this.next, alpha);
     } else {
       this.current.lerpVectors(this.previous, this.next, alpha);
