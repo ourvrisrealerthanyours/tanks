@@ -41,6 +41,13 @@ class Simulation {
     return this.characters[characterId][role] === playerId;
   }
 
+  registerHit(characterId) {
+    if(this.characters[characterId]) {
+      this.characters[characterId].health -= 30;
+      return this.characters[characterId].health;
+    }
+  }
+
   removePlayer(playerId) {
     // TODO: Make this function prettier
     for(const characterId in this.characters) {
