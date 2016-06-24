@@ -10,7 +10,6 @@ AFRAME.registerComponent('data-emitter', {
   },
 
   init: function() {
-    // console.log('INIT!', this.el)
     const data = this.data;
     data.socket = window.socket;
     if (data.simulationAttribute === 'position') {
@@ -18,7 +17,6 @@ AFRAME.registerComponent('data-emitter', {
     } else {
       this.attributeToEmit = 'rotation';
     }
-    // console.log(this.attributeToEmit);
   },
 
   tick: function(t, dt) {
