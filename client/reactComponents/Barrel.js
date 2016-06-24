@@ -33,10 +33,11 @@ const Barrel = (props) => {
 
       </a-entity>
     )
-  } else {    
+  } else {
     return (
       <a-entity class='barrel'
-      position={position}>
+      position={position}
+      rotation={rotation}>
         <a-cylinder
         position={`0 0 ${-barrelLength / 2}`}
         rotation='90 0 0'
@@ -53,9 +54,6 @@ const Barrel = (props) => {
         open-ended='false'
         theta-length='360'
         material={`side:double; ${props.material}`}/>
-
-        {props.children}
-
       </a-entity>
     )
   }
