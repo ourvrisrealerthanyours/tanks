@@ -22,13 +22,15 @@ class PlayerDriver extends React.Component {
       position={this.position}
       kinematic-body='radius: 2.5; height:2.5;'
       data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: position;`}
+      forward-movement-controls='rotationElSelector: #tankBody;'
       rotation='0 0 0'>
         <a-entity id='tankBody'
         material='opacity: 0;'
         position={'0 0 0'}
         rotation={this.rotation}
-        // universal-controls
-        tank-controls
+        look-controls
+        // universal-controls='movementEnabled: false; rotationControls: hmd, mouse;'
+        // tank-controls
         data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: tankRotation;`}>
 
           <Compartment
@@ -42,6 +44,8 @@ class PlayerDriver extends React.Component {
         </a-entity>
         <a-sphere
         position={'0 2.5 0'}
+        material={this.props.material}
+        radius='0.25'
         socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: turretRotation`}>
           <Barrel
           position='0 0 0'
