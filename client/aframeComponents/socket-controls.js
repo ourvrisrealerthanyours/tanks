@@ -56,7 +56,7 @@ AFRAME.registerComponent('socket-controls', {
       this.current.y = 2.5;
     }
 
-    this.el.setAttribute(data.controlledAttribute, this.current);
+    this.el.setAttribute(this.controlledAttribute, this.current);
   }
 
 });

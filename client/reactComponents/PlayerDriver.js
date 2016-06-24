@@ -20,6 +20,7 @@ class PlayerDriver extends React.Component {
       material='opacity: 0;'
       position={this.position}
       kinematic-body='radius: 2.5; height:2.5;'
+      data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: position;`}
       rotation='0 0 0'>
         <a-entity id='tankBody'
         material='opacity: 0;'
@@ -27,7 +28,7 @@ class PlayerDriver extends React.Component {
         rotation={this.rotation}
         // universal-controls
         tank-controls
-        data-emitter={`role: ${this.props.role}; characterId: ${this.props.characterId}`}>
+        data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: tankRotation;`}>
 
           <Compartment
           compartmentWidth={this.compartmentWidth}
