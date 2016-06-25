@@ -1,3 +1,5 @@
+import { TANK_RADIUS } from '../../simulation/constants';
+
 var shouldCaptureKeyEvent = (event) => {
   if (event.shiftKey || event.metaKey || event.altKey || event.ctrlKey) {
     return false;
@@ -22,15 +24,19 @@ AFRAME.registerComponent('forward-movement-controls', {
     this.dVelocity = new THREE.Vector3();
     this.heading = new THREE.Euler(0, 0, 0, 'YXZ');
     this.localKeys = {};
-    this.rotatorEl = this.data.rotationElSelector ? 
+    this.rotatorEl = this.data.rotationElSelector ?
       document.querySelector(this.data.rotationElSelector) : this.el;
-    
+
     this.bindMethods();
     this.attachEventListeners();
   },
 
   tick: function (t, dt) {
     if (isNaN(dt)) { return; }
+    
+    const position = this.getAttribute('position');
+    position.y = TANK_RADIUS;
+    this.el.setAttribute('position', position);
 
     if (dt / 1000 > MAX_DELTA) {
       this.velocity.set(0, 0, 0);

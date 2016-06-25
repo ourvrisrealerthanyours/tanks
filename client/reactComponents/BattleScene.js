@@ -2,7 +2,7 @@ import React from 'react';
 import Arena from './Arena';
 import PlayerTank from './PlayerTank';
 import EnemyTank from './EnemyTank';
-import { colors } from '../../simulation/constants';
+import { colors, TANK_RADIUS } from '../../simulation/constants';
 
 class BattleScene extends React.Component {
 
@@ -45,7 +45,7 @@ class BattleScene extends React.Component {
     return this.characters.map(character => {
       const position = [
         character.position.x,
-        character.position.y, // used to be hard coded to TANK_RADIUS
+        TANK_RADIUS,//character.position.y, // used to be hard coded to TANK_RADIUS
         character.position.z
       ].join(' ');
 
