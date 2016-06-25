@@ -10,16 +10,8 @@ class JoinGameScene extends React.Component {
     super(props);
     this.socket = props.socket;
     this.enterBattle = props.enterBattle;
-    this.state = {
-      loaded: false,
-      characters: {}
-    }
-    const self = this;
     this.bindMethods();
     this.socket.emit('requestCharacters', props.roomId);
-    this.socket.on('roleUpdate', function advanceToBattleScene(characters) {
-      self.setState({ characters: characters, loaded: true });
-    });
     this.socket.on('seatConfirmation', confirmation => {
       if (confirmation) {
         this.removeListeners();
@@ -44,15 +36,13 @@ class JoinGameScene extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.loaded) {
-      this.registerListeners();
-    }
+    this.registerListeners();
   }
 
   pickRole(event) {
     const characterId = event.target.getAttribute('characterId')
     const role = event.target.getAttribute('role')
-    if (!this.state.characters[characterId][role]) {
+    if (!this.props.characters[characterId][role]) {
       this.requestSeat(characterId, role);
     }
   }
@@ -76,8 +66,8 @@ class JoinGameScene extends React.Component {
 
   renderSelectables() {
     const characters = [];
-    for (var characterId in this.state.characters) {
-      characters.push(this.state.characters[characterId]);
+    for (var characterId in this.props.characters) {
+      characters.push(this.props.characters[characterId]);
     }
     const n = characters.length;
     const totalLength = 3 * n;
@@ -95,21 +85,12 @@ class JoinGameScene extends React.Component {
   }
 
   render () {
-    return this.state.loaded ? (
+    return (
       <a-entity>
         <a-sky color='blue' />
 
         <Arena wallHeight={8} >
           {this.renderSelectables.call(this)}
-          {/*<a-box id='greenTurret' position='-6 3.3 -8'
-          material={`color: green; opacity: ${1 - 0.5 * !!this.state.characters[0].gunner}`}/>
-          <a-box id='greenBody' position='-6 1.3 -8'
-          material={`color: green; opacity: ${1 - 0.5 * !!this.state.characters[0].driver}`}/>
-          <a-box id='redTurret' position='6 3.3 -8'
-          material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].gunner}`}/>
-          <a-box id='redBody' position='6 1.3 -8'
-          material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].driver}`}/>*/}
-
           <a-camera position='0 3 0' wasd-controls='enabled: false;'>
             <a-cursor maxDistance='10'>
               <a-animation begin="fusing" easing="ease-in" attribute="scale"
@@ -122,7 +103,7 @@ class JoinGameScene extends React.Component {
 
         </Arena>
       </a-entity>
-    ) : <a-entity />;
+    )
   }
 }
 

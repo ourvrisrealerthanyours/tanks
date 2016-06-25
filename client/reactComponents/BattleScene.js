@@ -16,15 +16,7 @@ class BattleScene extends React.Component {
     this.role = props.role;
     this.playerId = props.playerId
     this.socket = props.socket;
-    this.socket.emit('requestCharacters', this.props.roomId);
-    this.socket.on('roleUpdate', characters => {
-      const charactersArr = [];
-      for (var characterId in characters) {
-        charactersArr.push(characters[characterId]);
-      }
-      // TODO: make sure the update was for this room
-      this.setState({ characters: charactersArr });
-    });
+    this.socket.emit('requestCharacters');
     this.socket.on('shotFired', projectileData => {
       const projectile = document.createElement('a-entity');
       projectile.setAttribute('mixin', 'projectile');
@@ -38,8 +30,11 @@ class BattleScene extends React.Component {
   }
 
   renderCharacters () {
-    // TODO: How do we map if two characters per tank?
-    return this.state.characters.map(character => {
+    this.characters = [];
+    for (var characterId in this.props.characters) {
+      this.characters.push(this.props.characters[characterId]);
+    }
+    return this.characters.map(character => {
       const position = [
         character.position.x,
         2.6,
