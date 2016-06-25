@@ -54,10 +54,23 @@ module.exports = io => {
       const firedCharacterId = collisionDetails.firedCharacterId;
       if(hitCharacterId) {
         const remainingHealth = simulation.registerHit(hitCharacterId);
-        io.emit('shotHit', {
+        io.emit('characterHit', {
           characterId: hitCharacterId,
           remainingHealth
         });
+        if(remainingHealth <= 0) {
+          const remainingLives = simulation.registerDeath(hitCharacterId);
+          io.emit('characterDestroyed', {
+            remainingLives,
+            characterId: hitCharacterId,
+            culpritCharacterId: firedCharacterId
+          });
+          if(remainingLives <= 0) {
+            io.emit('characterEliminated', {
+              characterId: hitCharacterId
+            });
+          }
+        }
       }
     });
 

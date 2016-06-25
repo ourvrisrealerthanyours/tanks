@@ -64,13 +64,13 @@ class WelcomePage extends React.Component {
 
   render () {
     return (
-      <a-scene id='scene' physics='debug:false'>
+      <a-scene id='scene' physics='debug:false' vr-mode-ui='enabled: false'>
         <a-assets>
           <WallMixin height={8}/>
           <Projectile />
         </a-assets>
-        <a-entity light="type: directional; color: #EEE; intensity: 1.0" position="-1 1 0"/>
-        <a-entity light="type: hemisphere; color: #222; groundColor: #555; intensity: 2"/>
+        <a-entity light='type: directional; color: #EEE; intensity: 1.0' position='-1 1 0'/>
+        <a-entity light='type: hemisphere; color: #222; groundColor: #555; intensity: 2'/>
 
         {this.renderScene.call(this)}
 
