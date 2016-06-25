@@ -11,7 +11,6 @@ class WelcomePage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.roomId = '0';
     this.socket = io.connect(server);
     window.socket = this.socket; // figure out a better way for everyone to have access to this socket
 
