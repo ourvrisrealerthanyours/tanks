@@ -4,13 +4,14 @@ import TankBody from './TankBody';
 import Turret from './Turret';
 import Barrel from './Barrel';
 import { rand } from '../../math/vectorHelpers';
+import { TANK_RADIUS } from '../../simulation/constants';
 
 class PlayerTank extends React.Component {
 
   constructor(props) {
     super(props);
     this.rotation = props.rotation || '0 0 0';
-    this.radius = 2.5;
+    this.radius = TANK_RADIUS;
     this.socket = props.socket;
   }
 
@@ -27,8 +28,8 @@ class PlayerTank extends React.Component {
       )
     } else if(this.props.role === 'gunner') {
       return (
-        <a-entity 
-        position={this.props.position} 
+        <a-entity
+        position={this.props.position}
         kinematic-body={`radius: ${this.radius}; height: ${this.radius};`}
         characterId={this.props.characterId}
         socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: position`}>

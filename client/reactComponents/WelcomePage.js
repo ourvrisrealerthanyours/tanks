@@ -20,9 +20,14 @@ class WelcomePage extends React.Component {
       window.playerId = this.state.playerId;
     });
 
+    this.socket.on('roleUpdate', characters => {
+      this.setState({ characters });
+    });
+
     this.state = {
       scene: 'joinGame',
       characterId: undefined,
+      charcters: {},
       playerId: undefined,
       role: undefined
     };
@@ -39,13 +44,21 @@ class WelcomePage extends React.Component {
   renderScene() {
     if(this.state.scene === 'joinGame') {
       return (
-        <JoinGameScene socket={this.socket} playerId={this.state.playerId}
-        enterBattle={this.changeScene.bind(this, 'battleMode')} roomId={this.roomId}/>
+        <JoinGameScene
+        socket={this.socket}
+        playerId={this.state.playerId}
+        characters={this.state.characters}
+        enterBattle={this.changeScene.bind(this, 'battleMode')}
+        />
       )
     } else if (this.state.scene === 'battleMode') {
       return (
-        <BattleScene socket={this.socket} playerId={this.state.playerId}
-        role={this.state.role} characterId={this.state.characterId} roomId={this.roomId}/>
+        <BattleScene
+        socket={this.socket}
+        playerId={this.state.playerId}
+        role={this.state.role}
+        characters={this.state.characters}
+        characterId={this.state.characterId}/>
       )
     }
   }
