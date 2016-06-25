@@ -12,6 +12,7 @@ class Character {
     this.gunner = null;
     this.driver = null;
     this.health = 100;
+    this.lives = 3;
   }
 
   update(freshData) {

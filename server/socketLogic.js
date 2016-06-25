@@ -59,8 +59,10 @@ module.exports = io => {
           remainingHealth
         });
         if(remainingHealth <= 0) {
+          const remainingLives = simulation.registerDeath(hitCharacterId);
           io.emit('characterDestroyed', {
-            destroyedCharacterId: hitCharacterId,
+            remainingLives,
+            characterId: hitCharacterId,
             culpritCharacterId: firedCharacterId
           });
         }
