@@ -16,6 +16,7 @@ module.exports = io => {
     })
 
     client.on('requestCharacters', () => {
+      console.log('line 19');
       io.to(client.id).emit('roleUpdate', simulation.characters);
     });
 

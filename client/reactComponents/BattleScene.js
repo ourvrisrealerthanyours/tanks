@@ -2,8 +2,7 @@ import React from 'react';
 import Arena from './Arena';
 import PlayerTank from './PlayerTank';
 import EnemyTank from './EnemyTank';
-
-const colors = ['green', 'red', 'blue', 'orange', 'black'];
+import { colors } from '../../simulation/constants';
 
 class BattleScene extends React.Component {
 

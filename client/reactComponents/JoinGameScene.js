@@ -2,6 +2,7 @@ import React from 'react';
 import Arena from './Arena';
 import EnemyTank from './EnemyTank';
 import WallMixin from './WallMixin';
+import { colors } from '../../simulation/constants';
 
 class JoinGameScene extends React.Component {
 
@@ -13,15 +14,15 @@ class JoinGameScene extends React.Component {
       loaded: false,
       characters: {}
     }
+    const self = this;
+    this.bindMethods();
     this.socket.emit('requestCharacters', props.roomId);
-    this.socket.on('roleUpdate', characters => {
-      console.log('got role update!');
-      console.log('================');
-      this.setState({ characters: characters, loaded: true });
-      console.log('================');
+    this.socket.on('roleUpdate', function advanceToBattleScene(characters) {
+      self.setState({ characters: characters, loaded: true });
     });
     this.socket.on('seatConfirmation', confirmation => {
       if (confirmation) {
+        this.removeListeners();
         this.enterBattle(confirmation.characterId, confirmation.role);
       } else {
         this.socket.emit('requestCharacters', this.roomId);
@@ -44,37 +45,53 @@ class JoinGameScene extends React.Component {
 
   componentDidUpdate() {
     if (this.state.loaded) {
-      const greenTurret = document.querySelector('#greenTurret');
-      const greenBody = document.querySelector('#greenBody');
-      const redTurret = document.querySelector('#redTurret');
-      const redBody = document.querySelector('#redBody');
-      const self = this;
-
-      greenTurret.addEventListener('click', function pickGreenTurret(event) {
-        if (!self.state.characters[0].gunner) {
-          self.requestSeat('0', 'gunner');
-          greenTurret.removeEventListener('click', pickGreenTurret);
-        }
-      });
-      greenBody.addEventListener('click', function pickGreenBody(event) {
-        if (!self.state.characters[0].driver) {
-          self.requestSeat('0', 'driver');
-          greenBody.removeEventListener('click', pickGreenBody);
-        }
-      });
-      redTurret.addEventListener('click', function pickRedTurret(event) {
-        if (!self.state.characters[1].gunner) {
-          self.requestSeat('1', 'gunner');
-          redTurret.removeEventListener('click', pickRedTurret);
-        }
-      });
-      redBody.addEventListener('click', function pickRedBody(event) {
-        if (!self.state.characters[1].driver) {
-          self.requestSeat('1', 'driver');
-          redBody.removeEventListener('click', pickRedBody);
-        }
-      });
+      this.registerListeners();
     }
+  }
+
+  pickRole(event) {
+    const characterId = event.target.getAttribute('characterId')
+    const role = event.target.getAttribute('role')
+    if (!this.state.characters[characterId][role]) {
+      this.requestSeat(characterId, role);
+    }
+  }
+
+  bindMethods() {
+    this.pickRole = this.pickRole.bind(this);
+  }
+
+  registerListeners() {
+    this.selectables = Array.from(document.getElementsByClassName('delectableSelectable'));
+    this.selectables.forEach(selectable => {
+      selectable.addEventListener('click', this.pickRole);
+    })
+  }
+
+  removeListeners() {
+    this.selectables.forEach(selectable => {
+      selectable.removeEventListener('click', this.pickRole);
+    });
+  }
+
+  renderSelectables() {
+    const characters = [];
+    for (var characterId in this.state.characters) {
+      characters.push(this.state.characters[characterId]);
+    }
+    const n = characters.length;
+    const totalLength = 3 * n;
+    return characters.map((character, index) => {
+      const x = index * totalLength / (n - 1) - totalLength / 2;
+      return (
+        <a-entity key={index}>
+          <a-box class='delectableSelectable' position={`${x} 3.3 -8`} characterId={character.characterId}
+          role='gunner' material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].gunner}`}/>
+          <a-box class='delectableSelectable' position={`${x} 1.3 -8`} characterId={character.characterId}
+          role='driver' material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].driver}`}/>
+        </a-entity>
+      )}
+    );
   }
 
   render () {
@@ -83,14 +100,15 @@ class JoinGameScene extends React.Component {
         <a-sky color='blue' />
 
         <Arena wallHeight={8} >
-          <a-box id='greenTurret' position='-6 3.3 -8'
+          {this.renderSelectables.call(this)}
+          {/*<a-box id='greenTurret' position='-6 3.3 -8'
           material={`color: green; opacity: ${1 - 0.5 * !!this.state.characters[0].gunner}`}/>
           <a-box id='greenBody' position='-6 1.3 -8'
           material={`color: green; opacity: ${1 - 0.5 * !!this.state.characters[0].driver}`}/>
           <a-box id='redTurret' position='6 3.3 -8'
           material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].gunner}`}/>
           <a-box id='redBody' position='6 1.3 -8'
-          material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].driver}`}/>
+          material={`color: red; opacity: ${1 - 0.5 * !!this.state.characters[1].driver}`}/>*/}
 
           <a-camera position='0 3 0' wasd-controls='enabled: false;'>
             <a-cursor maxDistance='10'>
