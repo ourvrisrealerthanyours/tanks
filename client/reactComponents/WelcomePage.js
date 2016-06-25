@@ -5,7 +5,7 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 
 const io = require('socket.io-client/socket.io');
-const server = 'http://159.203.221.124:8080'; // change for production
+const server = 'http://159.203.221.124:80'; // change for production
 
 class WelcomePage extends React.Component {
 
