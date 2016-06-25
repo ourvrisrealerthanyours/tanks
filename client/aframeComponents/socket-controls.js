@@ -1,5 +1,4 @@
-// TODO: Remove unnecessary bits from schema
-const { DOWNLOAD_PERIOD } = require('../../simulation/constants');
+const { DOWNLOAD_PERIOD, TANK_RADIUS } = require('../../simulation/constants');
 const { lerpRotations, getVelocity } = require('../../math/vectorHelpers');
 
 AFRAME.registerComponent('socket-controls', {
@@ -53,7 +52,7 @@ AFRAME.registerComponent('socket-controls', {
       lerpRotations(this.current, this.previous, this.next, alpha);
     } else {
       this.current.lerpVectors(this.previous, this.next, alpha);
-      this.current.y = 2.5;
+      this.current.y = TANK_RADIUS;
     }
 
     this.el.setAttribute(this.controlledAttribute, this.current);

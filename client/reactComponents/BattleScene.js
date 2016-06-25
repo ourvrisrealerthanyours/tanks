@@ -37,7 +37,7 @@ class BattleScene extends React.Component {
     return this.characters.map(character => {
       const position = [
         character.position.x,
-        2.6,
+        character.position.y, // used to be hard coded to TANK_RADIUS
         character.position.z
       ].join(' ');
 

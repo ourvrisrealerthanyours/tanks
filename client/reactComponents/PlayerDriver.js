@@ -2,12 +2,13 @@ import React from 'react';
 import TankBody from './TankBody';
 import Turret from './Turret';
 import Barrel from './Barrel';
+import { TANK_RADIUS } from '../../simulation/constants';
 
 class PlayerDriver extends React.Component {
 
   constructor(props) {
     super(props);
-    this.position = props.position || '0 2.6 0';
+    this.position = props.position || `0 ${TANK_RADIUS} 0`;
     this.rotation = props.rotation || '0 0 0';
     this.socket = props.socket;
     this.compartmentWidth = 1.5;
@@ -20,7 +21,7 @@ class PlayerDriver extends React.Component {
       <a-sphere id='playerTankContainer'
       material='opacity: 0;'
       position={this.position}
-      kinematic-body='radius: 2.5; height:2.5;'
+      kinematic-body={`radius: ${TANK_RADIUS}; height: ${TANK_RADIUS};`}
       data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: position;`}
       forward-movement-controls='rotationElSelector: #tankBody;'
       rotation='0 0 0'>
@@ -43,7 +44,7 @@ class PlayerDriver extends React.Component {
 
         </a-entity>
         <a-sphere
-        position={'0 2.5 0'}
+        position={`0 ${TANK_RADIUS} 0`}
         material={this.props.material}
         radius='0.25'
         socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: turretRotation`}>

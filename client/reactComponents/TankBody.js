@@ -1,10 +1,11 @@
 import React from 'react';
+import { TANK_RADIUS } from '../../simulation/constants';
 
 class TankBody extends React.Component {
 
   constructor(props) {
     super(props);
-    this.radius = props.radius || 2.5;
+    this.radius = props.radius || TANK_RADIUS;
     this.material = props.material || 'color: red;'
   }
 
