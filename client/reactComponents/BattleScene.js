@@ -16,7 +16,9 @@ class BattleScene extends React.Component {
     this.role = props.role;
     this.playerId = props.playerId
     this.socket = props.socket;
+
     this.socket.emit('requestCharacters');
+
     this.socket.on('shotFired', projectileData => {
       const projectile = document.createElement('a-entity');
       projectile.setAttribute('mixin', 'projectile');
@@ -24,8 +26,24 @@ class BattleScene extends React.Component {
       projectile.setAttribute('velocity', projectileData.velocity);
       document.querySelector('#scene').appendChild(projectile);
     });
-    this.socket.on('shotHit', hitData => {
+
+    this.socket.on('characterHit', hitData => {
       console.log('Someone was hit!', hitData);
+      // TODO: Update health bars
+    });
+
+    this.socket.on('characterDestroyed', hitData => {
+      const deathEvent = new CustomEvent('characterDestroyed', {
+       detail: { characterId: hitData.characterId }
+      });
+      window.dispatchEvent(deathEvent);
+      // TODO: Update lives ui
+      // TODO: Render death and respawn
+      if(hitData.characterId === this.characterId) {
+        console.log('You were destroyed!');
+      } else {
+        console.log(hitData.characterId, 'was destroyed!');
+      }
     });
   }
 
