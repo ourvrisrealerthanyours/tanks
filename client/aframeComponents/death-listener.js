@@ -1,4 +1,4 @@
-AFRAME.registerComponent('event-listener', {
+AFRAME.registerComponent('death-listener', {
  schema: {
     characterId: {default: undefined}
   },
@@ -6,7 +6,7 @@ AFRAME.registerComponent('event-listener', {
   init: function () {
     const el = this.el;
     window.addEventListener('characterDestroyed', function (e) {
-      const characterId = e.characterId;
+      const characterId = e.detail.characterId;
       console.log('character killed:', characterId);
 
       // const blackPlane = document.createElement('a-plane');

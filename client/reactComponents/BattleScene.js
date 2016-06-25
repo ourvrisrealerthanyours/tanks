@@ -34,20 +34,15 @@ class BattleScene extends React.Component {
 
     this.socket.on('characterDestroyed', hitData => {
       const deathEvent = new CustomEvent('characterDestroyed', {
-       characterId: hitData.characterId 
+       detail: { characterId: hitData.characterId }
       });
       window.dispatchEvent(deathEvent);
       // TODO: Update lives ui
       // TODO: Render death and respawn
       if(hitData.characterId === this.characterId) {
         console.log('You were destroyed!');
-        // const camera = document.querySelector('#camera');
-        // const blackPlane = document.createElement('a-plane');
-        // blackPlane.setAttribute('position', '0 0 -0.2');
-        // camera.appendChild(blackPlane);
       } else {
         console.log(hitData.characterId, 'was destroyed!');
-        // Or trigger event on the scene which will be picked up by aframe components?
       }
     });
   }
