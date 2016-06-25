@@ -18,6 +18,10 @@ AFRAME.registerComponent('socket-controls', {
       this.current = new THREE.Vector3();
       this.next = new THREE.Vector3();
 
+      // // For latency debugging
+      // this.latencyTag = document.getElementById('latency')
+      // this.timeTag = document.getElementById('time')
+
       this.lastUpdateTime = 0;
       this.updateWaiting = false;
       this.updateRate = DOWNLOAD_PERIOD;
@@ -42,11 +46,18 @@ AFRAME.registerComponent('socket-controls', {
   tick: function(t, dt) {
     const data = this.data;
     if(this.updateWaiting) {
-      this.updateRate = Math.max(DOWNLOAD_PERIOD, (t - this.lastUpdateTime));
+      this.updateRate = (t - this.lastUpdateTime);
+
+      // // For latency debugging
+      // this.latencyTag.innerHTML = Math.floor(this.updateRate).toString();
+      // this.timeTag.innerHTML = Math.floor(t);
+
       this.lastUpdateTime = t;
       this.updateWaiting = false;
     }
-    const alpha = (t - this.lastUpdateTime) / this.updateRate;
+
+    const alpha = Math.min(1, (t - this.lastUpdateTime) / this.updateRate);
+    // this.timeTag.innerHTML = alpha;
 
     if (this.controlledAttribute === 'rotation') {
       lerpRotations(this.current, this.previous, this.next, alpha);

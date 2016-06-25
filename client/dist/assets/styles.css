@@ -1,3 +1,19 @@
-html {
+* {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+h2 {
+  z-index: 9999;
+  position: absolute;;
+  left: 20px;
+}
+
+#latency {
+  top: 20px;
+  color: #AFA
+}
+
+#time {
+  top: 50px;
+  color: #FAA
 }
