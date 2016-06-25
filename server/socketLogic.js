@@ -65,6 +65,11 @@ module.exports = io => {
             characterId: hitCharacterId,
             culpritCharacterId: firedCharacterId
           });
+          if(remainingLives <= 0) {
+            io.emit('characterEliminated', {
+              characterId: hitCharacterId
+            });
+          }
         }
       }
     });
