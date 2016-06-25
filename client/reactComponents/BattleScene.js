@@ -26,12 +26,16 @@ class BattleScene extends React.Component {
     });
     this.socket.on('characterHit', hitData => {
       console.log('Someone was hit!', hitData);
-      // TODO: Update health
+      // TODO: Update health bars
     });
     this.socket.on('characterDestroyed', hitData => {
-      console.log('Someone was destroyed!', hitData);
-      // TODO: Update lives
+      // TODO: Update lives ui
       // TODO: Render death and respawn
+      if(hitData.characterId === this.characterId) {
+        console.log('You were destroyed!');
+      } else {
+        console.log(hitData.characterId, 'was destroyed!');
+      }
     });
   }
 
