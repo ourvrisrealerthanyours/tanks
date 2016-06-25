@@ -24,8 +24,14 @@ class BattleScene extends React.Component {
       projectile.setAttribute('velocity', projectileData.velocity);
       document.querySelector('#scene').appendChild(projectile);
     });
-    this.socket.on('shotHit', hitData => {
+    this.socket.on('characterHit', hitData => {
       console.log('Someone was hit!', hitData);
+      // TODO: Update health
+    });
+    this.socket.on('characterDestroyed', hitData => {
+      console.log('Someone was destroyed!', hitData);
+      // TODO: Update lives
+      // TODO: Render death and respawn
     });
   }
 
