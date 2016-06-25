@@ -23,6 +23,7 @@ class PlayerDriver extends React.Component {
       position={this.position}
       kinematic-body={`radius: ${TANK_RADIUS}; height: ${TANK_RADIUS};`}
       data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: position;`}
+      death-listener={`characterId: ${this.props.characterId};`}
       forward-movement-controls='rotationElSelector: #tankBody;'
       rotation='0 0 0'>
         <a-entity id='tankBody'
