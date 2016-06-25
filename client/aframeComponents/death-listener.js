@@ -8,6 +8,7 @@ AFRAME.registerComponent('death-listener', {
     const data = this.data;
     window.addEventListener('characterDestroyed', function (e) {
       if(data.characterId === e.detail.characterId) {
+
         if(el.components.spawner) {
           el.components.spawner.pause();
           setTimeout(() => {
@@ -15,6 +16,12 @@ AFRAME.registerComponent('death-listener', {
           }, 5000)
         }
         
+        if(el.components['data-emitter']) {
+          el.components['data-emitter'].pause();
+          setTimeout(() => {
+            el.components['data-emitter'].play();
+          }, 5000)
+        }
       }
       // const characterId = e.detail.characterId;
       // console.log('character killed:', characterId);
