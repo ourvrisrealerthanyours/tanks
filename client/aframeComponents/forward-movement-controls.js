@@ -33,8 +33,8 @@ AFRAME.registerComponent('forward-movement-controls', {
 
   tick: function (t, dt) {
     if (isNaN(dt)) { return; }
-    
-    const position = this.getAttribute('position');
+
+    const position = this.el.getAttribute('position');
     position.y = TANK_RADIUS;
     this.el.setAttribute('position', position);
 
