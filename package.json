@@ -7,7 +7,9 @@
     "test": "test",
     "start": "webpack --watch & nodemon server/app.js",
     "build": "docker build -t tanks .",
-    "deploy": "docker run -d -p 80:80 tanks",
+    "kill": "docker rm -f tanksContainer",
+    "deploy": "docker run -d --name tanksContainer -p 80:80 tanks",
+    "mewtwo": "npm run build && npm run kill && npm run deploy",
     "docker-start": "node server/app.js"
   },
   "repository": {
