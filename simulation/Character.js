@@ -13,6 +13,7 @@ class Character {
     this.driver = null;
     this.health = 100;
     this.lives = 3;
+    this.isAlive = true;
   }
 
   update(freshData) {

@@ -8,10 +8,6 @@ class BattleScene extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      characters: [],
-    };
-
     this.characterId = props.characterId;
     this.role = props.role;
     this.playerId = props.playerId
@@ -41,6 +37,7 @@ class BattleScene extends React.Component {
       // TODO: Render death and respawn
       if(hitData.characterId === this.characterId) {
         console.log('You were destroyed!');
+        blackoutCamera(2000)
       } else {
         console.log(hitData.characterId, 'was destroyed!');
       }
@@ -94,3 +91,26 @@ class BattleScene extends React.Component {
 }
 
 module.exports = BattleScene;
+
+function blackoutCamera(fadeTime) {
+  const camera = document.querySelector('#camera');
+  const viewBlocker = document.createElement('a-plane');
+  viewBlocker.setAttribute('position', '0 0 -0.2');
+  viewBlocker.setAttribute('material', 'shader', 'flat');
+  camera.appendChild(viewBlocker);
+
+  const opacityAnimation = document.createElement('a-animation');
+  opacityAnimation.setAttribute('attribute', 'material.opacity');
+  opacityAnimation.setAttribute('from', 0);
+  opacityAnimation.setAttribute('to', 1);
+  opacityAnimation.setAttribute('dur', fadeTime /2);
+  opacityAnimation.setAttribute('direction', 'alternate');
+  opacityAnimation.setAttribute('repeat', 1);
+  opacityAnimation.setAttribute('easing', 'ease-out');
+
+  viewBlocker.appendChild(opacityAnimation);
+  camera.appendChild(viewBlocker);
+  setTimeout(() => {
+    camera.removeChild(viewBlocker)
+  }, fadeTime);
+}
