@@ -11,9 +11,7 @@ class Character {
     this.turretRotation = v0;
     this.gunner = null;
     this.driver = null;
-    this.health = 100;
-    this.lives = 3;
-    this.isAlive = true;
+    this.health = 1000;
   }
 
   update(freshData) {
