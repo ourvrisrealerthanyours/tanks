@@ -43,7 +43,7 @@ class Simulation {
 
   registerHit(characterId) {
     if(this.characters[characterId]) {
-      this.characters[characterId].health -= 30;
+      this.characters[characterId].health = Math.max(this.characters[characterId].health - 30, 0);
       return this.characters[characterId].health;
     }
   }

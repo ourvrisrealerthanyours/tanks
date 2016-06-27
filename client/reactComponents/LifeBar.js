@@ -16,11 +16,18 @@ const LifeBar = (props) => {
       height={height + 0.2}>
         <a-plane 
         position={'0 0 0.1'}
-        material='color:red;'
+        material='color:green;'
         width={width}
         height={height}
         // TODO: remove hardcoded maxLife
         hit-listener={`characterId: ${props.characterId}; maxLife: 1000; barWidth: ${width}`}/>
+        <a-plane 
+        position={'0 0 0.1'}
+        material='color:red;'
+        width={0}
+        height={height}
+        // TODO: remove hardcoded maxLife
+        hit-listener={`characterId: ${props.characterId}; maxLife: 1000; barWidth: ${width}; direction: -1;`}/>
       </a-plane>
     </a-entity>
   ) 

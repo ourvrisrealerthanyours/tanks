@@ -2,17 +2,18 @@ AFRAME.registerComponent('hit-listener', {
  schema: {
     characterId: { default: undefined },
     barWidth: { default: 1 },
-    maxLife: { default: 100 }
+    maxLife: { default: 100 },
+    direction: { default: 1 }
   },
 
   init: function () {
     const el = this.el;
     const data = this.data;
     const position = el.getAttribute('position');
-    window.addEventListener('characterHit', function (e) {
+    window.addEventListener('characterHit', (e) => {
       if(data.characterId === e.detail.characterId) {
-        const width = Math.max((e.detail.remainingHealth/data.maxLife) * data.barWidth, 0);
-        const xPosition = (e.detail.remainingHealth/data.maxLife - 1) * data.barWidth / 2;
+        const width = this.getWidth(e.detail.remainingHealth);
+        const xPosition = this.getXPosition(e.detail.remainingHealth);
         el.setAttribute('width', width);
         el.setAttribute('position', {
           x: xPosition,
@@ -21,5 +22,21 @@ AFRAME.registerComponent('hit-listener', {
         });
       }
     });
+  },
+
+  getWidth: function (remainingHealth) {
+    if(this.data.direction == 1) {
+      return Math.max((remainingHealth / this.data.maxLife) * this.data.barWidth, 0);
+    } else {
+      return Math.min((1 - remainingHealth / this.data.maxLife) * this.data.barWidth, this.data.barWidth);
+    }
+  },
+
+  getXPosition: function (remainingHealth) {
+    if(this.data.direction == 1) {
+      return (Math.max(remainingHealth, 0)/this.data.maxLife - 1) * this.data.barWidth / 2;
+    } else {
+      return (Math.max(remainingHealth, 0)/this.data.maxLife) * this.data.barWidth / 2;
+    }
   }
 });
