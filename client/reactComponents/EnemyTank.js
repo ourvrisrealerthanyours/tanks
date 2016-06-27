@@ -1,6 +1,7 @@
 import React from 'react';
 import Turret from './Turret';
 import TankBody from './TankBody';
+import LifeBar from './LifeBar';
 import { TANK_RADIUS } from '../../simulation/constants';
 
 class EnemyTank extends React.Component {
@@ -33,6 +34,7 @@ class EnemyTank extends React.Component {
         material={this.props.material}
         socket={this.props.socket}
         characterId={this.props.characterId}/>
+        <LifeBar/>
       </a-entity>
     )
   }

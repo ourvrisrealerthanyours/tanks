@@ -23,9 +23,10 @@ class BattleScene extends React.Component {
       document.querySelector('#scene').appendChild(projectile);
     });
 
-    this.socket.on('characterHit', hitData => {
-      console.log('Someone was hit!', hitData);
-      // TODO: Update health bars
+    this.socket.on('characterHit', hitDetails => {
+      // console.log('Someone was hit!', hitDetails);
+      const hitEvent = new CustomEvent('characterHit', { detail: hitDetails });
+      window.dispatchEvent(hitEvent);
     });
 
     this.socket.on('characterDestroyed', hitData => {

@@ -9,7 +9,7 @@ AFRAME.registerComponent('death-listener', {
     const el = this.el;
     const data = this.data;
     window.addEventListener('characterDestroyed', function (e) {
-      console.log(data.characterId, data.type, e.detail.characterId);
+      // console.log(data.characterId, data.type, e.detail.characterId);
       if(data.characterId === e.detail.characterId) {
         if(data.type === 'spawner') {
           el.components.spawner.pause();

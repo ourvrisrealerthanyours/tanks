@@ -48,13 +48,13 @@ class Simulation {
     }
   }
 
-  registerDeath(characterId) {
-    if(this.characters[characterId]) {
-      this.characters[characterId].health = 100;
-      this.characters[characterId].lives--;
-      return this.characters[characterId].lives;
-    }
-  }
+  // registerDeath(characterId) {
+  //   if(this.characters[characterId]) {
+  //     this.characters[characterId].health = 100;
+  //     this.characters[characterId].lives--;
+  //     return this.characters[characterId].lives;
+  //   }
+  // }
 
   removePlayer(playerId) {
     // TODO: Make this function prettier
