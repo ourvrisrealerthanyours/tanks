@@ -12,7 +12,7 @@ AFRAME.registerComponent('hit-listener', {
     window.addEventListener('characterHit', function (e) {
       if(data.characterId === e.detail.characterId) {
         const width = Math.max((e.detail.remainingHealth/data.maxLife) * data.barWidth, 0);
-        const xPosition = (1 - e.detail.remainingHealth/data.maxLife) * data.barWidth / 2;
+        const xPosition = (e.detail.remainingHealth/data.maxLife - 1) * data.barWidth / 2;
         el.setAttribute('width', width);
         el.setAttribute('position', {
           x: xPosition,
