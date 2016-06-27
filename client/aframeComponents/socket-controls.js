@@ -7,7 +7,6 @@ AFRAME.registerComponent('socket-controls', {
     simulationAttribute: {default: 'position'}, // one of 'position', 'tankRotation', 'turretRotation'
     posEnabled: {default: true},
     rotEnabled: {default: true},
-    customY: {default: undefined},
     enabled: {default: true}
   },
 
@@ -53,7 +52,7 @@ AFRAME.registerComponent('socket-controls', {
       lerpRotations(this.current, this.previous, this.next, alpha);
     } else {
       this.current.lerpVectors(this.previous, this.next, alpha);
-      this.current.y = data.customY ? data.customY : TANK_RADIUS;
+      this.current.y = TANK_RADIUS;
     }
 
     this.el.setAttribute(this.controlledAttribute, this.current);
