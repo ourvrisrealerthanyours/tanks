@@ -8,7 +8,7 @@ AFRAME.registerComponent('hit-listener', {
     const data = this.data;
     window.addEventListener('characterHit', function (e) {
       if(data.characterId === e.detail.characterId) {
-        console.log('HIT!!!!')
+        el.setAttribute('width', 1);
       }
     });
   }

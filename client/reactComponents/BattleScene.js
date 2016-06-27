@@ -24,7 +24,7 @@ class BattleScene extends React.Component {
     });
 
     this.socket.on('characterHit', hitDetails => {
-      // console.log('Someone was hit!', hitDetails);
+      console.log('Someone was hit!', hitDetails);
       const hitEvent = new CustomEvent('characterHit', { detail: hitDetails });
       window.dispatchEvent(hitEvent);
     });
