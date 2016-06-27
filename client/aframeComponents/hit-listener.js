@@ -1,4 +1,4 @@
-AFRAME.registerComponent('death-listener', {
+AFRAME.registerComponent('hit-listener', {
  schema: {
     characterId: { default: undefined }
   },

@@ -17,24 +17,28 @@ class EnemyTank extends React.Component {
   render () {
     // TODO: Add flash component for when shooting
     return (
-      <a-entity
-      position={this.props.position}
-      kinematic-body={`radius: ${this.radius}; height: ${this.radius}`}
-      characterId={this.props.characterId}
-      socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: position`}>
-        <TankBody
-        radius={this.radius}
-        material={this.props.material}
-        rotation={this.rotation}
-        socket={this.props.socket}
-        characterId={this.props.characterId}/>
-        <Turret
-        position={`0 ${this.radius - 0.5} 0`}
-        rotation={this.turretAngle}
-        material={this.props.material}
-        socket={this.props.socket}
-        characterId={this.props.characterId}/>
-        <LifeBar/>
+      <a-entity>
+        <a-entity
+        position={this.props.position}
+        kinematic-body={`radius: ${this.radius}; height: ${this.radius}`}
+        characterId={this.props.characterId}
+        socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: position`}>
+          <TankBody
+          radius={this.radius}
+          material={this.props.material}
+          rotation={this.rotation}
+          socket={this.props.socket}
+          characterId={this.props.characterId}/>
+          <Turret
+          position={`0 ${this.radius - 0.5} 0`}
+          rotation={this.turretAngle}
+          material={this.props.material}
+          socket={this.props.socket}
+          characterId={this.props.characterId}/>
+        </a-entity>
+        <LifeBar
+        characterId={this.props.characterId}
+        position={`0 ${this.radius + 2} 0`}/>
       </a-entity>
     )
   }

@@ -18,7 +18,7 @@ class PlayerDriver extends React.Component {
 
   render () {
     return (
-      <a-sphere id='playerTankContainer'
+      <a-sphere id='playerBody'
       material='opacity: 0;'
       position={this.position}
       kinematic-body={`radius: ${TANK_RADIUS}; height: ${TANK_RADIUS};`}
@@ -33,12 +33,12 @@ class PlayerDriver extends React.Component {
         // universal-controls='movementEnabled: false; rotationControls: hmd, mouse;'
         // tank-controls
         data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: tankRotation;`}>
-
+        {/*}
           <Compartment
           compartmentWidth={this.compartmentWidth}
           compartmentRadius={this.compartmentRadius}
           material={this.props.material}/>
-
+        */}
           <a-entity id='camera' position={`0 0 -1`}
           camera='near: 0.05;' />
 
