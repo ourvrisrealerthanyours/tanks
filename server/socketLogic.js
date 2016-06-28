@@ -59,17 +59,12 @@ module.exports = io => {
           remainingHealth
         });
         if(remainingHealth <= 0) {
-          const remainingLives = simulation.registerDeath(hitCharacterId);
+          // const simulation.registerDeath(hitCharacterId);
           io.emit('characterDestroyed', {
-            remainingLives,
             characterId: hitCharacterId,
             culpritCharacterId: firedCharacterId
           });
-          if(remainingLives <= 0) {
-            io.emit('characterEliminated', {
-              characterId: hitCharacterId
-            });
-          }
+          simulation.reset();
         }
       }
     });

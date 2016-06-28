@@ -26,6 +26,7 @@ class Turret extends React.Component {
           radius={1.5}>
             <a-entity id='camera'
             position={`0 1 0`}
+            death-listener={`characterId: ${this.props.characterId}`}
             camera='near: 0.05'/>
             <Barrel
             position='0 0 0'

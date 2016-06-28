@@ -8,10 +8,6 @@ class BattleScene extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      characters: [],
-    };
-
     this.characterId = props.characterId;
     this.role = props.role;
     this.playerId = props.playerId
@@ -27,9 +23,9 @@ class BattleScene extends React.Component {
       document.querySelector('#scene').appendChild(projectile);
     });
 
-    this.socket.on('characterHit', hitData => {
-      console.log('Someone was hit!', hitData);
-      // TODO: Update health bars
+    this.socket.on('characterHit', hitDetails => {
+      const hitEvent = new CustomEvent('characterHit', { detail: hitDetails });
+      window.dispatchEvent(hitEvent);
     });
 
     this.socket.on('characterDestroyed', hitData => {
@@ -37,13 +33,7 @@ class BattleScene extends React.Component {
        detail: { characterId: hitData.characterId }
       });
       window.dispatchEvent(deathEvent);
-      // TODO: Update lives ui
-      // TODO: Render death and respawn
-      if(hitData.characterId === this.characterId) {
-        console.log('You were destroyed!');
-      } else {
-        console.log(hitData.characterId, 'was destroyed!');
-      }
+      setTimeout(this.props.reset, 5000)
     });
   }
 
@@ -72,7 +62,7 @@ class BattleScene extends React.Component {
           <EnemyTank key={character.characterId}
           position={position}
           material={`color: ${colors[character.characterId]}`}
-          characterId={character.characterId}/>
+          character={character}/>
         )
       }
     });

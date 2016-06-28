@@ -14,6 +14,7 @@ require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
 require('./aframeComponents/forward-movement-controls');
 require('./aframeComponents/death-listener');
+require('./aframeComponents/hit-listener');
 
 import WelcomePage from './reactComponents/WelcomePage'
 

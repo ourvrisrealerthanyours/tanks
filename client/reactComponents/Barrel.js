@@ -24,6 +24,7 @@ const Barrel = (props) => {
         position={`0 0 ${-barrelLength}`}
         rotation='90 0 0'
         spawner={`mixin: projectile; ${event}; characterId: ${props.characterId}`}
+        death-listener={`characterId: ${props.characterId};`}
         height='0.3'
         radius='0.25'
         open-ended='false'

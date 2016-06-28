@@ -57,7 +57,8 @@ class WelcomePage extends React.Component {
         playerId={this.state.playerId}
         role={this.state.role}
         characters={this.state.characters}
-        characterId={this.state.characterId}/>
+        characterId={this.state.characterId}
+        reset={this.changeScene.bind(this, 'joinGame')}/>
       )
     }
   }

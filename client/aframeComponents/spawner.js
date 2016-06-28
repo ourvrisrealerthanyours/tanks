@@ -5,18 +5,16 @@ AFRAME.registerComponent('spawner', {
     enabled: {default: true}
   },
 
-  /**
-   * Add event listener.
-   */
+  init: function () {
+    this.bindMethods();
+  },
+
   update: function (oldData) {
     if(this.data.enabled) {
-      this.el.addEventListener(this.data.on, this.spawn.bind(this));
+      this.attachEventListeners;
     }
   },
 
-  /**
-   * Spawn new entity at entity's current position.
-   */
   spawn: function () {
     var el = this.el;
     var data = this.data;
@@ -76,5 +74,25 @@ AFRAME.registerComponent('spawner', {
       velocity: entity.getAttribute('velocity'),
     }
     window.socket.emit('shotFired', projectileData);
+  },
+
+  bindMethods: function () {
+    this.spawn = this.spawn.bind(this);
+  },
+
+  attachEventListeners: function () {
+    this.el.addEventListener(this.data.on, this.spawn);
+  },
+
+  removeEventListeners: function () {
+    this.el.removeEventListener(this.data.on, this.spawn);
+  },
+
+  play: function () {
+    this.attachEventListeners();
+  },
+
+  pause: function () {
+    this.removeEventListeners();
   }
 });

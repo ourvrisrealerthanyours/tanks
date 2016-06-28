@@ -15,7 +15,9 @@ class Arena extends React.Component {
       <a-entity position='0 0 0' rotation='0 0 0'>
 
         <a-plane static-body rotation='-90 0 0'
-        height={this.length} width={this.width}
+        height={this.length} 
+        width={this.width}
+        color='white'
         src="assets/ground.jpg" />
         {/*material={this.groundMaterial} />*/}
 
