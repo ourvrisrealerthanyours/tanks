@@ -40,8 +40,10 @@ class PlayerDriver extends React.Component {
           compartmentRadius={this.compartmentRadius}
           material={this.props.material}/>
         */}
-          <a-entity id='camera' position={`0 0 -1`}
-          camera='near: 0.05;' />
+          <a-entity id='camera' 
+          position={`0 0 -1`}
+          camera='near: 0.05;' 
+          death-listener={`characterId: ${this.props.characterId}`}/>
 
         </a-entity>
         <a-sphere
