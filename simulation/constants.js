@@ -4,4 +4,5 @@ module.exports = {
   ARENA_WIDTH: 200,
   TANK_RADIUS: 2.5,
   colors: ['green', 'red', 'blue', 'orange', 'black'],
+  MAX_HEALTH: 500,
 };

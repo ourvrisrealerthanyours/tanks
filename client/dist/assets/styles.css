@@ -2,18 +2,9 @@
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-h2 {
+.hud {
   z-index: 9999;
-  position: absolute;;
-  left: 20px;
-}
-
-#latency {
+  position: absolute;
   top: 20px;
-  color: #AFA
-}
-
-#time {
-  top: 50px;
-  color: #FAA
+  left: 20px;
 }

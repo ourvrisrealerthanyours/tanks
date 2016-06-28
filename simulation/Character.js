@@ -1,7 +1,7 @@
 const v0 = { x: 0, y: 0, z: 0 };
 const uuid = require('uuid');
 const { randStart } = require('../math/vectorHelpers');
-const { ARENA_WIDTH } = require('./constants');
+const { ARENA_WIDTH, MAX_HEALTH } = require('./constants');
 
 class Character {
   constructor(characterId = uuid.v4()) {
@@ -11,7 +11,7 @@ class Character {
     this.turretRotation = v0;
     this.gunner = null;
     this.driver = null;
-    this.health = 1000;
+    this.health = MAX_HEALTH;
   }
 
   update(freshData) {

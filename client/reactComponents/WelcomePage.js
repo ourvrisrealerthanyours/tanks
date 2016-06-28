@@ -3,6 +3,7 @@ import BattleScene from './BattleScene';
 import JoinGameScene from './JoinGameScene';
 import WallMixin from './WallMixin';
 import Projectile from './Projectile';
+import HeadsUpDisplay from './HeadsUpDisplay';
 
 const io = require('socket.io-client/socket.io');
 // const server = 'http://159.203.221.124:80'; // production
@@ -67,17 +68,20 @@ class WelcomePage extends React.Component {
 
   render () {
     return (
-      <a-scene id='scene' physics='debug:false' vr-mode-ui='enabled: false'>
-        <a-assets>
-          <WallMixin height={8}/>
-          <Projectile />
-        </a-assets>
-        <a-entity light='type: directional; color: #EEE; intensity: 1.0' position='-1 1 0'/>
-        <a-entity light='type: hemisphere; color: #222; groundColor: #555; intensity: 2'/>
+      <div>
+        <HeadsUpDisplay />
+        <a-scene id='scene' physics='debug:false' vr-mode-ui='enabled: false'>
+          <a-assets>
+            <WallMixin height={8}/>
+            <Projectile />
+          </a-assets>
+          <a-entity light='type: directional; color: #EEE; intensity: 1.0' position='-1 1 0'/>
+          <a-entity light='type: hemisphere; color: #222; groundColor: #555; intensity: 2'/>
 
-        {this.renderScene.call(this)}
+          {this.renderScene.call(this)}
 
-      </a-scene>
+        </a-scene>
+      </div>
     )
   }
 
