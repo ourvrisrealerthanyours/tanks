@@ -18,6 +18,8 @@ require('./aframeComponents/hit-listener');
 
 import WelcomePage from './reactComponents/WelcomePage'
 
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
 ReactDOM.render(
-  <WelcomePage/>
+  <WelcomePage isTouch={isTouch}/>
 , document.getElementById('app'));

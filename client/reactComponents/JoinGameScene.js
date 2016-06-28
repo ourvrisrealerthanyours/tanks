@@ -91,8 +91,14 @@ class JoinGameScene extends React.Component {
 
         <Arena wallHeight={8} >
           {this.renderSelectables.call(this)}
-          <a-camera position='0 3 0' wasd-controls='enabled: false;'>
-            <a-cursor maxDistance='10'>
+          <a-camera 
+          id='camera'
+          position='0 3 0' 
+          wasd-controls='enabled: false;'
+          // look-controls='enabled: false;'
+          // universal-controls={`movementEnabled: false; rotationControls: mouse, hmd;`}
+          >
+            <a-cursor maxDistance='10' fuse={this.props.isTouch}>
               <a-animation begin="fusing" easing="ease-in" attribute="scale"
               fill="none" from="1 1 1" to="0.1 0.1 0.1" dur='1500'/>
               <a-animation begin="click" easing="ease-in" attribute="scale"

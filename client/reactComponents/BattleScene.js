@@ -55,6 +55,7 @@ class BattleScene extends React.Component {
           position={position}
           material={`color: ${colors[character.characterId]}`}
           role={this.role}
+          isTouch={this.props.isTouch}
           characterId={character.characterId}/>
         )
       } else {

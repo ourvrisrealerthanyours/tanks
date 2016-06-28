@@ -5,7 +5,7 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 
 const io = require('socket.io-client/socket.io');
-const server = 'http://localhost:8080'; // change for production
+const server = 'http://192.168.1.13:8080'; // change for production
 
 class WelcomePage extends React.Component {
 
@@ -48,7 +48,7 @@ class WelcomePage extends React.Component {
         playerId={this.state.playerId}
         characters={this.state.characters}
         enterBattle={this.changeScene.bind(this, 'battleMode')}
-        />
+        isTouch={this.props.isTouch}/>
       )
     } else if (this.state.scene === 'battleMode') {
       return (
@@ -58,7 +58,8 @@ class WelcomePage extends React.Component {
         role={this.state.role}
         characters={this.state.characters}
         characterId={this.state.characterId}
-        reset={this.changeScene.bind(this, 'joinGame')}/>
+        reset={this.changeScene.bind(this, 'joinGame')}
+        isTouch={this.props.isTouch}/>
       )
     }
   }
