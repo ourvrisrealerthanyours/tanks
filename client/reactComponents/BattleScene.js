@@ -70,7 +70,7 @@ class BattleScene extends React.Component {
           <EnemyTank key={character.characterId}
           position={position}
           material={`color: ${colors[character.characterId]}`}
-          characterId={character.characterId}/>
+          character={character}/>
         )
       }
     });

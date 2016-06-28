@@ -2,7 +2,7 @@ AFRAME.registerComponent('hit-listener', {
  schema: {
     characterId: { default: undefined },
     barWidth: { default: 1 },
-    maxLife: { default: 100 },
+    maxHealth: { default: 100 },
     direction: { default: 1 }
   },
 
@@ -26,17 +26,17 @@ AFRAME.registerComponent('hit-listener', {
 
   getWidth: function (remainingHealth) {
     if(this.data.direction == 1) {
-      return Math.max((remainingHealth / this.data.maxLife) * this.data.barWidth, 0);
+      return Math.max((remainingHealth / this.data.maxHealth) * this.data.barWidth, 0);
     } else {
-      return Math.min((1 - remainingHealth / this.data.maxLife) * this.data.barWidth, this.data.barWidth);
+      return Math.min((1 - remainingHealth / this.data.maxHealth) * this.data.barWidth, this.data.barWidth);
     }
   },
 
   getXPosition: function (remainingHealth) {
     if(this.data.direction == 1) {
-      return (Math.max(remainingHealth, 0)/this.data.maxLife - 1) * this.data.barWidth / 2;
+      return (Math.max(remainingHealth, 0)/this.data.maxHealth - 1) * this.data.barWidth / 2;
     } else {
-      return (Math.max(remainingHealth, 0)/this.data.maxLife) * this.data.barWidth / 2;
+      return (Math.max(remainingHealth, 0)/this.data.maxHealth) * this.data.barWidth / 2;
     }
   }
 });

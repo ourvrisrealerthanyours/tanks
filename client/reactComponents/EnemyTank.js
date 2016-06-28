@@ -12,6 +12,7 @@ class EnemyTank extends React.Component {
     this.rotation = props.rotation || '0 0 0';
     this.turretAngle = props.turretAngle || '0 0 0';
     this.material = props.material || 'color: red;'
+    this.characterId = props.character.characterId;
   }
 
   render () {
@@ -21,23 +22,23 @@ class EnemyTank extends React.Component {
         <a-entity
         position={this.props.position}
         kinematic-body={`radius: ${this.radius}; height: ${this.radius}`}
-        characterId={this.props.characterId}
-        socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: position`}>
+        characterId={this.characterId}
+        socket-controls={`characterId: ${this.characterId}; simulationAttribute: position`}>
           <TankBody
           radius={this.radius}
           material={this.props.material}
           rotation={this.rotation}
           socket={this.props.socket}
-          characterId={this.props.characterId}/>
+          characterId={this.characterId}/>
           <Turret
           position={`0 ${this.radius - 0.5} 0`}
           rotation={this.turretAngle}
           material={this.props.material}
           socket={this.props.socket}
-          characterId={this.props.characterId}/>
+          characterId={this.characterId}/>
         </a-entity>
         <LifeBar
-        characterId={this.props.characterId}
+        character={this.props.character}
         position={`0 ${this.radius + 2} 0`}/>
       </a-entity>
     )

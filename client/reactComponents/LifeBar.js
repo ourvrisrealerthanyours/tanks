@@ -4,30 +4,34 @@ const LifeBar = (props) => {
   const position = props.position || '0 0 0';
   const width = props.width || 4;
   const height = props.height || 0.7;
+  const characterId = props.character.characterId;
+  const health = props.character.health;
+  const maxHealth = 1000;
   // TODO: Make better turret angle interpolator
   return (
     <a-entity
     look-at='#camera'
-    socket-controls={`characterId: ${props.characterId}; simulationAttribute: position`}>
+    socket-controls={`characterId: ${characterId}; simulationAttribute: position`}>
       <a-plane 
       position={position}
       material='color:grey;'
       width={width + 0.2}
       height={height + 0.2}>
         <a-plane 
-        position={'0 0 0.1'}
+        position={`${(health / maxHealth - 1) * width / 2} 0 0.1`}
         material='color:green;'
-        width={width}
+        width={Math.max((health / maxHealth) * width, 0)}
         height={height}
+
         // TODO: remove hardcoded maxLife
-        hit-listener={`characterId: ${props.characterId}; maxLife: 1000; barWidth: ${width}`}/>
+        hit-listener={`characterId: ${characterId}; maxHealth: ${maxHealth}; barWidth: ${width}`}/>
         <a-plane 
-        position={'0 0 0.1'}
+        position={`${(health / maxHealth) * width / 2} 0 0.1`}
         material='color:red;'
-        width={0}
+        width={Math.max((1 - health / maxHealth) * width, 0)}
         height={height}
         // TODO: remove hardcoded maxLife
-        hit-listener={`characterId: ${props.characterId}; maxLife: 1000; barWidth: ${width}; direction: -1;`}/>
+        hit-listener={`characterId: ${characterId}; maxHealth: ${maxHealth}; barWidth: ${width}; direction: -1;`}/>
       </a-plane>
     </a-entity>
   ) 
