@@ -32,7 +32,7 @@ AFRAME.registerComponent('socket-controls', {
       socket.on('simulationUpdate', characters => {
         if (characters[data.characterId]) {
           this.updateWaiting = true;
-          this.previous = this.el.getAttribute(this.controlledAttribute);
+          this.previous = this.el.getAttribute(this.controlledAttribute) || new THREE.Vector3();
           this.next = characters[data.characterId][data.simulationAttribute];
         }
       });
