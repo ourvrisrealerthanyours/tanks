@@ -1,8 +1,6 @@
 AFRAME.registerComponent('death-listener', {
  schema: {
     characterId: { default: undefined },
-    type: { default: undefined },
-    respawnTime: { default: 5000 }
   },
 
   init: function () {
@@ -11,25 +9,12 @@ AFRAME.registerComponent('death-listener', {
     window.addEventListener('characterDestroyed', function (e) {
       // console.log(data.characterId, data.type, e.detail.characterId);
       if(data.characterId === e.detail.characterId) {
-        if(data.type === 'spawner') {
+        if(el.components.spawner) {
           el.components.spawner.pause();
-          setTimeout(() => {
-            el.components.spawner.play();
-          }, data.respawnTime)
         }
         
-        if(data.type === 'driver') {
-          // el.components['data-emitter'].pause();
-          el.setAttribute('position', '0 2.5 0');
-          // window.socket.emit('respawn', { characterId: data.characterId });
-          // setTimeout(() => {
-          //   // el.components['data-emitter'].play();
-          //   el.setAttribute('position', '0 0 0')
-          // }, data.respawnTime)
-        }
-
-        if(data.type === 'enemyTank') {
-          // console.log(el.components['socket-controls']);
+        if(el.components['forward-movement-controls']) {
+          el.components['forward-movement-controls'].pause();
         }
       }
       // const characterId = e.detail.characterId;

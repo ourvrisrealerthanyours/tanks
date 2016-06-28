@@ -121,14 +121,14 @@ AFRAME.registerComponent('forward-movement-controls', {
   },
 
   removeEventListeners: function () {
-    window.removeEventListener('keydown', this.listeners.keydown);
-    window.removeEventListener('keyup', this.listeners.keyup);
-    window.removeEventListener('blur', this.listeners.blur);
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('keyup', this.onKeyUp);
+    window.removeEventListener('blur', this.oBlur);
 
-    var canvasEl = this.el.sceneEl && this.sceneEl.canvas;
+    var canvasEl = this.el.sceneEl && this.el.sceneEl.canvas;
     if (!canvasEl) { return; }
-    canvasEl.removeEventListener('touchstart', this.listeners.touchstart);
-    canvasEl.removeEventListener('touchend', this.listeners.touchend);
+    canvasEl.removeEventListener('touchstart', this.onTouchStart);
+    canvasEl.removeEventListener('touchend', this.onTouchEnd);
   },
 
   bindMethods: function () {
