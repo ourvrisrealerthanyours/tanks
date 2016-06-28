@@ -15,6 +15,13 @@ class Simulation {
     this.addCharacter(new Character('1'))
   }
 
+  reset() {
+    setTimeout(() => {
+      this.characters = {};
+      this.start.call(this)
+    }, 5000);
+  }
+
   update(freshData) {
     if (this.characters[freshData.characterId]) {
       this.characters[freshData.characterId].update(freshData);
@@ -47,14 +54,6 @@ class Simulation {
       return this.characters[characterId].health;
     }
   }
-
-  // registerDeath(characterId) {
-  //   if(this.characters[characterId]) {
-  //     this.characters[characterId].health = 100;
-  //     this.characters[characterId].lives--;
-  //     return this.characters[characterId].lives;
-  //   }
-  // }
 
   removePlayer(playerId) {
     // TODO: Make this function prettier

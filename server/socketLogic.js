@@ -64,6 +64,7 @@ module.exports = io => {
             characterId: hitCharacterId,
             culpritCharacterId: firedCharacterId
           });
+          simulation.reset();
         }
       }
     });

@@ -21,11 +21,11 @@ AFRAME.registerComponent('death-listener', {
       }
 
       if(el.components.camera) {
-        const blackPlane = document.createElement('a-plane');
-        blackPlane.setAttribute('position', '0 0 -0.2');
-        blackPlane.setAttribute('material', 'shader', 'flat');
-        blackPlane.setAttribute('width', 3);
-        blackPlane.setAttribute('height', 3);
+        const deathPlane = document.createElement('a-plane');
+        deathPlane.setAttribute('position', '0 0 -0.2');
+        deathPlane.setAttribute('material', 'shader', 'flat');
+        deathPlane.setAttribute('width', 3);
+        deathPlane.setAttribute('height', 3);
 
         const opacityAnimation = document.createElement('a-animation');
         opacityAnimation.setAttribute('attribute', 'material.opacity');
@@ -34,8 +34,8 @@ AFRAME.registerComponent('death-listener', {
         opacityAnimation.setAttribute('dur', 3000);
         opacityAnimation.setAttribute('easing', 'ease-out');
 
-        blackPlane.appendChild(opacityAnimation);
-        el.appendChild(blackPlane);
+        deathPlane.appendChild(opacityAnimation);
+        el.appendChild(deathPlane);
         this.removeListener();
       }
     }
@@ -49,9 +49,13 @@ AFRAME.registerComponent('death-listener', {
     window.addEventListener('characterDestroyed', this.handleEvent);
   },
 
-  play: this.addListener,
+  play: function () {
+    this.addListener();
+  },
 
-  pause: this.removeListener,
+  pause: function () {
+    this.removeListener();
+  },
 
   removeListener: function() {
     window.removeEventListener('characterDestroyed', this.handleEvent);

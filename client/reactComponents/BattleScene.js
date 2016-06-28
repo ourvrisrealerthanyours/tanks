@@ -33,6 +33,7 @@ class BattleScene extends React.Component {
        detail: { characterId: hitData.characterId }
       });
       window.dispatchEvent(deathEvent);
+      setTimeout(this.props.reset, 5000)
     });
   }
 
