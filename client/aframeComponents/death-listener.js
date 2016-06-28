@@ -20,6 +20,32 @@ AFRAME.registerComponent('death-listener', {
         el.components['forward-movement-controls'].pause();
       }
 
+      if(el.components['socket-controls']) {
+        const explosion = document.createElement('a-sphere');
+        explosion.setAttribute('material', 'color:red; side:double;');
+
+        const expandAnimation = document.createElement('a-animation');
+        expandAnimation.setAttribute('attribute', 'geometry.radius');
+        expandAnimation.setAttribute('from', 2.5);
+        expandAnimation.setAttribute('to', 8);
+        expandAnimation.setAttribute('dur', 400);
+        expandAnimation.setAttribute('easing', 'ease-out');
+        expandAnimation.setAttribute('repeat', 'indefinite');
+
+        const opacityAnimation = document.createElement('a-animation');
+        opacityAnimation.setAttribute('attribute', 'material.opacity');
+        opacityAnimation.setAttribute('from', 1);
+        opacityAnimation.setAttribute('to', 0);
+        opacityAnimation.setAttribute('dur', 400);
+        opacityAnimation.setAttribute('easing', 'ease-out');
+        opacityAnimation.setAttribute('repeat', 'indefinite');
+
+        explosion.appendChild(expandAnimation);
+        explosion.appendChild(opacityAnimation);
+
+        el.appendChild(explosion);
+      }
+
       if(el.components.camera) {
         const deathPlane = document.createElement('a-plane');
         deathPlane.setAttribute('position', '0 0 -0.2');
