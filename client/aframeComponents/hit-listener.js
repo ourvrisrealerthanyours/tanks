@@ -11,6 +11,7 @@ AFRAME.registerComponent('hit-listener', {
     const data = this.data;
     const position = el.getAttribute('position');
     window.addEventListener('characterHit', (e) => {
+      console.log('my hitta!', e.detail);
       if(data.characterId === e.detail.characterId) {
         const width = this.getWidth(e.detail.remainingHealth);
         const xPosition = this.getXPosition(e.detail.remainingHealth);
