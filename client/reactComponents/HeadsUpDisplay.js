@@ -1,24 +1,14 @@
 import React from 'react';
 
-class HeadsUpDisplay extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.socket = props.socket;
-    this.state = {
-      inTank: false,
-    };
-  }
-
-  render () {
-    return (
-      <div className='hud'>
-        Health
-        <div id='hud-health-bar'>40</div>
-      </div>
-    )
-  }
-
-}
+const HeadsUpDisplay = (props) => (
+  props.inTank ? (
+    <div id='hud-health-outer' >
+      <div style={`width: ${(props.health / MAX_HEALTH) * 100}%`}
+      className='hud-health-bar' id='hud-health-inner-green'></div>
+      <div style={`width: ${100 - (props.health / MAX_HEALTH) * 100}%`}
+      className='hud-health-bar' id='hud-health-inner-red'></div>
+    </div>
+  ) : (<div/>);
+);
 
 module.exports = HeadsUpDisplay;
