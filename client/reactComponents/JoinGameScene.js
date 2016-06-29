@@ -95,6 +95,8 @@ class JoinGameScene extends React.Component {
           id='camera'
           position='0 3 0' 
           wasd-controls='enabled: false;'
+          rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
+          look-controls={`enabled:${this.props.isTouch};`}
           // look-controls='enabled: false;'
           // universal-controls={`movementEnabled: false; rotationControls: mouse, hmd;`}
           >
