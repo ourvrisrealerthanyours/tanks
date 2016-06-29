@@ -32,7 +32,6 @@ class PlayerDriver extends React.Component {
         rotation={this.rotation}
         rotation-keyboard-controls={`enabled:${!this.props.isTouch}; wsEnabled:false;`}
         look-controls={`enabled:${this.props.isTouch};`}
-        // tank-controls
         data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: tankRotation;`}>
         {/*}
           <Compartment

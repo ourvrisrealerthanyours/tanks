@@ -54,6 +54,7 @@ class PlayerTank extends React.Component {
           characterId={this.props.characterId}
           position={'0 2.75 0'}
           material={this.props.material}
+          isTouch={this.props.isTouch}
           socket={this.props.socket}/>
         </a-entity>
       );
