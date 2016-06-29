@@ -25,14 +25,14 @@ const LifeBar = (props) => {
         height={height}
 
         // TODO: remove hardcoded maxLife
-        hit-listener={`characterId: ${characterId}; MAX_HEALTH: ${MAX_HEALTH}; barWidth: ${width}`}/>
+        hit-listener={`characterId: ${characterId}; maxHealth: ${MAX_HEALTH}; barWidth: ${width}`}/>
         <a-plane
         position={`${(health / MAX_HEALTH) * width / 2} 0 0.1`}
         material='color:red;'
         width={Math.max((1 - health / MAX_HEALTH) * width, 0)}
         height={height}
         // TODO: remove hardcoded maxLife
-        hit-listener={`characterId: ${characterId}; MAX_HEALTH: ${MAX_HEALTH}; barWidth: ${width}; direction: -1;`}/>
+        hit-listener={`characterId: ${characterId}; maxHealth: ${MAX_HEALTH}; barWidth: ${width}; direction: -1;`}/>
       </a-plane>
     </a-entity>
   )
