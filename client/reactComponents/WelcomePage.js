@@ -48,7 +48,8 @@ class WelcomePage extends React.Component {
       characters: {},
       role: undefined,
     });
-    this.socket.emit('requestCharacters', this.roomId);
+    console.log('resetting!');
+    this.socket.emit('requestCharacters');
   }
 
   renderScene() {
