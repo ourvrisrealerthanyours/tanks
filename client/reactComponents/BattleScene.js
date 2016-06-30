@@ -56,7 +56,8 @@ class BattleScene extends React.Component {
           material={`color: ${colors[character.characterId]}`}
           role={this.role}
           isTouch={this.props.isTouch}
-          characterId={character.characterId}/>
+          characterId={character.characterId}
+          character={character}/>
         )
       } else {
         return (
@@ -72,13 +73,10 @@ class BattleScene extends React.Component {
   render () {
     return (
       <a-entity>
-
         <a-sky color='blue' />
-
         <Arena wallHeight={8}>
           {this.renderCharacters.call(this)}
         </Arena>
-
       </a-entity>
     )
   }
