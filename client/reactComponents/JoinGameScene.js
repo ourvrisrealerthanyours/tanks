@@ -12,7 +12,7 @@ class JoinGameScene extends React.Component {
     this.socket = props.socket;
     this.enterBattle = props.enterBattle;
     this.bindMethods();
-    this.socket.emit('requestCharacters', props.roomId);
+    this.socket.emit('requestCharacters');
     this.socket.on('seatConfirmation', confirmation => {
       if (confirmation) {
         this.removeListeners();
@@ -118,9 +118,9 @@ class JoinGameScene extends React.Component {
 
         <Arena wallHeight={8} >
           {this.renderSelectables.call(this)}
-          <a-camera 
+          <a-camera
           id='camera'
-          position='0 3 0' 
+          position='0 3 0'
           wasd-controls='enabled: false;'
           rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
           look-controls={`enabled:${this.props.isTouch};`}
