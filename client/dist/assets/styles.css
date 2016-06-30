@@ -8,3 +8,32 @@
   top: 20px;
   left: 20px;
 }
+#hud-health-outer {
+  background-color: grey;
+  z-index: 9999;
+  position: relative;
+  height: 20px;
+  margin-top: 2%;
+  margin-left: 2%;
+  margin-right: 65%;
+  padding: 5px;
+  border-radius: 0 20px 20px 0;
+  opacity: 0.7;
+}
+.hud-health-bar {
+  display: inline-flex;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 10px 10px 0;
+}
+
+#hud-health-inner-green {
+  background-color: #0F5;
+  width: 50%;
+}
+
+#hud-health-red{
+  background-color: #F03;
+  width: 100%;
+}
