@@ -1,8 +1,9 @@
 import React from 'react';
 import Arena from './Arena';
-import EnemyTank from './EnemyTank';
+import TankBody from './TankBody';
+import Turret from './Turret';
 import WallMixin from './WallMixin';
-import { colors } from '../../simulation/constants';
+import { colors, TANK_RADIUS } from '../../simulation/constants';
 
 class JoinGameScene extends React.Component {
 
@@ -39,9 +40,9 @@ class JoinGameScene extends React.Component {
     this.registerListeners();
   }
 
-  pickRole(event) {
-    const characterId = event.target.getAttribute('characterId')
-    const role = event.target.getAttribute('role')
+  pickRole(_, target) {
+    const characterId = target.getAttribute('characterId')
+    const role = target.getAttribute('role')
     if (!this.props.characters[characterId][role]) {
       this.requestSeat(characterId, role);
     }
@@ -54,12 +55,14 @@ class JoinGameScene extends React.Component {
   registerListeners() {
     this.selectables = Array.from(document.getElementsByClassName('delectableSelectable'));
     this.selectables.forEach(selectable => {
-      selectable.addEventListener('click', this.pickRole);
-    })
+      selectable.addEventListener('click', this.pickRole.bind(this, null, selectable));
+    });
   }
 
   removeListeners() {
     this.selectables.forEach(selectable => {
+      // Not sure why we aren't getting the 'setState' error
+      // this removeListeners isn't removing the bound version of pickRole
       selectable.removeEventListener('click', this.pickRole);
     });
   }
@@ -74,11 +77,35 @@ class JoinGameScene extends React.Component {
     return characters.map((character, index) => {
       const x = index * totalLength / (n - 1) - totalLength / 2;
       return (
-        <a-entity key={index}>
-          <a-box class='delectableSelectable' position={`${x} 3.3 -8`} characterId={character.characterId}
-          role='gunner' material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].gunner}`}/>
-          <a-box class='delectableSelectable' position={`${x} 1.3 -8`} characterId={character.characterId}
-          role='driver' material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].driver}`}/>
+        <a-entity key={index}
+        position={`${x} ${TANK_RADIUS} -10`}>
+          <a-entity
+          class='delectableSelectable'
+          role='driver'
+          characterId={character.characterId}
+          >
+            <TankBody
+            radius={TANK_RADIUS}
+            role='driver'
+            characterId={character.characterId}
+            rotation='0 180 0'
+            material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].driver}`}
+            socketControlsDisabled={true}/>
+          </a-entity>
+          <a-entity
+          class='delectableSelectable'
+          role='gunner'
+          characterId={character.characterId}
+          >
+            <Turret
+            position={`0 ${TANK_RADIUS - 0.5} 0`}
+            rotation={`10 ${180 + x * 10} 0`}
+            className='delectableSelectable'
+            characterId={character.characterId}
+            role='gunner'
+            material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].gunner}`}
+            socketControlsDisabled={true}/>
+          </a-entity>
         </a-entity>
       )}
     );
