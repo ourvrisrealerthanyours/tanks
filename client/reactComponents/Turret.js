@@ -21,7 +21,8 @@ class Turret extends React.Component {
           position={`0 0 0`}
           rotation={this.rotation}
           material={this.props.material}
-          look-controls
+          rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
+          look-controls={`enabled:${this.props.isTouch};`}
           data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: turretRotation;`}
           radius={1.5}>
             <a-entity id='camera'

@@ -13,11 +13,14 @@ require('./aframeComponents/explode');
 require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
 require('./aframeComponents/forward-movement-controls');
+require('./aframeComponents/rotation-keyboard-controls');
 require('./aframeComponents/death-listener');
 require('./aframeComponents/hit-listener');
 
 import WelcomePage from './reactComponents/WelcomePage'
 
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
 ReactDOM.render(
-  <WelcomePage/>
+  <WelcomePage isTouch={isTouch}/>
 , document.getElementById('app'));

@@ -24,6 +24,7 @@ class PlayerTank extends React.Component {
         rotation={this.rotation}
         role={this.props.role}
         characterId={this.props.characterId}
+        isTouch={this.props.isTouch}
         material={this.props.material}/>
       )
     } else if(this.props.role === 'gunner') {
@@ -53,6 +54,7 @@ class PlayerTank extends React.Component {
           characterId={this.props.characterId}
           position={'0 2.75 0'}
           material={this.props.material}
+          isTouch={this.props.isTouch}
           socket={this.props.socket}/>
         </a-entity>
       );
