@@ -58,7 +58,7 @@ module.exports = io => {
           characterId: hitCharacterId,
           remainingHealth
         });
-        if(remainingHealth <= 0) {
+        if(-30 < remainingHealth && remainingHealth <= 0) {
           // const simulation.registerDeath(hitCharacterId);
           io.emit('characterDestroyed', {
             characterId: hitCharacterId,

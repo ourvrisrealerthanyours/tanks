@@ -37,6 +37,7 @@ class JoinGameScene extends React.Component {
   }
 
   componentDidUpdate() {
+    // this.socket.emit('requestCharacters'); // Just in case they somehow didn't get one
     this.registerListeners();
   }
 
@@ -73,7 +74,7 @@ class JoinGameScene extends React.Component {
       characters.push(this.props.characters[characterId]);
     }
     const n = characters.length;
-    const totalLength = 3 * n;
+    const totalLength = 4 * n;
     return characters.map((character, index) => {
       const x = index * totalLength / (n - 1) - totalLength / 2;
       return (

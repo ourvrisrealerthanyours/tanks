@@ -41,6 +41,16 @@ class WelcomePage extends React.Component {
     });
   }
 
+  reset() {
+    this.setState({
+      scene: 'joinGame',
+      characterId: undefined,
+      characters: {},
+      role: undefined,
+    });
+    this.socket.emit('requestCharacters', this.roomId);
+  }
+
   renderScene() {
     if(this.state.scene === 'joinGame') {
       return (
@@ -59,7 +69,7 @@ class WelcomePage extends React.Component {
         role={this.state.role}
         characters={this.state.characters}
         characterId={this.state.characterId}
-        reset={this.changeScene.bind(this, 'joinGame')}
+        reset={this.reset.bind(this)}
         isTouch={this.props.isTouch}/>
       )
     }
