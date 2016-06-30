@@ -7,6 +7,7 @@ class TankBody extends React.Component {
     super(props);
     this.radius = props.radius || TANK_RADIUS;
     this.material = props.material || 'color: red;'
+    this.socketControlsDisabled = props.socketControlsDisabled || false;
   }
 
   render () {
@@ -15,7 +16,9 @@ class TankBody extends React.Component {
       position='0 0 0'
       rotation={this.props.rotation}
       material={this.material}
-      socket-controls={`simulationAttribute: tankRotation; characterId: ${this.props.characterId}`}
+      socket-controls={`simulationAttribute: tankRotation; `+
+                      `characterId: ${this.props.characterId}; `+
+                      `enabled: ${!this.socketControlsDisabled}`}
       radius={this.radius}>
         <a-torus
         position='0 0 0'
