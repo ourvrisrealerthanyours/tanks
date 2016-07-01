@@ -2,7 +2,7 @@ import React from 'react';
 import Arena from './Arena';
 import PlayerTank from './PlayerTank';
 import EnemyTank from './EnemyTank';
-import { colors } from '../../simulation/constants';
+import { colors, TANK_RADIUS } from '../../simulation/constants';
 
 class BattleScene extends React.Component {
 
@@ -45,24 +45,26 @@ class BattleScene extends React.Component {
     return this.characters.map(character => {
       const position = [
         character.position.x,
-        character.position.y, // used to be hard coded to TANK_RADIUS
+        TANK_RADIUS,//character.position.y, // used to be hard coded to TANK_RADIUS
         character.position.z
       ].join(' ');
+      const material = `color: ${colors[character.characterId]}; metalness: 0.4; roughness: 0.5;`
 
       if (character.characterId === this.characterId) {
         return (
           <PlayerTank key={character.characterId}
           position={position}
-          material={`color: ${colors[character.characterId]}`}
           role={this.role}
           isTouch={this.props.isTouch}
-          characterId={character.characterId}/>
+          material={material}
+          characterId={character.characterId}
+          character={character}/>
         )
       } else {
         return (
           <EnemyTank key={character.characterId}
           position={position}
-          material={`color: ${colors[character.characterId]}`}
+          material={material}
           character={character}/>
         )
       }
@@ -72,13 +74,9 @@ class BattleScene extends React.Component {
   render () {
     return (
       <a-entity>
-
-        <a-sky color='blue' />
-
         <Arena wallHeight={8}>
           {this.renderCharacters.call(this)}
         </Arena>
-
       </a-entity>
     )
   }

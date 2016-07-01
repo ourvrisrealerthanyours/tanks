@@ -10,6 +10,7 @@ class Turret extends React.Component {
     this.barrelLength = props.barrelLength || 5;
     this.activeControl = props.activeControl || false;
     this.socket = props.socket;
+    this.socketControlsDisabled = props.socketControlsDisabled || false;
   }
 
   render () {
@@ -23,7 +24,8 @@ class Turret extends React.Component {
           material={this.props.material}
           rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
           look-controls={`enabled:${this.props.isTouch};`}
-          data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: turretRotation;`}
+          data-emitter={`characterId: ${this.props.characterId}; ` +
+                        `simulationAttribute: turretRotation;`}
           radius={1.5}>
             <a-entity id='camera'
             position={`0 1 0`}
@@ -43,7 +45,9 @@ class Turret extends React.Component {
           <a-sphere
           position={'0 0 0'}
           rotation={this.rotation}
-          socket-controls={`characterId: ${this.props.characterId}; simulationAttribute: turretRotation`}
+          socket-controls={`simulationAttribute: turretRotation; `+
+                          `characterId: ${this.props.characterId}; `+
+                          `enabled: ${!this.socketControlsDisabled}`}
           material={this.props.material}
           radius={1.5}>
             <Barrel

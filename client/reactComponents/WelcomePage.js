@@ -5,7 +5,8 @@ import WallMixin from './WallMixin';
 import Projectile from './Projectile';
 
 const io = require('socket.io-client/socket.io');
-const server = 'http://localhost:8080'; // change for production
+// const server = 'http://159.203.221.124:80'; // production
+const server = 'http://localhost:8080'; // development
 
 class WelcomePage extends React.Component {
 
@@ -40,6 +41,16 @@ class WelcomePage extends React.Component {
     });
   }
 
+  reset() {
+    this.setState({
+      scene: 'joinGame',
+      characterId: undefined,
+      characters: {},
+      role: undefined,
+    });
+    this.socket.emit('requestCharacters');
+  }
+
   renderScene() {
     if(this.state.scene === 'joinGame') {
       return (
@@ -58,7 +69,7 @@ class WelcomePage extends React.Component {
         role={this.state.role}
         characters={this.state.characters}
         characterId={this.state.characterId}
-        reset={this.changeScene.bind(this, 'joinGame')}
+        reset={this.reset.bind(this)}
         isTouch={this.props.isTouch}/>
       )
     }
@@ -68,16 +79,19 @@ class WelcomePage extends React.Component {
     return (
       <a-scene id='scene' physics='debug:false' vr-mode-ui='enabled: false'>
         <a-assets>
-          <WallMixin height={8}/>
+          <WallMixin height={32}/>
+          <img id='ground' src='assets/tronGround.jpg'/>
+          <img id='wallSrc' src='assets/tronWall.jpg'/>
+          <img id='sky' src='assets/sky.jpg'/>
           <Projectile />
         </a-assets>
-        <a-entity light='type: directional; color: #EEE; intensity: 1.0' position='-1 1 0'/>
-        <a-entity light='type: hemisphere; color: #222; groundColor: #555; intensity: 2'/>
-
+        <a-entity light='type: directional; color: #FFF; intensity: 1.0' position='-1 1 0'/>
+        <a-entity light='type: hemisphere; color: #F20; groundColor: #82F; intensity: 2'/>
+        <a-sky src='#sky' />
         {this.renderScene.call(this)}
 
       </a-scene>
-    )
+    );
   }
 
 }

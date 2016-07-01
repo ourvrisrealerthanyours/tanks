@@ -27,10 +27,6 @@ AFRAME.registerComponent('spawner', {
     var tankEl = rotationEl.parentElement.parentElement;
     var turretRotation = rotationEl.getAttribute('rotation');
 
-    // console.log('El', el);
-    // console.log('rotationEl', rotationEl);
-    // console.log('tankEl', tankEl);
-    
     var tankVel = tankEl.getAttribute('velocity');
 
     position.setFromMatrixPosition(matrixWorld);

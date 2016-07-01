@@ -7,6 +7,7 @@ class Simulation {
   constructor(socket) {
     this.socket = socket;
     this.characters = {};
+    this.lastReset = new Date();
     setInterval(() => this.updatePositions(), DOWNLOAD_PERIOD)
   }
 
@@ -16,10 +17,14 @@ class Simulation {
   }
 
   reset() {
-    setTimeout(() => {
-      this.characters = {};
-      this.start.call(this)
-    }, 5000);
+    const attemptTime = new Date()
+    if (attemptTime - this.lastReset > 10000) {
+      this.lastReset = attemptTime;
+      setTimeout(() => {
+        this.characters = {};
+        this.start.call(this)
+      }, 5000);
+    }
   }
 
   update(freshData) {
@@ -50,7 +55,7 @@ class Simulation {
 
   registerHit(characterId) {
     if(this.characters[characterId]) {
-      this.characters[characterId].health = Math.max(this.characters[characterId].health - 30, 0);
+      this.characters[characterId].health = Math.max(this.characters[characterId].health - 30, -30);
       return this.characters[characterId].health;
     }
   }

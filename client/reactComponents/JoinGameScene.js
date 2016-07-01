@@ -1,8 +1,9 @@
 import React from 'react';
 import Arena from './Arena';
-import EnemyTank from './EnemyTank';
+import TankBody from './TankBody';
+import Turret from './Turret';
 import WallMixin from './WallMixin';
-import { colors } from '../../simulation/constants';
+import { colors, TANK_RADIUS } from '../../simulation/constants';
 
 class JoinGameScene extends React.Component {
 
@@ -11,7 +12,7 @@ class JoinGameScene extends React.Component {
     this.socket = props.socket;
     this.enterBattle = props.enterBattle;
     this.bindMethods();
-    this.socket.emit('requestCharacters', props.roomId);
+    this.socket.emit('requestCharacters');
     this.socket.on('seatConfirmation', confirmation => {
       if (confirmation) {
         this.removeListeners();
@@ -23,15 +24,16 @@ class JoinGameScene extends React.Component {
   }
 
   requestSeat(characterId, role) {
-    if(this.props.playerId) {
-      this.socket.emit('requestSeat', {
-        playerId: this.props.playerId,
-        characterId,
-        role,
-        roomId: this.props.roomId,
-      });
-    } else {
-      this.socket.emit('requestPlayerId'); // Just in case they somehow didn't get one
+    if (!this.props.characters[characterId][role]) {
+      if(this.props.playerId) {
+        this.socket.emit('requestSeat', {
+          playerId: this.props.playerId,
+          characterId,
+          role
+        });
+      } else {
+        this.socket.emit('requestPlayerId'); // Just in case they somehow didn't get one
+      }
     }
   }
 
@@ -39,28 +41,33 @@ class JoinGameScene extends React.Component {
     this.registerListeners();
   }
 
-  pickRole(event) {
-    const characterId = event.target.getAttribute('characterId')
-    const role = event.target.getAttribute('role')
-    if (!this.props.characters[characterId][role]) {
-      this.requestSeat(characterId, role);
-    }
-  }
+  gunner0() { this.requestSeat.call(this, '0', 'gunner') }
+  driver0() { this.requestSeat.call(this, '0', 'driver') }
+  gunner1() { this.requestSeat.call(this, '1', 'gunner') }
+  driver1() { this.requestSeat.call(this, '1', 'driver') }
 
   bindMethods() {
-    this.pickRole = this.pickRole.bind(this);
+    this.gunner0 = this.gunner0.bind(this);
+    this.driver0 = this.driver0.bind(this);
+    this.gunner1 = this.gunner1.bind(this);
+    this.driver1 = this.driver1.bind(this);
   }
 
   registerListeners() {
     this.selectables = Array.from(document.getElementsByClassName('delectableSelectable'));
     this.selectables.forEach(selectable => {
-      selectable.addEventListener('click', this.pickRole);
-    })
+      const role = selectable.getAttribute('role');
+      const characterId = selectable.getAttribute('characterId');
+      selectable.addEventListener('click', this[role + characterId]);
+    });
   }
 
   removeListeners() {
     this.selectables.forEach(selectable => {
-      selectable.removeEventListener('click', this.pickRole);
+      // This hackery could probably be improved
+      const role = selectable.getAttribute('role');
+      const characterId = selectable.getAttribute('characterId');
+      selectable.removeEventListener('click', this[role + characterId]);
     });
   }
 
@@ -70,15 +77,43 @@ class JoinGameScene extends React.Component {
       characters.push(this.props.characters[characterId]);
     }
     const n = characters.length;
-    const totalLength = 3 * n;
+    const totalLength = 4 * n;
     return characters.map((character, index) => {
       const x = index * totalLength / (n - 1) - totalLength / 2;
       return (
-        <a-entity key={index}>
-          <a-box class='delectableSelectable' position={`${x} 3.3 -8`} characterId={character.characterId}
-          role='gunner' material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].gunner}`}/>
-          <a-box class='delectableSelectable' position={`${x} 1.3 -8`} characterId={character.characterId}
-          role='driver' material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].driver}`}/>
+        <a-entity key={index}
+        position={`${x} ${TANK_RADIUS} -10`}>
+          <a-entity
+          class='delectableSelectable'
+          role='driver'
+          characterId={character.characterId}
+          >
+            <TankBody
+            radius={TANK_RADIUS}
+            role='driver'
+            characterId={character.characterId}
+            rotation='0 180 0'
+            material={`color: ${colors[character.characterId]}; ` +
+                      `metalness: 0.7; ` +
+                      `opacity: ${1 - 0.5 * !!characters[index].driver}`}
+            socketControlsDisabled={true}/>
+          </a-entity>
+          <a-entity
+          class='delectableSelectable'
+          role='gunner'
+          characterId={character.characterId}
+          >
+            <Turret
+            position={`0 ${TANK_RADIUS - 0.5} 0`}
+            rotation={`10 ${180 + x * 10} 0`}
+            className='delectableSelectable'
+            characterId={character.characterId}
+            role='gunner'
+            material={`color: ${colors[character.characterId]}; ` +
+                      `metalness: 0.5; ` +
+                      `opacity: ${1 - 0.5 * !!characters[index].driver}`}
+            socketControlsDisabled={true}/>
+          </a-entity>
         </a-entity>
       )}
     );
@@ -87,26 +122,17 @@ class JoinGameScene extends React.Component {
   render () {
     return (
       <a-entity>
-        <a-sky color='blue' />
-
         <Arena wallHeight={8} >
           {this.renderSelectables.call(this)}
-          <a-camera 
-          id='camera'
-          position='0 3 0' 
+          <a-camera
+          position='0 3 0'
           wasd-controls='enabled: false;'
           rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
           look-controls={`enabled:${this.props.isTouch};`}
-          // look-controls='enabled: false;'
-          // universal-controls={`movementEnabled: false; rotationControls: mouse, hmd;`}
           >
-            <a-cursor maxDistance='10' fuse={this.props.isTouch}>
-              <a-animation begin="fusing" easing="ease-in" attribute="scale"
-              fill="none" from="1 1 1" to="0.1 0.1 0.1" dur='1500'/>
-              <a-animation begin="click" easing="ease-in" attribute="scale"
-              direction='alternate' repeat='1'
-              fill="backwards" from="1 1 1" to="1.8 1.8 1.8" dur='80'/>
-            </a-cursor>
+            <a-cursor
+            material='color: #AAF; shader: flat;'
+            maxDistance='10'/>
           </a-camera>
 
         </Arena>

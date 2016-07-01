@@ -1,4 +1,5 @@
 import React from 'react';
+import { WALL_OPACITY } from '../../simulation/constants';
 
 class Arena extends React.Component {
 
@@ -15,10 +16,11 @@ class Arena extends React.Component {
       <a-entity position='0 0 0' rotation='0 0 0'>
 
         <a-plane static-body rotation='-90 0 0'
-        height={this.length} 
+        height={this.length}
         width={this.width}
         color='white'
-        src="assets/ground.jpg" />
+        opacity={`${WALL_OPACITY}`}
+        src='#ground' />
         {/*material={this.groundMaterial} />*/}
 
         {/* Outside Walls */}
