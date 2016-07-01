@@ -5,4 +5,5 @@ module.exports = {
   TANK_RADIUS: 2.5,
   colors: ['blue', 'red', 'green', 'orange', 'black'],
   MAX_HEALTH: 500,
+  WALL_OPACITY: 0.8,
 };
