@@ -82,12 +82,12 @@ class WelcomePage extends React.Component {
         <a-assets>
           <WallMixin height={20}/>
           <img id='ground' src='assets/tronGround.jpg'/>
-          <img id='wall' src='assets/tronWall.jpg'/>
+          <img id='wallSrc' src='assets/tronWall.jpg'/>
           <img id='sky' src='assets/sky.jpg'/>
           <Projectile />
         </a-assets>
-        <a-entity light='type: directional; color: #EEE; intensity: 1.0' position='-1 1 0'/>
-        <a-entity light='type: hemisphere; color: #222; groundColor: #555; intensity: 2'/>
+        <a-entity light='type: directional; color: #FFF; intensity: 1.0' position='-1 1 0'/>
+        <a-entity light='type: hemisphere; color: #F20; groundColor: #82F; intensity: 2'/>
         <a-sky src='#sky' />
         {this.renderScene.call(this)}
 

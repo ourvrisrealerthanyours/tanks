@@ -48,14 +48,15 @@ class BattleScene extends React.Component {
         TANK_RADIUS,//character.position.y, // used to be hard coded to TANK_RADIUS
         character.position.z
       ].join(' ');
+      const material = `color: ${colors[character.characterId]}; metalness: 0.4; roughness: 0.5;`
 
       if (character.characterId === this.characterId) {
         return (
           <PlayerTank key={character.characterId}
           position={position}
-          material={`color: ${colors[character.characterId]}`}
           role={this.role}
           isTouch={this.props.isTouch}
+          material={material}
           characterId={character.characterId}
           character={character}/>
         )
@@ -63,7 +64,7 @@ class BattleScene extends React.Component {
         return (
           <EnemyTank key={character.characterId}
           position={position}
-          material={`color: ${colors[character.characterId]}`}
+          material={material}
           character={character}/>
         )
       }

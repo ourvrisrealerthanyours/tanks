@@ -94,7 +94,9 @@ class JoinGameScene extends React.Component {
             role='driver'
             characterId={character.characterId}
             rotation='0 180 0'
-            material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].driver}`}
+            material={`color: ${colors[character.characterId]}; ` +
+                      `metalness: 0.7; ` +
+                      `opacity: ${1 - 0.5 * !!characters[index].driver}`}
             socketControlsDisabled={true}/>
           </a-entity>
           <a-entity
@@ -108,7 +110,9 @@ class JoinGameScene extends React.Component {
             className='delectableSelectable'
             characterId={character.characterId}
             role='gunner'
-            material={`color: ${colors[index]}; opacity: ${1 - 0.5 * !!characters[index].gunner}`}
+            material={`color: ${colors[character.characterId]}; ` +
+                      `metalness: 0.5; ` +
+                      `opacity: ${1 - 0.5 * !!characters[index].driver}`}
             socketControlsDisabled={true}/>
           </a-entity>
         </a-entity>
