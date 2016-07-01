@@ -10,7 +10,6 @@
 }
 #hud-health-outer {
   background-color: grey;
-  z-index: 9999;
   position: relative;
   height: 20px;
   margin-top: 2%;
@@ -30,7 +29,6 @@
 
 #hud-health-inner-green {
   background-color: #0F5;
-  width: 50%;
 }
 
 #hud-health-red{

@@ -25,7 +25,6 @@ class JoinGameScene extends React.Component {
 
   requestSeat(characterId, role) {
     if (!this.props.characters[characterId][role]) {
-      console.log('reqesting', role, characterId);
       if(this.props.playerId) {
         this.socket.emit('requestSeat', {
           playerId: this.props.playerId,
@@ -130,19 +129,10 @@ class JoinGameScene extends React.Component {
           wasd-controls='enabled: false;'
           rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
           look-controls={`enabled:${this.props.isTouch};`}
-          // look-controls='enabled: false;'
-          // universal-controls={`movementEnabled: false; rotationControls: mouse, hmd;`}
           >
             <a-cursor
             material='color: #AAF; shader: flat;'
-            maxDistance='10'
-            fuse={this.props.isTouch}>
-              <a-animation begin="fusing" easing="ease-in" attribute="scale"
-              fill="none" from="1 1 1" to="0.1 0.1 0.1" dur='1500'/>
-              <a-animation begin="click" easing="ease-in" attribute="scale"
-              direction='alternate' repeat='1'
-              fill="backwards" from="1 1 1" to="1.8 1.8 1.8" dur='80'/>
-            </a-cursor>
+            maxDistance='10'/>
           </a-camera>
 
         </Arena>

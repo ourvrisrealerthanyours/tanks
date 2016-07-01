@@ -48,7 +48,6 @@ class WelcomePage extends React.Component {
       characters: {},
       role: undefined,
     });
-    console.log('resetting!');
     this.socket.emit('requestCharacters');
   }
 
@@ -80,7 +79,7 @@ class WelcomePage extends React.Component {
     return (
       <a-scene id='scene' physics='debug:false' vr-mode-ui='enabled: false'>
         <a-assets>
-          <WallMixin height={20}/>
+          <WallMixin height={32}/>
           <img id='ground' src='assets/tronGround.jpg'/>
           <img id='wallSrc' src='assets/tronWall.jpg'/>
           <img id='sky' src='assets/sky.jpg'/>
