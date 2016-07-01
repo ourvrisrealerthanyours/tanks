@@ -2,7 +2,7 @@ import React from 'react';
 import { WALL_OPACITY } from '../../simulation/constants';
 
 const WallMixin = (props) => {
-  const material = props.material || `src: #ground; opacity: ${WALL_OPACITY}; metalness: 0;`
+  const material = props.material || `src: #wall; opacity: ${WALL_OPACITY}; metalness: 0;`
   const height = props.height || 8;
   return (
     <a-mixin

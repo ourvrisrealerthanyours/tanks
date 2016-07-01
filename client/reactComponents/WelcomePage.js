@@ -82,6 +82,7 @@ class WelcomePage extends React.Component {
         <a-assets>
           <WallMixin height={20}/>
           <img id='ground' src='assets/tronGround.jpg'/>
+          <img id='wall' src='assets/tronWall.jpg'/>
           <img id='sky' src='assets/sky.jpg'/>
           <Projectile />
         </a-assets>
