@@ -80,12 +80,14 @@ class WelcomePage extends React.Component {
     return (
       <a-scene id='scene' physics='debug:false' vr-mode-ui='enabled: false'>
         <a-assets>
-          <WallMixin height={8}/>
+          <WallMixin height={20}/>
+          <img id='ground' src='assets/tronGround.jpg'/>
+          <img id='sky' src='assets/sky.jpg'/>
           <Projectile />
         </a-assets>
         <a-entity light='type: directional; color: #EEE; intensity: 1.0' position='-1 1 0'/>
         <a-entity light='type: hemisphere; color: #222; groundColor: #555; intensity: 2'/>
-
+        <a-sky src='#sky' />
         {this.renderScene.call(this)}
 
       </a-scene>

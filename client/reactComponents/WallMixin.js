@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WallMixin = (props) => {
-  const material = props.material || 'color: brown;'
+  const material = props.material || 'color: black; metalness: 0;'
   const height = props.height || 8;
   return (
     <a-mixin
