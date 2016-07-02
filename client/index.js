@@ -5,6 +5,7 @@ import extras from 'aframe-extras';
 
 extras.physics.registerAll();
 extras.controls.registerAll();
+require('aframe-text-component')
 
 require('./aframeComponents/tank-controls');
 require('./aframeComponents/spawner');
