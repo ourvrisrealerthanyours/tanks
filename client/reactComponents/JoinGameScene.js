@@ -81,7 +81,7 @@ class JoinGameScene extends React.Component {
     return characters.map((character, index) => {
       const x = index * totalLength / (n - 1) - totalLength / 2;
       return (
-        <a-entity key={index}
+        <a-entity key={character.characterId + character.driver + character.gunner}
         position={`${x} ${TANK_RADIUS} -10`}>
           <a-entity
           class='delectableSelectable'
@@ -95,7 +95,7 @@ class JoinGameScene extends React.Component {
             rotation='0 180 0'
             material={`color: ${colors[character.characterId]}; ` +
                       `metalness: 0.7; ` +
-                      `opacity: ${1 - 0.5 * !!characters[index].driver}`}
+                      `opacity: ${1 - 0.5 * !!character.driver}`}
             socketControlsDisabled={true}/>
           </a-entity>
           <a-entity
@@ -111,7 +111,7 @@ class JoinGameScene extends React.Component {
             role='gunner'
             material={`color: ${colors[character.characterId]}; ` +
                       `metalness: 0.5; ` +
-                      `opacity: ${1 - 0.5 * !!characters[index].driver}`}
+                      `opacity: ${1 - 0.5 * !!character.gunner}`}
             socketControlsDisabled={true}/>
           </a-entity>
         </a-entity>
