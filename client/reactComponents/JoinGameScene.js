@@ -90,7 +90,7 @@ class JoinGameScene extends React.Component {
           material='opacity: 0;'
           role='driver'
           characterId={character.characterId}
-          hover-highlight>
+          hover-highlight={`role:${character.driver};`}>
             <TankBody
             radius={TANK_RADIUS}
             role='driver'
@@ -108,7 +108,7 @@ class JoinGameScene extends React.Component {
           material='opacity: 0;'
           role='gunner'
           characterId={character.characterId}
-          hover-highlight>
+          hover-highlight={`role:${character.gunner};`}>
             <Turret
             position='0 0 0'
             rotation={`10 ${180 + x * 10} 0`}
