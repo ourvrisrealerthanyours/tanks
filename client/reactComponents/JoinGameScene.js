@@ -86,8 +86,7 @@ class JoinGameScene extends React.Component {
           <a-entity
           class='delectableSelectable'
           role='driver'
-          characterId={character.characterId}
-          >
+          characterId={character.characterId}>
             <TankBody
             radius={TANK_RADIUS}
             role='driver'
@@ -101,8 +100,7 @@ class JoinGameScene extends React.Component {
           <a-entity
           class='delectableSelectable'
           role='gunner'
-          characterId={character.characterId}
-          >
+          characterId={character.characterId}>
             <Turret
             position={`0 ${TANK_RADIUS - 0.5} 0`}
             rotation={`10 ${180 + x * 10} 0`}
@@ -128,11 +126,13 @@ class JoinGameScene extends React.Component {
           position='0 3 0'
           wasd-controls='enabled: false;'
           rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
-          look-controls={`enabled:${this.props.isTouch};`}
-          >
-            <a-cursor
-            material='color: #AAF; shader: flat;'
-            maxDistance='10'/>
+          look-controls={`enabled:${this.props.isTouch};`}>
+            <a-entity 
+            raycaster
+            click-space-cursor='maxDistance: 10;'
+            position='0 0 -1'
+            geometry='primitive: ring; radiusOuter: 0.016; radiusInner: 0.01;'
+            material='shader: flat; color: #AAF;'/>
           </a-camera>
 
         </Arena>

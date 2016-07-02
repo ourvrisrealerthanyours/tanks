@@ -8,7 +8,8 @@ extras.controls.registerAll();
 
 require('./aframeComponents/tank-controls');
 require('./aframeComponents/spawner');
-require('./aframeComponents/event-listener');
+require('./aframeComponents/click-space-listener');
+require('./aframeComponents/click-space-cursor');
 require('./aframeComponents/explode');
 require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
