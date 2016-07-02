@@ -1,6 +1,7 @@
 import React from 'react';
 import Arena from './Arena';
 import TankBody from './TankBody';
+import Directions from './Directions';
 import Turret from './Turret';
 import WallMixin from './WallMixin';
 import { colors, TANK_RADIUS } from '../../simulation/constants';
@@ -77,7 +78,7 @@ class JoinGameScene extends React.Component {
       characters.push(this.props.characters[characterId]);
     }
     const n = characters.length;
-    const totalLength = 4 * n;
+    const totalLength = 6 * n;
     return characters.map((character, index) => {
       const x = index * totalLength / (n - 1) - totalLength / 2;
       return (
@@ -127,6 +128,7 @@ class JoinGameScene extends React.Component {
   render () {
     return (
       <a-entity>
+        <Directions deviceType={this.props.isTouch ? 'mobile' : 'browser'}/>
         <Arena wallHeight={8} >
           {this.renderSelectables.call(this)}
           <a-camera
@@ -134,11 +136,11 @@ class JoinGameScene extends React.Component {
           wasd-controls='enabled: false;'
           rotation-keyboard-controls={`enabled:${!this.props.isTouch};`}
           look-controls={`enabled:${this.props.isTouch};`}>
-            <a-entity 
+            <a-entity
             raycaster
-            click-space-cursor='maxDistance: 10;'
+            click-space-cursor='maxDistance: 20;'
             position='0 0 -1'
-            geometry='primitive: ring; radiusOuter: 0.016; radiusInner: 0.01;'
+            geometry='primitive: ring; radiusOuter: 0.02; radiusInner: 0.01;'
             material='shader: flat; color: #AAF;'/>
           </a-camera>
 
