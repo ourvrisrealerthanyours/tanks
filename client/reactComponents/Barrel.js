@@ -6,8 +6,6 @@ const Barrel = (props) => {
   const barrelLength = props.barrelLength || 6;
   // TODO: Make better turret angle interpolator
   if(props.fireEvent) {
-    const fireEventArray = props.fireEvent.replace(' ', '').split(';');
-    const event = fireEventArray.filter(params => params.slice(0,3) === 'on:')[0];
     return (
       <a-entity class='barrel'
       position={position}
@@ -23,15 +21,14 @@ const Barrel = (props) => {
         <a-cylinder
         position={`0 0 ${-barrelLength}`}
         rotation='90 0 0'
-        spawner={`mixin: projectile; ${event}; characterId: ${props.characterId}`}
+        spawner={`mixin: projectile; on: click; characterId: ${props.characterId}`}
         death-listener={`characterId: ${props.characterId};`}
         height='0.3'
         radius='0.25'
         open-ended='false'
         theta-length='360'
         material={`side:double; ${props.material}`}
-        event-listener={props.fireEvent}/>
-
+        click-space-listener/>
       </a-entity>
     )
   } else {
