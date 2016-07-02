@@ -15,18 +15,18 @@ const LifeBar = (props) => {
     socket-controls={`characterId: ${characterId}; simulationAttribute: position`}>
       <a-plane
       position={position}
-      material='color:grey;'
+      material='color:grey; opacity: 0.5; shader: flat'
       width={width + 0.2}
       height={height + 0.2}>
         <a-plane
         position={`${(health / MAX_HEALTH - 1) * width / 2} 0 0.1`}
-        material='color:green;'
+        material='color: #0F5; opacity: 0.7;  shader: flat'
         width={Math.max((health / MAX_HEALTH) * width, 0)}
         height={height}
         hit-listener={`characterId: ${characterId}; maxHealth: ${MAX_HEALTH}; barWidth: ${width}`}/>
         <a-plane
         position={`${(health / MAX_HEALTH) * width / 2} 0 0.1`}
-        material='color:red;'
+        material='color: #F03; opacity: 0.7; shader: flat'
         width={Math.max((1 - health / MAX_HEALTH) * width, 0)}
         height={height}
         hit-listener={`characterId: ${characterId}; maxHealth: ${MAX_HEALTH}; barWidth: ${width}; direction: -1;`}/>
