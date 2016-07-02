@@ -34,7 +34,7 @@ class Turret extends React.Component {
             <Barrel
             position='0 0 0'
             characterId={this.props.characterId}
-            fireEvent='on: click'
+            fireEvent
             material={this.props.material}/>
           </a-sphere>
         </a-entity>

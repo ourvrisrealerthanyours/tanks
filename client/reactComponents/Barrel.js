@@ -6,8 +6,6 @@ const Barrel = (props) => {
   const barrelLength = props.barrelLength || 6;
   // TODO: Make better turret angle interpolator
   if(props.fireEvent) {
-    const fireEventArray = props.fireEvent.replace(' ', '').split(';');
-    const event = fireEventArray.filter(params => params.slice(0,3) === 'on:')[0];
     return (
       <a-entity class='barrel'
       position={position}

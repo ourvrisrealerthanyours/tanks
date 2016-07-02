@@ -70,9 +70,7 @@ AFRAME.registerComponent('click-space-cursor', {
   },
 
   onKeyDown: function (evt) {
-    console.log('keydown!!');
     if(evt.keyCode === 32) {
-      console.log('space pressed!')
       this.emit('keydown');
       this.keyDownEl = this.intersectedEl;
     }
