@@ -1,3 +1,5 @@
+var throttle = require('lodash.throttle');
+
 AFRAME.registerComponent('spawner', {
   schema: {
     on: { default: 'click' },
@@ -73,7 +75,7 @@ AFRAME.registerComponent('spawner', {
   },
 
   bindMethods: function () {
-    this.spawn = this.spawn.bind(this);
+    this.spawn = throttle(this.spawn.bind(this), 100);
   },
 
   attachEventListeners: function () {
