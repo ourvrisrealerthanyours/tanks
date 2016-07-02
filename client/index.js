@@ -17,6 +17,7 @@ require('./aframeComponents/forward-movement-controls');
 require('./aframeComponents/rotation-keyboard-controls');
 require('./aframeComponents/death-listener');
 require('./aframeComponents/hit-listener');
+require('./aframeComponents/hover-highlight');
 
 import WelcomePage from './reactComponents/WelcomePage'
 
