@@ -86,8 +86,11 @@ class JoinGameScene extends React.Component {
         position={`${x} ${TANK_RADIUS} -10`}>
           <a-entity
           class='delectableSelectable'
+          geometry={`primitive: sphere; radius: ${TANK_RADIUS + 0.01}`}
+          material='opacity: 0;'
           role='driver'
-          characterId={character.characterId}>
+          characterId={character.characterId}
+          hover-highlight={`role:${character.driver};`}>
             <TankBody
             radius={TANK_RADIUS}
             role='driver'
@@ -100,10 +103,14 @@ class JoinGameScene extends React.Component {
           </a-entity>
           <a-entity
           class='delectableSelectable'
+          position={`0 ${TANK_RADIUS - 0.5} 0`}
+          geometry={`primitive: sphere; radius: 1.51;`}
+          material='opacity: 0;'
           role='gunner'
-          characterId={character.characterId}>
+          characterId={character.characterId}
+          hover-highlight={`role:${character.gunner};`}>
             <Turret
-            position={`0 ${TANK_RADIUS - 0.5} 0`}
+            position='0 0 0'
             rotation={`10 ${180 + x * 10} 0`}
             className='delectableSelectable'
             characterId={character.characterId}
