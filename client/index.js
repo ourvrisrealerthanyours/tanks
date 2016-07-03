@@ -7,7 +7,6 @@ extras.physics.registerAll();
 extras.controls.registerAll();
 require('aframe-text-component')
 
-require('./aframeComponents/tank-controls');
 require('./aframeComponents/spawner');
 require('./aframeComponents/click-space-listener');
 require('./aframeComponents/click-space-cursor');
@@ -15,7 +14,7 @@ require('./aframeComponents/explode');
 require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
 require('./aframeComponents/forward-movement-controls');
-require('./aframeComponents/rotation-keyboard-controls');
+require('./aframeComponents/rotation-controls');
 require('./aframeComponents/death-listener');
 require('./aframeComponents/hit-listener');
 require('./aframeComponents/hover-highlight');
