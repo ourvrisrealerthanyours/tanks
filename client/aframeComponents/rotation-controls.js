@@ -18,7 +18,8 @@ AFRAME.registerComponent('rotation-controls', {
     enabled: { default: true },
     wsEnabled: { default: true },
     pointerlockEnabled: { default: true },
-    sensitivity: { default: 1 / 25 }
+    sensitivity: { default: 1 / 25 },
+    rotationSensitivity:  { default: 0.05 } // radians/frame, ish
   },
 
   init: function () {
@@ -62,8 +63,6 @@ AFRAME.registerComponent('rotation-controls', {
     var mouseRotationDelta, keyboardRotationDelta;
     let data = this.data;
     this.totalRotationDelta.set(0,0);
-
-    let rotation = this.el.getComputedAttribute('rotation');
 
     keyboardRotationDelta = this.getKeyboardRotationDelta();
     this.totalRotationDelta.add(keyboardRotationDelta);
