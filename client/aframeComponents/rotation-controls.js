@@ -18,7 +18,8 @@ AFRAME.registerComponent('rotation-controls', {
     enabled: { default: true },
     wsEnabled: { default: true },
     pointerlockEnabled: { default: true },
-    mouseSensitivity: { default: 0.002 }
+    mouseSensitivity: { default: 0.002 },
+    keyboardSensitivity: { default: 1 }
   },
 
   init: function () {
@@ -88,7 +89,7 @@ AFRAME.registerComponent('rotation-controls', {
     let rotationDelta = new THREE.Vector2(
       THREE.Math.degToRad(yaw), 
       THREE.Math.degToRad(pitch)
-    );
+    ).multiplyScalar(this.data.keyboardSensitivity);
     return rotationDelta;
   },
 
