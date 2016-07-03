@@ -64,10 +64,10 @@ class Simulation {
     // TODO: Make this function prettier
     for(const characterId in this.characters) {
       if(playerId === this.characters[characterId].driver) {
-        this.updateCharacterRoles(characterId, 'driver', undefined);
+        this.updateCharacterRoles(characterId, 'driver', null);
       }
       if(playerId === this.characters[characterId].gunner) {
-        this.updateCharacterRoles(characterId, 'gunner', undefined);
+        this.updateCharacterRoles(characterId, 'gunner', null);
       }
     }
   }

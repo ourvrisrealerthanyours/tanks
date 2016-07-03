@@ -6,10 +6,11 @@ AFRAME.registerComponent('hover-highlight', {
 
   init: function () {
     this.isHovered = false;
+    console.log(this.data.role);
   },
 
   tick: function () {
-    if(!this.data.role || this.data.role === 'null') {
+    if(!this.data.role || this.data.role === 'null' || this.data.role === 'undefined') {
       if(this.el.is('hovered') && !this.isHovered) {
         this.isHovered = true;
         this.handleHover();
