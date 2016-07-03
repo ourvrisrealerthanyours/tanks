@@ -16,6 +16,7 @@ require('./aframeComponents/data-emitter');
 require('./aframeComponents/socket-controls');
 require('./aframeComponents/forward-movement-controls');
 require('./aframeComponents/rotation-keyboard-controls');
+require('./aframeComponents/rotation-controls');
 require('./aframeComponents/death-listener');
 require('./aframeComponents/hit-listener');
 require('./aframeComponents/hover-highlight');

@@ -1,5 +1,6 @@
 import THREE from 'three';
 var MAX_DELTA = 0.2;
+var PI_2 = Math.PI / 2;
 var shouldCaptureKeyEvent = (event) => {
   if (event.shiftKey || event.metaKey || event.altKey || event.ctrlKey) {
     return false;
@@ -25,6 +26,8 @@ AFRAME.registerComponent('rotation-controls', {
     this.yaw = new THREE.Object3D();
     this.yaw.position.y = 10;
     this.yaw.add(this.pitch);
+
+    this.totalRotationDelta = new THREE.Vector2();
 
     this.keys = {};
     this.mouseDown = false;
@@ -56,35 +59,51 @@ AFRAME.registerComponent('rotation-controls', {
   },
 
   updateRotation: function(dt) {
-    var control, dRotation,
-        data = this.data;
-    
-    let rotation = this.el.getComputedAttribute('rotation');
-    let adRotation = 0;
-    let wsRotation = 0;
-    if(this.data.wsEnabled) {
-      if (this.keys[87] || this.keys[38]) { wsRotation += 1} // W or Up
-      if (this.keys[83] || this.keys[40]) { wsRotation -= 1} // S or Down
-    }
-    if (this.keys[65] || this.keys[37]) { adRotation += 1} // A or Left
-    if (this.keys[68] || this.keys[39]) { adRotation -= 1} // D or Right
-    this.el.setAttribute('rotation', {
-      x: rotation.x + wsRotation,
-      y: rotation.y + adRotation,
-      z: rotation.z
-    });
+    var mouseRotationDelta, keyboardRotationDelta;
+    let data = this.data;
+    this.totalRotationDelta.set(0,0);
 
-    dRotation = control.getRotationDelta(dt);
-    dRotation.multiplyScalar(data.rotationSensitivity);
-    this.yaw.rotation.y -= dRotation.x;
-    this.pitch.rotation.x -= dRotation.y;
+    let rotation = this.el.getComputedAttribute('rotation');
+
+    keyboardRotationDelta = this.getKeyboardRotationDelta();
+    this.totalRotationDelta.add(keyboardRotationDelta);
+
+    if(this.isMouseRotationActive()) {
+      mouseRotationDelta = this.getMouseRotationDelta();
+      mouseRotationDelta.multiplyScalar(data.rotationSensitivity);
+      this.totalRotationDelta.add(mouseRotationDelta);
+    }
+
+    this.yaw.rotation.y -= this.totalRotationDelta.x;
+    this.pitch.rotation.x -= this.totalRotationDelta.y;
     this.pitch.rotation.x = Math.max(-PI_2, Math.min(PI_2, this.pitch.rotation.x));
     this.el.setAttribute('rotation', {
       x: THREE.Math.radToDeg(this.pitch.rotation.x),
       y: THREE.Math.radToDeg(this.yaw.rotation.y),
       z: 0
     });
+  },
 
+  getKeyboardRotationDelta: function () {
+    let yaw = 0;
+    let pitch = 0;
+    if(this.data.wsEnabled) {
+      if (this.keys[87] || this.keys[38]) { pitch -= 1} // W or Up
+      if (this.keys[83] || this.keys[40]) { pitch += 1} // S or Down
+    }
+    if (this.keys[65] || this.keys[37]) { yaw -= 1} // A or Left
+    if (this.keys[68] || this.keys[39]) { yaw += 1} // D or Right
+    let rotationDelta = new THREE.Vector2(
+      THREE.Math.degToRad(yaw), 
+      THREE.Math.degToRad(pitch)
+    );
+    return rotationDelta;
+  },
+
+  getMouseRotationDelta: function () {
+    var rotationDelta = this.lookVector.clone().multiplyScalar(this.data.sensitivity);
+    this.lookVector.set(0, 0);
+    return rotationDelta;
   },
 
   getKeys: function () {
@@ -105,6 +124,7 @@ AFRAME.registerComponent('rotation-controls', {
 
   pause: function () {
     this.keys = {};
+    this.lookVector.set(0, 0);
     this.removeEventListeners();
   },
 
@@ -181,17 +201,8 @@ AFRAME.registerComponent('rotation-controls', {
     }
   },
 
-  isRotationActive: function () {
+  isMouseRotationActive: function () {
     return this.data.enabled && (this.mouseDown || this.pointerLocked);
-  },
-
-  /**
-   * Returns the sum of all mouse movement since last call.
-   */
-  getRotationDelta: function () {
-    var dRotation = this.lookVector.clone().multiplyScalar(this.data.sensitivity);
-    this.lookVector.set(0, 0);
-    return dRotation;
   },
 
   onMouseMove: function (event) {
