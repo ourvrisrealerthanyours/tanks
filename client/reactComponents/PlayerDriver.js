@@ -30,7 +30,7 @@ class PlayerDriver extends React.Component {
         material='opacity: 0;'
         position={'0 0 0'}
         rotation={this.rotation}
-        rotation-keyboard-controls={`enabled:${!this.props.isTouch}; wsEnabled:false;`}
+        rotation-controls={`enabled:${!this.props.isTouch}; wsEnabled:false;`}
         look-controls={`enabled:${this.props.isTouch};`}
         data-emitter={`characterId: ${this.props.characterId}; simulationAttribute: tankRotation;`}>
         {/*}

@@ -33,13 +33,9 @@ AFRAME.registerComponent('rotation-controls', {
     this.pointerLocked = false;
     
     this.bindMethods();
-    this.attachVisibilityEventListeners();
   },
 
   bindMethods: function () {
-    this.onBlur = this.onBlur.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onVisibilityChange = this.onVisibilityChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -123,18 +119,7 @@ AFRAME.registerComponent('rotation-controls', {
 
   remove: function () {
     this.pause();
-  },
-
-  attachVisibilityEventListeners: function () {
-    window.addEventListener('blur', this.onBlur);
-    window.addEventListener('focus', this.onFocus);
-    document.addEventListener('visibilitychange', this.onVisibilityChange);
-  },
-
-  removeVisibilityEventListeners: function () {
-    window.removeEventListener('blur', this.onBlur);
-    window.removeEventListener('focus', this.onFocus);
-    document.removeEventListener('visibilitychange', this.onVisibilityChange);
+    document.exitPointerLock();
   },
 
   attachEventListeners: function () {
@@ -176,22 +161,6 @@ AFRAME.registerComponent('rotation-controls', {
     document.removeEventListener('pointerlockchange', this.onPointerLockChange, false);
     document.removeEventListener('mozpointerlockchange', this.onPointerLockChange, false);
     document.removeEventListener('pointerlockerror', this.onPointerLockError, false);
-  },
-
-  onBlur: function () {
-    this.pause();
-  },
-
-  onFocus: function () {
-    this.play();
-  },
-
-  onVisibilityChange: function () {
-    if (document.hidden) {
-      this.onBlur();
-    } else {
-      this.onFocus();
-    }
   },
 
   isMouseRotationActive: function () {
