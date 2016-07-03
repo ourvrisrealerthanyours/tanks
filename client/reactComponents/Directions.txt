@@ -1,8 +1,0 @@
-directions
-
-Look up
-
-Check if they're on a computer or on a phone
-Use your phone to look around you, touch the screen to click
-Gunner: use your phone to aim and tap the screen to shoot
-Driver: use your phone to steer and press your screen to move forwards
