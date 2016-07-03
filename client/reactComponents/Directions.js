@@ -2,8 +2,8 @@ import React from 'react';
 const letterHeight = 0.01;
 const instructions = {
   browser: [
-    'Use the arrow keys and spacebar to choose a spot in a tank',
-    'GUNNER: Use the arrow keys to aim and spacebar to shoot',
+    'Use the mouse or arrow keys and spacebar to choose a spot in a tank',
+    'GUNNER: Use the mouse or arrow keys to aim and spacebar to shoot',
     'DRIVER: Use the arrow keys to drive and steer',
   ],
   mobile: [
