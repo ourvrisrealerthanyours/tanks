@@ -1,6 +1,8 @@
 import THREE from 'three';
+
 var MAX_DELTA = 0.2;
 var PI_2 = Math.PI / 2;
+
 var shouldCaptureKeyEvent = (event) => {
   if (event.shiftKey || event.metaKey || event.altKey || event.ctrlKey) {
     return false;
@@ -10,31 +12,24 @@ var shouldCaptureKeyEvent = (event) => {
 
 AFRAME.registerComponent('rotation-controls', {
 
-  dependencies: ['velocity', 'rotation'],
+  dependencies: ['rotation'],
 
   schema: {
-    movementEasing: { default: 15 }, // m/s2
-    movementAcceleration: { default: 200 }, // m/s2
     enabled: { default: true },
     wsEnabled: { default: true },
     pointerlockEnabled: { default: true },
-    sensitivity: { default: 1 / 25 },
-    rotationSensitivity:  { default: 0.05 } // radians/frame, ish
+    mouseSensitivity: { default: 0.002 }
   },
 
   init: function () {
     this.pitch = new THREE.Object3D();
     this.yaw = new THREE.Object3D();
-    this.yaw.position.y = 10;
-    this.yaw.add(this.pitch);
-
+    this.lookVector = new THREE.Vector2();
     this.totalRotationDelta = new THREE.Vector2();
 
     this.keys = {};
     this.mouseDown = false;
-
     this.pointerLocked = false;
-    this.lookVector = new THREE.Vector2();
     
     this.bindMethods();
     this.attachVisibilityEventListeners();
@@ -60,16 +55,14 @@ AFRAME.registerComponent('rotation-controls', {
   },
 
   updateRotation: function(dt) {
-    var mouseRotationDelta, keyboardRotationDelta;
     let data = this.data;
     this.totalRotationDelta.set(0,0);
 
-    keyboardRotationDelta = this.getKeyboardRotationDelta();
+    let keyboardRotationDelta = this.getKeyboardRotationDelta();
     this.totalRotationDelta.add(keyboardRotationDelta);
 
     if(this.isMouseRotationActive()) {
-      mouseRotationDelta = this.getMouseRotationDelta();
-      mouseRotationDelta.multiplyScalar(data.rotationSensitivity);
+      let mouseRotationDelta = this.getMouseRotationDelta();
       this.totalRotationDelta.add(mouseRotationDelta);
     }
 
@@ -100,7 +93,7 @@ AFRAME.registerComponent('rotation-controls', {
   },
 
   getMouseRotationDelta: function () {
-    var rotationDelta = this.lookVector.clone().multiplyScalar(this.data.sensitivity);
+    var rotationDelta = this.lookVector.clone().multiplyScalar(this.data.mouseSensitivity);
     this.lookVector.set(0, 0);
     return rotationDelta;
   },
