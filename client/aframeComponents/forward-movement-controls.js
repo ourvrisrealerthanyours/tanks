@@ -105,6 +105,7 @@ AFRAME.registerComponent('forward-movement-controls', {
   },
 
   pause: function () {
+    this.velocity.set(0, 0, 0);
     this.removeEventListeners();
   },
 
