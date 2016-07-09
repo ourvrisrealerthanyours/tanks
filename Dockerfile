@@ -12,7 +12,7 @@ RUN mkdir -p /app && cp -a /tmp/node_modules /app/
 WORKDIR /app
 ADD . /app
 
-RUN webpack
+RUN webpack -p
 
 EXPOSE 80
 CMD ["npm", "run", "docker-start"]
