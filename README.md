@@ -2,6 +2,8 @@
 
 Battle your friends in virtual tanks on any device!
 Play now at [www.bubbletanks.biz](www.bubbletanks.biz)
+![screen shot](./readmeAssets/screenshot.png "screen shot")
+
 
 Tanks is a multiplayer virtual reality game built with [A-Frame VR](https://aframe.io/), [React](https://facebook.github.io/react/), [Express](https://expressjs.com/), and [Socket.io](http://socket.io/). The connections between clients, the server, and the simulation are shown in this architecture diagram:
 ![architecture diagram](./readmeAssets/architecture.jpeg "architecture diagram")
